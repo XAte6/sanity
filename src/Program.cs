@@ -1,0 +1,30 @@
+using System;
+using System.Threading;
+using System.Windows.Forms;
+
+namespace Sanity
+{
+    internal static class Program
+    {
+        [STAThread]
+        private static void Main(string[] args)
+        {
+            if (args.Length > 0 && args[0] == "--write-default-config")
+            {
+                AppConfig.CreateDefault().Save();
+                return;
+            }
+
+            bool createdNew;
+            using (new Mutex(true, "Sanity.UrlTrackerRemover", out createdNew))
+            {
+                if (!createdNew)
+                    return;
+
+                Application.EnableVisualStyles();
+                Application.SetCompatibleTextRenderingDefault(false);
+                Application.Run(new TrayApplicationContext());
+            }
+        }
+    }
+}
