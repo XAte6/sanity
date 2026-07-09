@@ -18,8 +18,13 @@ class LinkProxyActivity : AppCompatActivity() {
         val config = AppConfigStore.load(this)
         val result = LinkHandler.handle(this, url)
 
-        if (result.cleaned && config.notificationsEnabled) {
-            Toast.makeText(this, "Tracking removed from clicked URL.", Toast.LENGTH_SHORT).show()
+        when {
+            !result.opened -> {
+                Toast.makeText(this, R.string.browser_open_failed, Toast.LENGTH_LONG).show()
+            }
+            result.cleaned && config.notificationsEnabled -> {
+                Toast.makeText(this, R.string.tracking_removed, Toast.LENGTH_SHORT).show()
+            }
         }
 
         finish()

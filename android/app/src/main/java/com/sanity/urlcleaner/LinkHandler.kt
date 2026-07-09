@@ -4,7 +4,8 @@ import android.content.Context
 
 data class LinkHandleResult(
     val finalUrl: String,
-    val cleaned: Boolean
+    val cleaned: Boolean,
+    val opened: Boolean
 )
 
 object LinkHandler {
@@ -20,7 +21,7 @@ object LinkHandler {
             }
         }
 
-        BrowserForwarder.open(context, finalUrl, config.targetBrowser)
-        return LinkHandleResult(finalUrl = finalUrl, cleaned = cleaned)
+        val opened = BrowserForwarder.open(context, finalUrl, config.targetBrowser)
+        return LinkHandleResult(finalUrl = finalUrl, cleaned = cleaned, opened = opened)
     }
 }

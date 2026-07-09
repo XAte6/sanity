@@ -1,4 +1,5 @@
 <resources>
     <color name="sanity_green">#228B22</color>
     <color name="sanity_white">#FFFFFF</color>
+    <color name="sanity_red">#C62828</color>
 </resources>

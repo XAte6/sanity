@@ -12,15 +12,14 @@ data class BrowserInfo(
 
 object BrowserForwarder {
     fun installedBrowsers(context: Context): List<BrowserInfo> {
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://example.com"))
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://example.com")).apply {
+            addCategory(Intent.CATEGORY_BROWSABLE)
+        }
         val selfPackage = context.packageName
         val seen = linkedSetOf<String>()
         val browsers = mutableListOf<BrowserInfo>()
 
-        val activities = context.packageManager.queryIntentActivities(
-            intent,
-            PackageManager.MATCH_DEFAULT_ONLY
-        )
+        val activities = queryViewHandlers(context, intent)
 
         for (resolveInfo in activities) {
             val packageName = resolveInfo.activityInfo.packageName
@@ -32,23 +31,37 @@ object BrowserForwarder {
         return browsers.sortedBy { it.label.lowercase() }
     }
 
-    fun open(context: Context, url: String, targetPackage: String) {
+    fun open(context: Context, url: String, targetPackage: String): Boolean {
         val uri = Uri.parse(url)
+        val packageToUse = targetPackage.ifBlank {
+            installedBrowsers(context).firstOrNull()?.packageName.orEmpty()
+        }
+
+        if (packageToUse.isBlank()) {
+            return false
+        }
+
         val intent = Intent(Intent.ACTION_VIEW, uri).apply {
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            if (targetPackage.isNotBlank()) {
-                setPackage(targetPackage)
-            }
+            setPackage(packageToUse)
         }
 
-        if (intent.resolveActivity(context.packageManager) != null) {
-            context.startActivity(intent)
-            return
+        if (intent.resolveActivity(context.packageManager) == null) {
+            return false
         }
 
-        val fallback = Intent(Intent.ACTION_VIEW, uri).apply {
-            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        }
-        context.startActivity(fallback)
+        context.startActivity(intent)
+        return true
     }
+
+    @Suppress("DEPRECATION")
+    private fun queryViewHandlers(context: Context, intent: Intent) =
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
+            context.packageManager.queryIntentActivities(
+                intent,
+                PackageManager.ResolveInfoFlags.of(PackageManager.MATCH_ALL.toLong())
+            )
+        } else {
+            context.packageManager.queryIntentActivities(intent, PackageManager.MATCH_ALL)
+        }
 }

@@ -95,7 +95,30 @@ Build output: `mac/bin/Sanity.app`
 
 ## Android
 
-**Requirements:** JDK 17+, Android SDK, Gradle (or Android Studio)
+You need to **build an APK** on your PC, then install it on your phone. There are two ways to do that.
+
+### Option A: Android Studio (recommended if you're new to this)
+
+This is the easiest path. You do **not** need to install Gradle, the Android SDK, or a JDK separately — Android Studio bundles all of them.
+
+1. Download and install [Android Studio](https://developer.android.com/studio) for Windows (the recommended `.exe` installer is fine).
+2. Open Android Studio → **Open** → select the `android` folder in this repo.
+3. Wait for the initial sync to finish (it will download the SDK and dependencies).
+4. **Build → Build Bundle(s) / APK(s) → Build APK(s)**.
+5. When the build finishes, click **locate** in the notification, or find the APK at:
+   `android/app/build/outputs/apk/release/app-release-unsigned.apk`
+
+Copy that APK to your phone and install it (see **Install (sideload)** below).
+
+### Option B: Command line (`build.bat`)
+
+Only use this if you already have Android development tools set up, or you specifically want a scriptable build.
+
+**Requirements:** JDK 17+, Android SDK, and Gradle on your `PATH`.
+
+- **JDK 17+** — Android Studio includes one; for CLI-only setups, install a JDK and set `JAVA_HOME`.
+- **Android SDK** — install via Android Studio's SDK Manager, or the [command-line tools](https://developer.android.com/studio#command-line-tools-only). Set `ANDROID_HOME` (usually `C:\Users\<you>\AppData\Local\Android\Sdk`).
+- **Gradle** — must be installed separately and available on `PATH`. `winget` does **not** currently ship Gradle. Use [Chocolatey](https://chocolatey.org/) (`choco install gradle`), [Scoop](https://scoop.sh/) (`scoop install gradle`), or a [manual install](https://gradle.org/install/) (this project uses Gradle 8.7).
 
 ```bat
 cd android
@@ -112,14 +135,28 @@ cp app/build/outputs/apk/release/app-release-unsigned.apk bin/Sanity.apk
 
 Build output: `android/bin/Sanity.apk`
 
-### Install (sideload)
+### Install and use (sideload)
+
+Sanity is **not** a browser and does **not** run in the background. It is a link proxy: Android hands clicked links to Sanity, Sanity strips trackers, then forwards the cleaned URL to your real browser and exits.
+
+**Setup (do this in order):**
 
 1. Install the APK on your phone (enable install from unknown sources if needed).
-2. Open Sanity and choose a **target browser**.
-3. Enable **Clean clicked links**.
+2. Open Sanity and pick a **target browser** (e.g. Chrome) from the dropdown.
+3. Turn on **Enabled** and **Clean clicked links**.
 4. Tap **Open default apps settings** and set **Sanity** as the default browser.
 
-Sanity only runs when a link is opened — there is no background service and negligible idle battery use.
+**Using it:** tap a link in WhatsApp, Gmail, SMS, etc. You may see a brief “tracking removed” toast; your chosen browser should then open the cleaned page. You do not need to keep Sanity open.
+
+**Deploy from Android Studio (wireless debugging):** with your phone paired in Device Manager, click **Run** to build, install, and launch in one step.
+
+**Deploy an existing APK via adb:**
+
+```powershell
+adb install -r android\app\build\outputs\apk\release\app-release-unsigned.apk
+```
+
+(`adb` is in `%LOCALAPPDATA%\Android\Sdk\platform-tools\`.)
 
 ## Configuration
 
