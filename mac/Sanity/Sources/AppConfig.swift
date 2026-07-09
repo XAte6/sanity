@@ -7,6 +7,8 @@ struct UrlRule: Codable {
 
 struct AppConfig: Codable {
     var enabled: Bool
+    var linkProxyEnabled: Bool
+    var targetBrowser: String
     var launchOnStartup: Bool
     var notificationsEnabled: Bool
     var sleepUntil: String?
@@ -18,14 +20,22 @@ struct AppConfig: Codable {
         return true
     }
 
+    var isLinkProxyActive: Bool {
+        linkProxyEnabled && isActive
+    }
+
     init(
         enabled: Bool = true,
+        linkProxyEnabled: Bool = false,
+        targetBrowser: String = "",
         launchOnStartup: Bool = false,
         notificationsEnabled: Bool = true,
         sleepUntil: String? = nil,
         rules: [UrlRule] = []
     ) {
         self.enabled = enabled
+        self.linkProxyEnabled = linkProxyEnabled
+        self.targetBrowser = targetBrowser
         self.launchOnStartup = launchOnStartup
         self.notificationsEnabled = notificationsEnabled
         self.sleepUntil = sleepUntil
@@ -35,6 +45,8 @@ struct AppConfig: Codable {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         enabled = try container.decodeIfPresent(Bool.self, forKey: .enabled) ?? true
+        linkProxyEnabled = try container.decodeIfPresent(Bool.self, forKey: .linkProxyEnabled) ?? false
+        targetBrowser = try container.decodeIfPresent(String.self, forKey: .targetBrowser) ?? ""
         launchOnStartup = try container.decodeIfPresent(Bool.self, forKey: .launchOnStartup) ?? false
         notificationsEnabled = try container.decodeIfPresent(Bool.self, forKey: .notificationsEnabled) ?? true
         sleepUntil = try container.decodeIfPresent(String.self, forKey: .sleepUntil)

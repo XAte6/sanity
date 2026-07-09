@@ -14,6 +14,8 @@ namespace Sanity
     public class AppConfig
     {
         public bool Enabled { get; set; }
+        public bool LinkProxyEnabled { get; set; }
+        public string TargetBrowser { get; set; }
         public bool LaunchOnStartup { get; set; }
         public bool NotificationsEnabled { get; set; }
         public DateTime? SleepUntil { get; set; }
@@ -42,6 +44,12 @@ namespace Sanity
             }
         }
 
+        [ScriptIgnore]
+        public bool IsLinkProxyActive
+        {
+            get { return LinkProxyEnabled && IsActive; }
+        }
+
         public static AppConfig Load()
         {
             var path = ConfigPath;
@@ -62,6 +70,8 @@ namespace Sanity
                     config.Rules = new List<UrlRule>();
                 if (!raw.Contains("notificationsEnabled"))
                     config.NotificationsEnabled = true;
+                if (config.TargetBrowser == null)
+                    config.TargetBrowser = string.Empty;
                 return config;
             }
             catch
@@ -81,6 +91,8 @@ namespace Sanity
         {
             return json
                 .Replace("\"Enabled\":", "\"enabled\":")
+                .Replace("\"LinkProxyEnabled\":", "\"linkProxyEnabled\":")
+                .Replace("\"TargetBrowser\":", "\"targetBrowser\":")
                 .Replace("\"LaunchOnStartup\":", "\"launchOnStartup\":")
                 .Replace("\"NotificationsEnabled\":", "\"notificationsEnabled\":")
                 .Replace("\"SleepUntil\":", "\"sleepUntil\":")
@@ -93,6 +105,8 @@ namespace Sanity
         {
             return json
                 .Replace("\"enabled\":", "\"Enabled\":")
+                .Replace("\"linkProxyEnabled\":", "\"LinkProxyEnabled\":")
+                .Replace("\"targetBrowser\":", "\"TargetBrowser\":")
                 .Replace("\"launchOnStartup\":", "\"LaunchOnStartup\":")
                 .Replace("\"notificationsEnabled\":", "\"NotificationsEnabled\":")
                 .Replace("\"sleepUntil\":", "\"SleepUntil\":")
@@ -106,6 +120,8 @@ namespace Sanity
             return new AppConfig
             {
                 Enabled = true,
+                LinkProxyEnabled = false,
+                TargetBrowser = string.Empty,
                 LaunchOnStartup = false,
                 NotificationsEnabled = true,
                 SleepUntil = null,

@@ -15,6 +15,12 @@ namespace Sanity
                 return;
             }
 
+            if (args.Length >= 2 && args[0] == "--open")
+            {
+                LinkOpener.Open(args[1]);
+                return;
+            }
+
             bool createdNew;
             using (new Mutex(true, "Sanity.UrlTrackerRemover", out createdNew))
             {

@@ -9,6 +9,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private var refreshTimer: Timer?
 
     private var enabledItem: NSMenuItem!
+    private var linkProxyItem: NSMenuItem!
+    private var targetBrowserMenu: NSMenuItem!
     private var notificationsItem: NSMenuItem!
     private var launchOnStartupItem: NSMenuItem!
     private var sleepMenu: NSMenuItem!
@@ -29,9 +31,20 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             return
         }
 
+        if let openIndex = CommandLine.arguments.firstIndex(of: "--open"),
+           openIndex + 1 < CommandLine.arguments.count {
+            _ = LinkOpener.open(CommandLine.arguments[openIndex + 1])
+            NSApp.terminate(nil)
+            return
+        }
+
         NSApp.setActivationPolicy(.accessory)
         NSApp.applicationIconImage = AppIcon.create(size: 128)
         StartupRegistration.apply(config.launchOnStartup)
+        if config.linkProxyEnabled {
+            BrowserRegistration.apply(enabled: true, config: &config)
+            config.save()
+        }
         requestNotificationPermission()
 
         clipboardMonitor = ClipboardMonitor(config: config)
@@ -69,6 +82,14 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         enabledItem = NSMenuItem(title: "Enabled", action: #selector(toggleEnabled), keyEquivalent: "")
         enabledItem.target = self
         menu.addItem(enabledItem)
+
+        linkProxyItem = NSMenuItem(title: "Clean clicked links", action: #selector(toggleLinkProxy), keyEquivalent: "")
+        linkProxyItem.target = self
+        menu.addItem(linkProxyItem)
+
+        targetBrowserMenu = NSMenuItem(title: "Target browser", action: nil, keyEquivalent: "")
+        rebuildTargetBrowserMenu()
+        menu.addItem(targetBrowserMenu)
 
         notificationsItem = NSMenuItem(title: "Notifications", action: #selector(toggleNotifications), keyEquivalent: "")
         notificationsItem.target = self
@@ -128,6 +149,39 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         refreshMenuState()
     }
 
+    @objc private func toggleLinkProxy() {
+        config.linkProxyEnabled.toggle()
+        if config.linkProxyEnabled && config.targetBrowser.isEmpty {
+            config.targetBrowser = BrowserHelper.defaultBrowserBundleId() ?? ""
+        }
+        BrowserRegistration.apply(enabled: config.linkProxyEnabled, config: &config)
+        config.save()
+        rebuildTargetBrowserMenu()
+        refreshMenuState()
+    }
+
+    private func rebuildTargetBrowserMenu() {
+        let submenu = NSMenu()
+        for browser in BrowserHelper.installedBrowsers() {
+            let item = NSMenuItem(title: browser.name, action: #selector(selectTargetBrowser(_:)), keyEquivalent: "")
+            item.target = self
+            item.representedObject = browser.bundleId
+            submenu.addItem(item)
+        }
+        if submenu.items.isEmpty {
+            submenu.addItem(NSMenuItem(title: "(no browsers found)", action: nil, keyEquivalent: ""))
+        }
+        targetBrowserMenu.submenu = submenu
+        updateTargetBrowserChecks()
+    }
+
+    @objc private func selectTargetBrowser(_ sender: NSMenuItem) {
+        guard let bundleId = sender.representedObject as? String else { return }
+        config.targetBrowser = bundleId
+        config.save()
+        refreshMenuState()
+    }
+
     @objc private func toggleNotifications() {
         config.notificationsEnabled.toggle()
         config.save()
@@ -165,6 +219,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
         enabledItem.state = (config.enabled && !sleeping) ? .on : .off
         enabledItem.title = sleeping ? "Enabled (sleeping)" : "Enabled"
+        linkProxyItem.state = config.linkProxyEnabled ? .on : .off
+        updateTargetBrowserChecks()
         notificationsItem.state = config.notificationsEnabled ? .on : .off
         launchOnStartupItem.state = config.launchOnStartup ? .on : .off
 
@@ -182,7 +238,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         updateSleepItem(sleep8hItem, hours: 8, sleeping: sleeping)
 
         if active {
-            statusItem.button?.toolTip = "Sanity - active"
+            statusItem.button?.toolTip = config.linkProxyEnabled
+                ? "Sanity - active (clipboard + links)"
+                : "Sanity - active"
         } else if sleeping, let until = config.sleepUntilDate() {
             let formatter = DateFormatter()
             formatter.timeStyle = .short
@@ -199,6 +257,26 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         }
         let target = Date().addingTimeInterval(Double(hours) * 3600)
         item.state = abs(sleepUntil.timeIntervalSince(target)) < 300 ? .on : .off
+    }
+
+    private func updateTargetBrowserChecks() {
+        guard let submenu = targetBrowserMenu.submenu else { return }
+        for item in submenu.items {
+            guard let bundleId = item.representedObject as? String else {
+                item.state = .off
+                continue
+            }
+            item.state = bundleId == config.targetBrowser ? .on : .off
+        }
+    }
+
+    func application(_ sender: NSApplication, open urls: [URL]) {
+        for url in urls {
+            let cleaned = LinkOpener.open(url.absoluteString)
+            if cleaned {
+                showNotification("Tracking removed from clicked URL.")
+            }
+        }
     }
 
     private func requestNotificationPermission() {

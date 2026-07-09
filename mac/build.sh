@@ -4,7 +4,7 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "$0")" && pwd)"
 SRC="$ROOT/Sanity/Sources"
 PLIST="$ROOT/Sanity/Info.plist"
-BIN="$ROOT/../bin"
+BIN="$ROOT/bin"
 APP="$BIN/Sanity.app"
 MACOS="$APP/Contents/MacOS"
 RES="$APP/Contents/Resources"
@@ -27,8 +27,11 @@ swiftc -O \
     "$SRC"/AppConfig.swift \
     "$SRC"/AppDelegate.swift \
     "$SRC"/AppIcon.swift \
+    "$SRC"/BrowserHelper.swift \
+    "$SRC"/BrowserRegistration.swift \
     "$SRC"/ClipboardMonitor.swift \
     "$SRC"/ConfigWindowController.swift \
+    "$SRC"/LinkOpener.swift \
     "$SRC"/StartupRegistration.swift \
     "$SRC"/UrlCleaner.swift \
     "$SRC"/main.swift \
@@ -81,10 +84,8 @@ iconutil -c icns "$ICONSET" -o "$RES/AppIcon.icns"
 /usr/libexec/PlistBuddy -c "Set :CFBundleIconFile AppIcon" "$APP/Contents/Info.plist"
 
 "$MACOS/Sanity" --write-default-config
-if [ -f "$ROOT/../config.json" ]; then
-    cp "$ROOT/../config.json" "$BIN/config.json"
-else
-    cp "$BIN/config.json" "$ROOT/../config.json" 2>/dev/null || true
+if [ -f "$ROOT/config.json" ]; then
+    cp "$ROOT/config.json" "$BIN/config.json"
 fi
 
 echo "Built $APP"

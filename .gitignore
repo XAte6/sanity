@@ -1,5 +1,9 @@
 # Build output
-bin/
+win/bin/
+mac/bin/
+android/bin/
+android/app/build/
+android/.gradle/
 
 # Windows build artifacts
 win/app.ico

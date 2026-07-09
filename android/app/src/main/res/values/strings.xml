@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Sanity</string>
+    <string name="enabled">Enabled</string>
+    <string name="clean_clicked_links">Clean clicked links</string>
+    <string name="notifications">Notifications</string>
+    <string name="target_browser">Target browser</string>
+    <string name="open_default_apps">Open default apps settings</string>
+    <string name="status_default_browser">Status: Sanity is the default browser.</string>
+    <string name="status_not_default_browser">Status: Sanity is not the default browser.</string>
+    <string name="setup_help">Install Sanity, choose a target browser, enable cleaning, then set Sanity as your default browser in Android settings. Links from other apps will be cleaned and forwarded with no background battery use.</string>
+</resources>

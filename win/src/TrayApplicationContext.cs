@@ -13,6 +13,8 @@ namespace Sanity
         private readonly ContextMenuStrip _menu;
 
         private ToolStripMenuItem _enabledItem;
+        private ToolStripMenuItem _linkProxyItem;
+        private ToolStripMenuItem _targetBrowserMenuItem;
         private ToolStripMenuItem _notificationsItem;
         private ToolStripMenuItem _launchOnStartupItem;
         private ToolStripMenuItem _sleepMenuItem;
@@ -25,6 +27,8 @@ namespace Sanity
         {
             _config = AppConfig.Load();
             StartupRegistration.Apply(_config.LaunchOnStartup);
+            if (_config.LinkProxyEnabled)
+                ProtocolRegistration.Apply(true, _config);
 
             _clipboardMonitor = new ClipboardMonitor(_config);
             _clipboardMonitor.Show();
@@ -59,6 +63,12 @@ namespace Sanity
             _enabledItem = new ToolStripMenuItem("Enabled");
             _enabledItem.Click += (s, e) => ToggleEnabled();
 
+            _linkProxyItem = new ToolStripMenuItem("Clean clicked links");
+            _linkProxyItem.Click += (s, e) => ToggleLinkProxy();
+
+            _targetBrowserMenuItem = new ToolStripMenuItem("Target browser");
+            RebuildTargetBrowserMenu();
+
             _launchOnStartupItem = new ToolStripMenuItem("Launch on startup");
             _launchOnStartupItem.Click += (s, e) => ToggleLaunchOnStartup();
 
@@ -90,6 +100,8 @@ namespace Sanity
             menu.Items.Add(configItem);
             menu.Items.Add(new ToolStripSeparator());
             menu.Items.Add(_enabledItem);
+            menu.Items.Add(_linkProxyItem);
+            menu.Items.Add(_targetBrowserMenuItem);
             menu.Items.Add(_notificationsItem);
             menu.Items.Add(_launchOnStartupItem);
             menu.Items.Add(_sleepMenuItem);
@@ -119,6 +131,59 @@ namespace Sanity
 
             _config.Save();
             RefreshMenuState();
+        }
+
+        private void ToggleLinkProxy()
+        {
+            _config.LinkProxyEnabled = !_config.LinkProxyEnabled;
+            if (_config.LinkProxyEnabled && string.IsNullOrWhiteSpace(_config.TargetBrowser))
+            {
+                var defaultPath = BrowserHelper.GetDefaultBrowserPath();
+                _config.TargetBrowser = defaultPath ?? BrowserHelper.GetDefaultBrowserProgId() ?? string.Empty;
+            }
+
+            ProtocolRegistration.Apply(_config.LinkProxyEnabled, _config);
+            _config.Save();
+
+            if (_config.LinkProxyEnabled)
+            {
+                ProtocolRegistration.OpenDefaultAppsSettings();
+                ShowBalloon("Set Sanity as the default app for HTTP and HTTPS links.");
+            }
+            else
+            {
+                ProtocolRegistration.OpenDefaultAppsSettings();
+                ShowBalloon("Choose your browser as the default for HTTP and HTTPS links.");
+            }
+
+            RebuildTargetBrowserMenu();
+            RefreshMenuState();
+        }
+
+        private void RebuildTargetBrowserMenu()
+        {
+            _targetBrowserMenuItem.DropDownItems.Clear();
+            foreach (var browser in BrowserHelper.GetInstalledBrowsers())
+            {
+                var item = new ToolStripMenuItem(browser.Name);
+                var path = browser.ExecutablePath;
+                var progId = browser.ProgId;
+                item.Click += (s, e) =>
+                {
+                    _config.TargetBrowser = !string.IsNullOrEmpty(path) ? path : progId;
+                    _config.Save();
+                    RefreshMenuState();
+                };
+                _targetBrowserMenuItem.DropDownItems.Add(item);
+            }
+
+            if (_targetBrowserMenuItem.DropDownItems.Count == 0)
+            {
+                _targetBrowserMenuItem.DropDownItems.Add(new ToolStripMenuItem("(no browsers found)")
+                {
+                    Enabled = false
+                });
+            }
         }
 
         private void ToggleLaunchOnStartup()
@@ -163,6 +228,12 @@ namespace Sanity
                 ? "Enabled (sleeping)"
                 : "Enabled";
 
+            _linkProxyItem.Checked = _config.LinkProxyEnabled;
+            _linkProxyItem.Text = _config.LinkProxyEnabled && !ProtocolRegistration.IsRegistered()
+                ? "Clean clicked links (set as default)"
+                : "Clean clicked links";
+            UpdateTargetBrowserChecks();
+
             _launchOnStartupItem.Checked = _config.LaunchOnStartup;
             _notificationsItem.Checked = _config.NotificationsEnabled;
 
@@ -176,10 +247,31 @@ namespace Sanity
             UpdateSleepItem(_sleep8hItem, 8, sleeping);
 
             _notifyIcon.Text = active
-                ? "Sanity - active"
+                ? (_config.LinkProxyEnabled ? "Sanity - active (clipboard + links)" : "Sanity - active")
                 : sleeping
                     ? "Sanity - sleeping until " + _config.SleepUntil.Value.ToString("HH:mm")
                     : "Sanity - disabled";
+        }
+
+        private void UpdateTargetBrowserChecks()
+        {
+            foreach (ToolStripItem dropDownItem in _targetBrowserMenuItem.DropDownItems)
+            {
+                var item = dropDownItem as ToolStripMenuItem;
+                if (item == null || !item.Enabled)
+                    continue;
+
+                var browser = BrowserHelper.GetInstalledBrowsers().Find(b => b.Name == item.Text);
+                if (browser == null)
+                {
+                    item.Checked = false;
+                    continue;
+                }
+
+                var target = _config.TargetBrowser ?? string.Empty;
+                item.Checked = string.Equals(target, browser.ExecutablePath, StringComparison.OrdinalIgnoreCase)
+                    || string.Equals(target, browser.ProgId, StringComparison.OrdinalIgnoreCase);
+            }
         }
 
         private void UpdateSleepItem(ToolStripMenuItem item, int hours, bool sleeping)
