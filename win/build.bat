@@ -7,9 +7,10 @@ if not exist "%CSC%" (
     exit /b 1
 )
 
-if not exist "bin" mkdir bin
+set BIN=..\bin
+if not exist "%BIN%" mkdir "%BIN%"
 
-"%CSC%" /nologo /target:exe /out:bin\IconWriter.exe ^
+"%CSC%" /nologo /target:exe /out:%BIN%\IconWriter.exe ^
   /reference:System.Drawing.dll ^
   /reference:System.Windows.Forms.dll ^
   src\AppIcon.cs ^
@@ -20,9 +21,9 @@ if errorlevel 1 (
     exit /b 1
 )
 
-bin\IconWriter.exe app.ico
+%BIN%\IconWriter.exe app.ico
 
-"%CSC%" /nologo /target:winexe /out:bin\Sanity.exe ^
+"%CSC%" /nologo /target:winexe /out:%BIN%\Sanity.exe ^
   /win32icon:app.ico ^
   /reference:System.Windows.Forms.dll ^
   /reference:System.Drawing.dll ^
@@ -42,8 +43,11 @@ if errorlevel 1 (
     exit /b 1
 )
 
-echo Built bin\Sanity.exe
-bin\Sanity.exe --write-default-config
-copy /Y bin\config.json config.json >nul
-echo Default config.json updated.
-echo Run bin\Sanity.exe to start the tray app.
+echo Built %BIN%\Sanity.exe
+%BIN%\Sanity.exe --write-default-config
+if exist "..\config.json" (
+    copy /Y ..\config.json %BIN%\config.json >nul
+) else (
+    copy /Y %BIN%\config.json ..\config.json >nul
+)
+echo Run %BIN%\Sanity.exe to start the tray app.

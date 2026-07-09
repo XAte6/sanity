@@ -1,0 +1,27 @@
+# Build output
+bin/
+
+# Windows build artifacts
+win/app.ico
+
+# macOS build artifacts
+mac/.build/
+
+# OS
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Editor / IDE
+.vs/
+.vscode/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+.idea/
+
+# Logs and temp
+*.log
+*.tmp
+*~
