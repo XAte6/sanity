@@ -24,27 +24,18 @@ if errorlevel 1 (
 set RELEASES=%ROOT%..\releases
 if not exist "%RELEASES%" mkdir "%RELEASES%"
 
-set ARM_APK=app\build\outputs\apk\release\app-arm64-v8a-release-unsigned.apk
-if not exist "%ARM_APK%" set ARM_APK=app\build\outputs\apk\release\app-arm64-v8a-release.apk
-set X86_APK=app\build\outputs\apk\release\app-x86_64-release-unsigned.apk
-if not exist "%X86_APK%" set X86_APK=app\build\outputs\apk\release\app-x86_64-release.apk
+set ARM_APK=app\build\outputs\apk\release\app-release-unsigned.apk
+if not exist "%ARM_APK%" set ARM_APK=app\build\outputs\apk\release\app-release.apk
 
 if not exist "%ARM_APK%" (
-    echo ARM APK not found: %ARM_APK%
-    popd
-    exit /b 1
-)
-if not exist "%X86_APK%" (
-    echo x86 APK not found: %X86_APK%
+    echo APK not found: %ARM_APK%
     popd
     exit /b 1
 )
 
 copy /Y "%ARM_APK%" "%BIN%\Sanity.apk" >nul
 copy /Y "%ARM_APK%" "%RELEASES%\Sanity-android-arm.apk" >nul
-copy /Y "%X86_APK%" "%RELEASES%\Sanity-android-x86.apk" >nul
 
 popd
 echo Built %BIN%\Sanity.apk
 echo Copied %RELEASES%\Sanity-android-arm.apk
-echo Copied %RELEASES%\Sanity-android-x86.apk
