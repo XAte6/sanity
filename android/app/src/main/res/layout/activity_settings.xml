@@ -111,17 +111,25 @@
             android:layout_height="wrap_content"
             android:text="@string/notifications" />
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="@string/target_browser" />
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
-        <Spinner
-            android:id="@+id/browserSpinner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/target_browser" />
+
+            <Spinner
+                android:id="@+id/browserSpinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_weight="1" />
+        </LinearLayout>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/defaultBrowserButton"
@@ -129,6 +137,14 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="@string/open_default_apps" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/editConfigButton"
+            style="@style/Widget.Material3.Button.TextButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/edit_configuration" />
 
         <TextView
             android:id="@+id/noBrowsersWarning"

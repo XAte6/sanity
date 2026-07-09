@@ -6,9 +6,13 @@ import java.util.regex.Pattern
 object UrlCleaner {
     private val embeddedUrlPattern =
         Pattern.compile("""https?://[^\s<>"')\]]+""", Pattern.CASE_INSENSITIVE)
+    private val invisibleChars = Regex("[\\u200E\\u200F\\uFEFF]")
+
+    fun normalizeInboundText(text: String): String =
+        invisibleChars.replace(text, "").trim()
 
     fun extractHttpUrl(text: String): String? {
-        val trimmed = text.trim()
+        val trimmed = normalizeInboundText(text)
         if (trimmed.isEmpty()) return null
 
         val direct = trimmed.trimEnd(',', '.', ')', ']', '>', '"', '\'')
@@ -22,7 +26,7 @@ object UrlCleaner {
     }
 
     fun tryClean(text: String, rules: List<UrlRule>): String? {
-        val trimmed = text.trim()
+        val trimmed = normalizeInboundText(text)
         if (trimmed.isEmpty()) return null
         if (!trimmed.startsWith("http://", ignoreCase = true) &&
             !trimmed.startsWith("https://", ignoreCase = true)) {

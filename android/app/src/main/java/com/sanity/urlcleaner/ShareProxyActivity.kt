@@ -40,14 +40,30 @@ class ShareProxyActivity : AppCompatActivity() {
     private fun extractSharedText(intent: Intent?): String? {
         if (intent?.action != Intent.ACTION_SEND) return null
 
-        intent.getStringExtra(Intent.EXTRA_TEXT)
-            ?.trim()
-            ?.takeIf { it.isNotEmpty() }
-            ?.let { return it }
+        val candidates = buildList {
+            intent.getStringExtra(Intent.EXTRA_TEXT)
+                ?.let { UrlCleaner.normalizeInboundText(it) }
+                ?.takeIf { it.isNotEmpty() }
+                ?.let { add(it) }
+            intent.getStringExtra(Intent.EXTRA_SUBJECT)
+                ?.let { UrlCleaner.normalizeInboundText(it) }
+                ?.takeIf { it.isNotEmpty() }
+                ?.let { add(it) }
+            intent.dataString
+                ?.let { UrlCleaner.normalizeInboundText(it) }
+                ?.takeIf { it.isNotEmpty() }
+                ?.let { add(it) }
+            intent.clipData?.let { clip ->
+                for (i in 0 until clip.itemCount) {
+                    clip.getItemAt(i).text?.toString()
+                        ?.let { UrlCleaner.normalizeInboundText(it) }
+                        ?.takeIf { it.isNotEmpty() }
+                        ?.let { add(it) }
+                }
+            }
+        }
 
-        val clip = intent.clipData ?: return null
-        if (clip.itemCount == 0) return null
-
-        return clip.getItemAt(0).text?.toString()?.trim()?.takeIf { it.isNotEmpty() }
+        return candidates.firstOrNull { UrlCleaner.extractHttpUrl(it) != null }
+            ?: candidates.firstOrNull()
     }
 }

@@ -16,7 +16,7 @@ object DefaultRules {
         rules += global("[?&](mc_[a-z]+=[^&]*)")
 
         addPlatform(rules, listOf("youtube.com", "youtu.be"),
-            "si=[^&]*", "feature=[^&]*", "pp=[^&]*", "embeds_referring_euri=[^&]*")
+            "si=[^&]*", "is=[^&]*", "feature=[^&]*", "pp=[^&]*", "embeds_referring_euri=[^&]*")
         addPlatform(rules, listOf("amazon.com", "amazon.co.uk", "amazon.de", "amazon.fr", "amazon.ca",
             "amazon.es", "amazon.it", "amazon.co.jp", "amzn.to", "a.co"),
             "tag=[^&]*", "linkCode=[^&]*", "ref_=[^&]*", "ascsubtag=[^&]*", "creative=[^&]*",

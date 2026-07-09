@@ -146,7 +146,7 @@ namespace Sanity
             rules.Add(new UrlRule { Domain = "*", Regex = "[?&](mc_[a-z]+=[^&]*)" });
 
             AddPlatformRules(rules, new[] { "youtube.com", "youtu.be" },
-                "si=[^&]*", "feature=[^&]*", "pp=[^&]*", "embeds_referring_euri=[^&]*");
+                "si=[^&]*", "is=[^&]*", "feature=[^&]*", "pp=[^&]*", "embeds_referring_euri=[^&]*");
 
             AddPlatformRules(rules, new[] { "amazon.com", "amazon.co.uk", "amazon.de", "amazon.fr", "amazon.ca", "amazon.es", "amazon.it", "amazon.co.jp", "amzn.to", "a.co" },
                 "tag=[^&]*", "linkCode=[^&]*", "ref_=[^&]*", "ascsubtag=[^&]*", "creative=[^&]*",

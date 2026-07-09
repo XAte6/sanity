@@ -33,6 +33,10 @@
         </activity>
 
         <activity
+            android:name=".ConfigEditorActivity"
+            android:exported="false" />
+
+        <activity
             android:name=".LinkProxyActivity"
             android:exported="true"
             android:excludeFromRecents="true"

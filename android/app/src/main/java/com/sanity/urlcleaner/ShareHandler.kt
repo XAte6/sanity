@@ -11,13 +11,14 @@ data class ShareHandleResult(
 
 object ShareHandler {
     fun handle(context: Context, text: String): ShareHandleResult {
+        val config = AppConfigStore.load(context)
         val url = UrlCleaner.extractHttpUrl(text)
             ?: return ShareHandleResult(finalUrl = "", cleaned = false, shared = false)
 
-        val clean = LinkHandler.cleanIf(context, url) { it.isActive }
+        val cleanedUrl = UrlCleaner.tryClean(url, config.rules) ?: url
         val shareIntent = Intent(Intent.ACTION_SEND).apply {
             type = "text/plain"
-            putExtra(Intent.EXTRA_TEXT, clean.finalUrl)
+            putExtra(Intent.EXTRA_TEXT, cleanedUrl)
         }
 
         context.startActivity(
@@ -25,8 +26,8 @@ object ShareHandler {
         )
 
         return ShareHandleResult(
-            finalUrl = clean.finalUrl,
-            cleaned = clean.cleaned,
+            finalUrl = cleanedUrl,
+            cleaned = cleanedUrl != url,
             shared = true
         )
     }

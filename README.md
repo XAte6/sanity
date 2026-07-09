@@ -149,7 +149,7 @@ Sanity is **not** a browser and does **not** run in the background. It is a link
 
 **Using it (clicked links):** tap a link in WhatsApp, Gmail, SMS, etc. You may see a brief “tracking removed” toast; your chosen browser should then open the cleaned page. You do not need to keep Sanity open.
 
-**Using it (copied / pasted links):** select the URL (or use Share on a page/link), choose **Share → Sanity**, then pick the app to send the cleaned link to (Messages, WhatsApp, your browser, etc.). Turn on **Enabled** so trackers are stripped before the second share sheet appears.
+**Using it (copied / pasted links):** select the URL (or use Share on a page/link), choose **Share → Sanity**, then pick the app to send the cleaned link to (Messages, WhatsApp, your browser, etc.). Cleaning always runs when you share to Sanity.
 
 **Deploy from Android Studio (wireless debugging):** with your phone paired in Device Manager, click **Run** to build, install, and launch in one step.
 
@@ -160,6 +160,8 @@ adb install -r android\app\build\outputs\apk\release\app-release-unsigned.apk
 ```
 
 (`adb` is in `%LOCALAPPDATA%\Android\Sdk\platform-tools\`.)
+
+**Editing rules on device:** open Sanity → **Edit configuration**. This opens `config.json` in a built-in editor. Each rule has a `domain` and `regex` (same format as desktop). Tap **Save** when done, or **Reset rules** to restore the built-in defaults.
 
 ## Configuration
 
@@ -206,7 +208,7 @@ On first run, a default `config.json` is created if one does not exist.
 ### Share target (Android)
 
 1. You select a URL and tap **Share → Sanity** (or share a link from Chrome, etc.).
-2. Sanity applies your rules when **Enabled** is on.
+2. Sanity applies your rules.
 3. Android’s share sheet opens so you can send the cleaned URL to Messages, WhatsApp, a browser, etc.
 4. Sanity exits immediately.
 

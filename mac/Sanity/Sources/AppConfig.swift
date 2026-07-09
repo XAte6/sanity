@@ -140,7 +140,7 @@ struct AppConfig: Codable {
         rules += globalRule("[?&](mc_[a-z]+=[^&]*)")
 
         addPlatformRules(&rules, domains: ["youtube.com", "youtu.be"],
-                         params: ["si=[^&]*", "feature=[^&]*", "pp=[^&]*", "embeds_referring_euri=[^&]*"])
+                         params: ["si=[^&]*", "is=[^&]*", "feature=[^&]*", "pp=[^&]*", "embeds_referring_euri=[^&]*"])
         addPlatformRules(&rules, domains: ["amazon.com", "amazon.co.uk", "amazon.de", "amazon.fr", "amazon.ca", "amazon.es", "amazon.it", "amazon.co.jp", "amzn.to", "a.co"],
                          params: ["tag=[^&]*", "linkCode=[^&]*", "ref_=[^&]*", "ascsubtag=[^&]*", "creative=[^&]*", "creativeASIN=[^&]*", "linkId=[^&]*", "pd_rd_w=[^&]*", "pd_rd_wg=[^&]*", "pd_rd_r=[^&]*", "pf_rd_p=[^&]*", "pf_rd_r=[^&]*"])
         addPlatformRules(&rules, domains: ["google.com", "google.co.uk", "google.de", "google.fr", "google.ca", "google.com.au"],

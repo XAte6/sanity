@@ -34,6 +34,7 @@ class SettingsActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        config = AppConfigStore.load(this)
         refreshBrowsers()
         updateBrowserSpinner()
         updateChecklist()
@@ -82,6 +83,10 @@ class SettingsActivity : AppCompatActivity() {
 
         binding.defaultBrowserButton.setOnClickListener {
             startActivity(Intent(Settings.ACTION_MANAGE_DEFAULT_APPS_SETTINGS))
+        }
+
+        binding.editConfigButton.setOnClickListener {
+            startActivity(Intent(this, ConfigEditorActivity::class.java))
         }
 
         binding.closeButton.setOnClickListener {

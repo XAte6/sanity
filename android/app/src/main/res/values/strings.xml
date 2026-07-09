@@ -5,8 +5,16 @@
     <string name="notifications">Notifications</string>
     <string name="target_browser">Target browser</string>
     <string name="open_default_apps">Open default apps settings</string>
+    <string name="edit_configuration">Edit configuration</string>
+    <string name="config_editor_title">Configuration</string>
+    <string name="config_editor_instructions">Edit config.json below. Each rule has a domain (use * for all hosts) and a regex pattern to remove from matching URLs.</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="reset_rules">Reset rules</string>
+    <string name="config_saved">Configuration saved.</string>
+    <string name="config_invalid">Could not save configuration: %1$s</string>
     <string name="setup_instructions_title">How to set up</string>
-    <string name="setup_instructions">• Pick your real browser below (for example, Chrome).\n• Turn on Enabled and Clean clicked links.\n• Tap Open default apps settings and set Sanity as your default browser.\n\nAfter that, tap links in WhatsApp, Gmail, SMS, and other apps. Sanity opens briefly, removes trackers, forwards the link to your browser, then exits.\n\nTo clean a copied URL, use Share on the text or link, choose Sanity, then pick where to send the cleaned link. It does not run in the background.</string>
+    <string name="setup_instructions">• Pick your real browser below (for example, Chrome).\n• Turn on Enabled and Clean clicked links.\n• Tap Open default apps settings and set Sanity as your default browser.\n\nNow, when you tap links in your favourite apps Sanity opens briefly, removes trackers, opens your browser and exits.\n\nUse Share to... Sanity then on the next Share to... pick the app you want to share to.\n\nSanity does not run in the background.</string>
     <string name="setup_checklist_title">Setup checklist</string>
     <string name="options_title">Options</string>
     <string name="check_ok">✓</string>
