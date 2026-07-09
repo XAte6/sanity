@@ -106,12 +106,6 @@
             android:text="@string/clean_clicked_links" />
 
         <com.google.android.material.materialswitch.MaterialSwitch
-            android:id="@+id/clipboardListenerSwitch"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/clipboard_listener" />
-
-        <com.google.android.material.materialswitch.MaterialSwitch
             android:id="@+id/notificationsSwitch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

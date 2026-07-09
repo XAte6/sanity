@@ -60,7 +60,6 @@ object AppConfigStore {
         return AppConfig(
             enabled = json.optBoolean("enabled", true),
             linkProxyEnabled = json.optBoolean("linkProxyEnabled", false),
-            clipboardListenerEnabled = json.optBoolean("clipboardListenerEnabled", false),
             targetBrowser = json.optString("targetBrowser", ""),
             notificationsEnabled = json.optBoolean("notificationsEnabled", true),
             sleepUntil = if (json.has("sleepUntil") && !json.isNull("sleepUntil")) {
@@ -76,7 +75,6 @@ object AppConfigStore {
         return JSONObject().apply {
             put("enabled", config.enabled)
             put("linkProxyEnabled", config.linkProxyEnabled)
-            put("clipboardListenerEnabled", config.clipboardListenerEnabled)
             put("targetBrowser", config.targetBrowser)
             put("notificationsEnabled", config.notificationsEnabled)
             if (config.sleepUntil != null) put("sleepUntil", config.sleepUntil)

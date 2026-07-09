@@ -1,13 +1,11 @@
 package com.sanity.urlcleaner
 
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.view.View
 import android.widget.ArrayAdapter
 import androidx.activity.OnBackPressedCallback
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -17,18 +15,6 @@ class SettingsActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySettingsBinding
     private lateinit var config: AppConfig
     private var browsers: List<BrowserInfo> = emptyList()
-
-    private val notificationPermissionLauncher = registerForActivityResult(
-        ActivityResultContracts.RequestPermission()
-    ) { granted ->
-        if (granted) {
-            config = config.copy(clipboardListenerEnabled = true)
-            save()
-            ClipboardListenerService.start(this)
-        } else {
-            binding.clipboardListenerSwitch.isChecked = false
-        }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,7 +38,6 @@ class SettingsActivity : AppCompatActivity() {
         refreshBrowsers()
         updateBrowserSpinner()
         updateChecklist()
-        syncClipboardService()
     }
 
     private fun refreshBrowsers() {
@@ -67,7 +52,6 @@ class SettingsActivity : AppCompatActivity() {
     private fun bindUi() {
         binding.enabledSwitch.isChecked = config.enabled
         binding.linkProxySwitch.isChecked = config.linkProxyEnabled
-        binding.clipboardListenerSwitch.isChecked = config.clipboardListenerEnabled
         binding.notificationsSwitch.isChecked = config.notificationsEnabled
 
         updateBrowserSpinner()
@@ -83,16 +67,6 @@ class SettingsActivity : AppCompatActivity() {
             config = config.copy(linkProxyEnabled = checked)
             save()
             updateChecklist()
-        }
-
-        binding.clipboardListenerSwitch.setOnCheckedChangeListener { _, checked ->
-            if (checked) {
-                enableClipboardListener()
-            } else {
-                config = config.copy(clipboardListenerEnabled = false)
-                save()
-                ClipboardListenerService.stop(this)
-            }
         }
 
         binding.notificationsSwitch.setOnCheckedChangeListener { _, checked ->
@@ -186,22 +160,6 @@ class SettingsActivity : AppCompatActivity() {
             .setNegativeButton(R.string.stay, null)
             .setPositiveButton(R.string.exit_anyway) { _, _ -> finish() }
             .show()
-    }
-
-    private fun enableClipboardListener() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            notificationPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
-        } else {
-            config = config.copy(clipboardListenerEnabled = true)
-            save()
-            ClipboardListenerService.start(this)
-        }
-    }
-
-    private fun syncClipboardService() {
-        if (config.clipboardListenerEnabled) {
-            ClipboardListenerService.start(this)
-        }
     }
 
     private fun save() {
