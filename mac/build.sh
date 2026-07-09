@@ -89,18 +89,14 @@ if [ -f "$ROOT/config.json" ]; then
 fi
 
 ARCH="$(uname -m)"
-case "$ARCH" in
-    arm64) ARCH_NAME=arm ;;
-    x86_64) ARCH_NAME=x86 ;;
-    *)
-        echo "Unsupported macOS architecture: $ARCH"
-        exit 1
-        ;;
-esac
+if [ "$ARCH" != "arm64" ]; then
+    echo "Release builds require Apple Silicon (arm64). Build on an M-series Mac."
+    exit 1
+fi
 
 RELEASES="$ROOT/../releases"
 mkdir -p "$RELEASES"
-RELEASE_ZIP="$RELEASES/Sanity-mac-${ARCH_NAME}.zip"
+RELEASE_ZIP="$RELEASES/Sanity-mac-arm.zip"
 rm -f "$RELEASE_ZIP"
 (
     cd "$BIN"
