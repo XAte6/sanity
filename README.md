@@ -21,10 +21,46 @@ No installers, package managers, or runtimes required beyond what ships with eac
   - **Sleep** → 1h / 2h / 4h / 8h
   - **Exit**
 
+## Releases
+
+Pre-built binaries live in the [`releases/`](releases/) folder in this repo:
+
+| File | Platform |
+|------|----------|
+| `Sanity-win-x86.exe` | Windows (Intel / AMD64) |
+| `Sanity-mac-arm.zip` | macOS (Apple Silicon) |
+| `Sanity-mac-x86.zip` | macOS (Intel) |
+| `Sanity-android-arm.apk` | Android phones / tablets (ARM) |
+| `Sanity-android-x86.apk` | Android emulators (x86_64) |
+
+Run each platform's `build.bat` / `build.sh` to refresh these files after code changes.
+
+### Run a release
+
+**Windows**
+
+1. Download or copy [`releases/Sanity-win-x86.exe`](releases/Sanity-win-x86.exe) anywhere (e.g. Desktop).
+2. Run it. On first launch, `config.json` is created next to the exe.
+
+**macOS**
+
+1. Download or copy the zip for your Mac (`Sanity-mac-arm.zip` or `Sanity-mac-x86.zip`).
+2. Unzip — you get `Sanity.app` and `config.json`. Move both to Applications or run from the unzip folder.
+3. **First launch only:** macOS may block unsigned apps. **Right-click** `Sanity.app` → **Open** → **Open**. After that, double-click works normally. (Alternatively: **System Settings → Privacy & Security → Open Anyway** after a blocked attempt.)
+
+**Android**
+
+1. Download or copy `Sanity-android-arm.apk` (phone) or `Sanity-android-x86.apk` (emulator).
+2. Install on your device (enable install from unknown sources if prompted).
+3. Open Sanity, set your target browser, enable **Clean clicked links**, and set Sanity as the default browser (see **Install and use (sideload)** below).
+
+To build from source instead of using a release, see the platform sections below.
+
 ## Project layout
 
 ```
 sanity/
+  releases/      # shipped binaries (Sanity-{platform}-{arch}.{ext})
   win/           # Windows (C# / WinForms)
     bin/         # build output (Sanity.exe, config.json)
   mac/           # macOS (Swift / AppKit)

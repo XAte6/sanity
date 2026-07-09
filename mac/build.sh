@@ -88,5 +88,25 @@ if [ -f "$ROOT/config.json" ]; then
     cp "$ROOT/config.json" "$BIN/config.json"
 fi
 
+ARCH="$(uname -m)"
+case "$ARCH" in
+    arm64) ARCH_NAME=arm ;;
+    x86_64) ARCH_NAME=x86 ;;
+    *)
+        echo "Unsupported macOS architecture: $ARCH"
+        exit 1
+        ;;
+esac
+
+RELEASES="$ROOT/../releases"
+mkdir -p "$RELEASES"
+RELEASE_ZIP="$RELEASES/Sanity-mac-${ARCH_NAME}.zip"
+rm -f "$RELEASE_ZIP"
+(
+    cd "$BIN"
+    zip -r "$RELEASE_ZIP" Sanity.app config.json
+)
+
 echo "Built $APP"
+echo "Copied $RELEASE_ZIP"
 echo "Run: open \"$APP\""

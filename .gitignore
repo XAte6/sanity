@@ -1,4 +1,5 @@
 # Build output
+/bin/
 win/bin/
 mac/bin/
 android/bin/

@@ -51,4 +51,10 @@ echo Built %BIN%\Sanity.exe
 if exist "config.json" (
     copy /Y config.json %BIN%\config.json >nul
 )
+
+set RELEASES=..\releases
+if not exist "%RELEASES%" mkdir "%RELEASES%"
+copy /Y "%BIN%\Sanity.exe" "%RELEASES%\Sanity-win-x86.exe" >nul
+echo Copied %RELEASES%\Sanity-win-x86.exe
+
 echo Run %BIN%\Sanity.exe to start the tray app.
