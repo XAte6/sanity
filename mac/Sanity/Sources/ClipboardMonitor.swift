@@ -4,7 +4,7 @@ final class ClipboardMonitor {
     private var config: AppConfig
     private var lastChangeCount = NSPasteboard.general.changeCount
     private var isUpdatingClipboard = false
-    private let timer: Timer
+    private var timer: Timer?
     var onCleaned: (() -> Void)?
 
     init(config: AppConfig) {
