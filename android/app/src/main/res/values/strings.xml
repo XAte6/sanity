@@ -6,7 +6,7 @@
     <string name="target_browser">Target browser</string>
     <string name="open_default_apps">Open default apps settings</string>
     <string name="setup_instructions_title">How to set up</string>
-    <string name="setup_instructions">• Pick your real browser below (for example, Chrome).\n• Turn on Enabled and Clean clicked links.\n• Tap Open default apps settings and set Sanity as your default browser.\n\nAfter that, tap links in WhatsApp, Gmail, SMS, and other apps. Sanity opens briefly, removes trackers, forwards the link to your browser, then exits. It does not run in the background.</string>
+    <string name="setup_instructions">• Pick your real browser below (for example, Chrome).\n• Turn on Enabled and Clean clicked links.\n• Tap Open default apps settings and set Sanity as your default browser.\n\nAfter that, tap links in WhatsApp, Gmail, SMS, and other apps. Sanity opens briefly, removes trackers, forwards the link to your browser, then exits.\n\nTo clean a copied URL, use Share on the text or link, choose Sanity, then pick where to send the cleaned link. It does not run in the background.</string>
     <string name="setup_checklist_title">Setup checklist</string>
     <string name="options_title">Options</string>
     <string name="check_ok">✓</string>
@@ -26,5 +26,9 @@
     <string name="exit_anyway">Exit anyway</string>
     <string name="no_browsers_found">No browsers found. Reinstall the latest Sanity build, or install Chrome and reopen this screen.</string>
     <string name="tracking_removed">Tracking removed from clicked URL.</string>
+    <string name="tracking_removed_share">Tracking removed from shared URL.</string>
+    <string name="share_to_sanity">Sanity</string>
+    <string name="share_chooser_title">Share cleaned link</string>
+    <string name="share_no_url">No URL found in shared text.</string>
     <string name="browser_open_failed">Could not open a browser. Open Sanity and choose a target browser.</string>
 </resources>

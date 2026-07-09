@@ -2,6 +2,11 @@ package com.sanity.urlcleaner
 
 import android.content.Context
 
+data class CleanResult(
+    val finalUrl: String,
+    val cleaned: Boolean
+)
+
 data class LinkHandleResult(
     val finalUrl: String,
     val cleaned: Boolean,
@@ -9,19 +14,29 @@ data class LinkHandleResult(
 )
 
 object LinkHandler {
-    fun handle(context: Context, url: String): LinkHandleResult {
+    fun cleanIf(context: Context, url: String, shouldClean: (AppConfig) -> Boolean): CleanResult {
         val config = AppConfigStore.load(context)
         var finalUrl = url
         var cleaned = false
 
-        if (config.isLinkProxyActive) {
+        if (shouldClean(config)) {
             UrlCleaner.tryClean(finalUrl, config.rules)?.let {
                 finalUrl = it
                 cleaned = true
             }
         }
 
-        val opened = BrowserForwarder.open(context, finalUrl, config.targetBrowser)
-        return LinkHandleResult(finalUrl = finalUrl, cleaned = cleaned, opened = opened)
+        return CleanResult(finalUrl = finalUrl, cleaned = cleaned)
+    }
+
+    fun handle(context: Context, url: String): LinkHandleResult {
+        val config = AppConfigStore.load(context)
+        val clean = cleanIf(context, url) { it.isLinkProxyActive }
+        val opened = BrowserForwarder.open(context, clean.finalUrl, config.targetBrowser)
+        return LinkHandleResult(
+            finalUrl = clean.finalUrl,
+            cleaned = clean.cleaned,
+            opened = opened
+        )
     }
 }

@@ -4,6 +4,23 @@ import android.net.Uri
 import java.util.regex.Pattern
 
 object UrlCleaner {
+    private val embeddedUrlPattern =
+        Pattern.compile("""https?://[^\s<>"')\]]+""", Pattern.CASE_INSENSITIVE)
+
+    fun extractHttpUrl(text: String): String? {
+        val trimmed = text.trim()
+        if (trimmed.isEmpty()) return null
+
+        val direct = trimmed.trimEnd(',', '.', ')', ']', '>', '"', '\'')
+        if (isHttpUrl(direct)) return direct
+
+        val matcher = embeddedUrlPattern.matcher(trimmed)
+        if (!matcher.find()) return null
+
+        val found = matcher.group().trimEnd(',', '.', ')', ']', '>', '"', '\'')
+        return if (isHttpUrl(found)) found else null
+    }
+
     fun tryClean(text: String, rules: List<UrlRule>): String? {
         val trimmed = text.trim()
         if (trimmed.isEmpty()) return null
@@ -31,6 +48,18 @@ object UrlCleaner {
 
         result = tidyUrl(result)
         return if (result == trimmed) null else result
+    }
+
+    private fun isHttpUrl(text: String): Boolean {
+        if (!text.startsWith("http://", ignoreCase = true) &&
+            !text.startsWith("https://", ignoreCase = true)) {
+            return false
+        }
+
+        val uri = Uri.parse(text)
+        val scheme = uri.scheme?.lowercase()
+        val host = uri.host
+        return (scheme == "http" || scheme == "https") && !host.isNullOrEmpty()
     }
 
     private fun domainMatches(host: String, domain: String): Boolean {

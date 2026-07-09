@@ -8,6 +8,7 @@ No installers, package managers, or runtimes required beyond what ships with eac
 
 - **Clipboard cleaning** — monitors copied URLs and removes trackers before you paste
 - **Link proxy** — intercepts clicked links from other apps, cleans them, and forwards to your real browser
+- **Share target (Android)** — share a URL to Sanity, then forward the cleaned link to another app
 - Configurable rules: **domain** + **regex** pairs
 - Default rules for YouTube, Amazon, Google, Facebook, Instagram, TikTok, X/Twitter, Reddit, and common global trackers (`utm_*`, `fbclid`, `gclid`, etc.)
 - Tray / menu bar controls (desktop):
@@ -146,7 +147,9 @@ Sanity is **not** a browser and does **not** run in the background. It is a link
 3. Turn on **Enabled** and **Clean clicked links**.
 4. Tap **Open default apps settings** and set **Sanity** as the default browser.
 
-**Using it:** tap a link in WhatsApp, Gmail, SMS, etc. You may see a brief “tracking removed” toast; your chosen browser should then open the cleaned page. You do not need to keep Sanity open.
+**Using it (clicked links):** tap a link in WhatsApp, Gmail, SMS, etc. You may see a brief “tracking removed” toast; your chosen browser should then open the cleaned page. You do not need to keep Sanity open.
+
+**Using it (copied / pasted links):** select the URL (or use Share on a page/link), choose **Share → Sanity**, then pick the app to send the cleaned link to (Messages, WhatsApp, your browser, etc.). Turn on **Enabled** so trackers are stripped before the second share sheet appears.
 
 **Deploy from Android Studio (wireless debugging):** with your phone paired in Device Manager, click **Run** to build, install, and launch in one step.
 
@@ -200,12 +203,20 @@ On first run, a default `config.json` is created if one does not exist.
 3. Sanity applies your rules and forwards the cleaned URL to your target browser.
 4. Sanity exits immediately — no persistent background process.
 
+### Share target (Android)
+
+1. You select a URL and tap **Share → Sanity** (or share a link from Chrome, etc.).
+2. Sanity applies your rules when **Enabled** is on.
+3. Android’s share sheet opens so you can send the cleaned URL to Messages, WhatsApp, a browser, etc.
+4. Sanity exits immediately.
+
 ## Limitations
 
 | Scenario | Intercepted? |
 |----------|--------------|
 | Link click in Slack, Teams, Discord, SMS, email apps | Usually yes |
 | Copy/paste URL (desktop) | Yes (clipboard mode) |
+| Copy/paste URL (Android) | Via Share → Sanity → Share (manual two-step) |
 | Link clicked inside an open browser tab | No — browser handles it internally |
 | In-app WebViews (Twitter, Reddit, some email apps) | Often no — app navigates internally |
 | Android without setting Sanity as default browser | No |
