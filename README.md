@@ -55,6 +55,18 @@ Build output: `win\bin\Sanity.exe`
 
 Links opened from apps like Slack, Outlook, or Notepad will pass through Sanity, be cleaned, and open in your chosen browser.
 
+### Test link cleaning (Windows)
+
+Quick check without setting Sanity as default — runs the same cleaning path as a clicked link:
+
+```bat
+bin\Sanity.exe --open "https://example.com/?utm_source=test&utm_medium=email&fbclid=IwAR_fake123&keep=visible"
+```
+
+Your target browser should open to `https://example.com/?keep=visible` (tracking params removed).
+
+For a full end-to-end test, paste that URL into Notepad and Ctrl+click it (with **Clean clicked links** enabled and Sanity set as the default for HTTP/HTTPS).
+
 ## macOS
 
 **Requirements:** Xcode Command Line Tools (`swiftc`, `iconutil`)
