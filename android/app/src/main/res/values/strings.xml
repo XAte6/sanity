@@ -14,7 +14,7 @@
     <string name="config_saved">Configuration saved.</string>
     <string name="config_invalid">Could not save configuration: %1$s</string>
     <string name="setup_instructions_title">How to set up</string>
-    <string name="setup_instructions">• Pick your real browser below (for example, Chrome).\n• Turn on Enabled and Clean clicked links.\n• Tap Open default apps settings and set Sanity as your default browser.\n\nNow, when you tap links in your favourite apps Sanity opens briefly, removes trackers, opens your browser and exits.\n\nUse Share to... Sanity then on the next Share to... pick the app you want to share to.\n\nSanity does not run in the background.</string>
+    <string name="setup_instructions">• Pick your real browser below (for example, Chrome).\n• Turn on Enabled and Clean clicked links.\n• Tap Open default apps settings and set Sanity as your default browser.\n• Turn on Auto-clean clipboard to strip trackers the moment you copy a URL — no sharing required.\n\nNow, when you tap links in your favourite apps Sanity opens briefly, removes trackers, opens your browser and exits.\n\nUse Share to... Sanity then on the next Share to... pick the app you want to share to.</string>
     <string name="setup_checklist_title">Setup checklist</string>
     <string name="options_title">Options</string>
     <string name="check_ok">✓</string>
@@ -38,5 +38,12 @@
     <string name="share_to_sanity">Sanity</string>
     <string name="share_chooser_title">Share cleaned link</string>
     <string name="share_no_url">No URL found in shared text.</string>
+    <string name="clipboard_listener">Auto-clean clipboard</string>
+    <string name="clipboard_listener_running">Watching clipboard. URLs cleaned on copy.</string>
+    <string name="clipboard_cleaned">Tracking junk stripped from clipboard.</string>
+    <string name="clipboard_channel_name">Clipboard watcher</string>
+    <string name="clipboard_cleaned_channel_name">Clipboard cleaned</string>
+    <string name="checklist_clipboard_ok">Auto-clean clipboard is on</string>
+    <string name="checklist_clipboard_fail">Auto-clean clipboard is off</string>
     <string name="browser_open_failed">Could not open a browser. Open Sanity and choose a target browser.</string>
 </resources>
