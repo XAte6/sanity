@@ -17,7 +17,6 @@ No installers, package managers, or runtimes required beyond what ships with eac
 - Tray / menu bar controls (desktop):
   - **Regex Rules** — edit domain + regex patterns
   - **Enabled** — turn clipboard cleaning on or off
-  - **Clean clicked links** — register Sanity as the system link handler
   - **Target browser** — browser to forward cleaned links to
   - **Notifications** — toast popups when a URL is cleaned (clipboard and clicked links)
   - **Launch on startup**
