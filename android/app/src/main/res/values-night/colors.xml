@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="sanity_green">#3CB371</color>
+    <color name="sanity_green_container">#1B3D1B</color>
+    <color name="sanity_on_primary">#FFFFFF</color>
+    <color name="sanity_surface">#121412</color>
+    <color name="sanity_red">#EF9A9A</color>
+    <color name="sanity_ink">#E8EDE8</color>
+    <color name="sanity_muted">#A8B2A8</color>
+    <color name="sanity_panel">#1E241E</color>
+    <color name="sanity_border">#3A443A</color>
+</resources>

@@ -1,20 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Sanity</string>
     <string name="enabled">Enabled</string>
-    <string name="clean_clicked_links">Clean clicked links</string>
     <string name="notifications">Notifications</string>
     <string name="target_browser">Target browser</string>
-    <string name="open_default_apps">Open default apps settings</string>
-    <string name="edit_configuration">Edit configuration</string>
-    <string name="config_editor_title">Configuration</string>
-    <string name="config_editor_instructions">Edit config.json below. Each rule has a domain (use * for all hosts) and a regex pattern to remove from matching URLs.</string>
+    <string name="regex_rules">Regex Rules</string>
+    <string name="statistics">Statistics</string>
+    <string name="statistics_title">Statistics</string>
+    <string name="statistics_blurb">Tracking parameters removed before you paste or open links.</string>
+    <string name="performance">Performance</string>
+    <string name="total_cleaned_caption">Total cleaned of %1$d %2$s</string>
+    <string name="percent_value">%1$d%%</string>
+    <string name="domains_title">Domains</string>
+    <string name="domains_subtitle">Share of total cleaned clicks</string>
+    <string name="domain_count_with_percent">%1$d  (%2$d%%)</string>
+    <string name="no_cleans_yet">No cleans recorded yet — open or share a tracked link</string>
+    <string name="regex_rules_title">Regex Rules</string>
+    <string name="regex_rules_blurb">Domain host to match (* = all). Regex pattern removed from matching URLs.</string>
+    <string name="filter_domain">Filter domain</string>
+    <string name="filter_regex">Filter regex</string>
+    <string name="add_rule">Add rule</string>
+    <string name="edit_rule">Edit rule</string>
+    <string name="delete_rule">Delete rule</string>
+    <string name="delete">Delete</string>
+    <string name="delete_rule_message">Delete rule for %1$s?</string>
+    <string name="blank_domain">(blank domain)</string>
+    <string name="domain_label">Domain</string>
+    <string name="regex_label">Regex to remove</string>
+    <string name="test_url_label">Paste a URL to test</string>
+    <string name="test_result_label">Result</string>
+    <string name="test_result_hint">Paste a URL above to preview this rule.</string>
+    <string name="test_result_no_change">No change — domain or regex did not match.</string>
+    <string name="test_result_invalid_url">Enter a full http:// or https:// URL.</string>
+    <string name="rules_showing">Showing %1$d of %2$d rules</string>
     <string name="save">Save</string>
     <string name="cancel">Cancel</string>
-    <string name="reset_rules">Reset rules</string>
-    <string name="config_saved">Configuration saved.</string>
-    <string name="config_invalid">Could not save configuration: %1$s</string>
     <string name="setup_instructions_title">How to set up</string>
-    <string name="setup_instructions">• Pick your real browser below (for example, Chrome).\n• Turn on Enabled and Clean clicked links.\n• Tap Open default apps settings and set Sanity as your default browser.\n\nNow, when you tap links in your favourite apps Sanity opens briefly, removes trackers, opens your browser and exits.\n\nUse Share to... Sanity then on the next Share to... pick the app you want to share to.\n\nSanity does not run in the background.</string>
+    <string name="setup_instructions_prefix">•\u0020</string>
+    <string name="setup_instructions_link">Tap here and set Sanity as your default browser</string>
+    <string name="setup_instructions_suffix">.\n• Pick your real browser below (for example, Chrome).\n• Sanity does not run in the background.\n\nWhen you tap links in your favourite apps Sanity opens briefly, removes trackers, opens your browser and exits.\n\nUse Share to… Sanity, then on the next Share to… pick the app you want to share to.</string>
     <string name="setup_checklist_title">Setup checklist</string>
     <string name="options_title">Options</string>
     <string name="check_ok">✓</string>
@@ -25,8 +49,6 @@
     <string name="checklist_target_browser_fail">Target browser is not set</string>
     <string name="checklist_enabled_ok">Cleaning is enabled</string>
     <string name="checklist_enabled_fail">Cleaning is disabled</string>
-    <string name="checklist_link_proxy_ok">Clean clicked links is on</string>
-    <string name="checklist_link_proxy_fail">Clean clicked links is off</string>
     <string name="exit_app">Exit</string>
     <string name="exit_incomplete_title">Exit without finishing setup?</string>
     <string name="exit_incomplete_message">Are you sure you wish to exit without completing configuration? Links may not be cleaned until setup is complete.</string>
@@ -39,4 +61,23 @@
     <string name="share_chooser_title">Share cleaned link</string>
     <string name="share_no_url">No URL found in shared text.</string>
     <string name="browser_open_failed">Could not open a browser. Open Sanity and choose a target browser.</string>
+    <string name="github">GitHub</string>
+    <string name="support">Support</string>
+    <string name="tip">Tip</string>
+    <string name="github_url">https://github.com/XAte6/sanity</string>
+    <string name="support_url">https://github.com/XAte6/sanity/issues</string>
+    <string name="tip_url">https://paypal.me/XAte6</string>
+
+    <plurals name="clicks">
+        <item quantity="one">click</item>
+        <item quantity="other">clicks</item>
+    </plurals>
+    <plurals name="domains_protected">
+        <item quantity="one">%d domain protected</item>
+        <item quantity="other">%d domains protected</item>
+    </plurals>
+    <plurals name="rules_count">
+        <item quantity="one">%d rule</item>
+        <item quantity="other">%d rules</item>
+    </plurals>
 </resources>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/linksRow"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="horizontal"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp">
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/githubChip"
+        style="@style/Widget.Material3.Button.TonalButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="6dp"
+        android:layout_weight="1.2"
+        android:maxLines="1"
+        android:minWidth="0dp"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:text="@string/github"
+        app:icon="@drawable/ic_github"
+        app:iconGravity="textStart"
+        app:iconPadding="4dp"
+        app:iconSize="16dp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/supportChip"
+        style="@style/Widget.Material3.Button.TonalButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="6dp"
+        android:layout_weight="1.25"
+        android:maxLines="1"
+        android:minWidth="0dp"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:text="@string/support"
+        app:icon="@drawable/ic_support"
+        app:iconGravity="textStart"
+        app:iconPadding="4dp"
+        app:iconSize="16dp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/tipChip"
+        style="@style/Widget.Material3.Button.TonalButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.7"
+        android:maxLines="1"
+        android:minWidth="0dp"
+        android:paddingStart="6dp"
+        android:paddingEnd="6dp"
+        android:text="@string/tip"
+        app:icon="@drawable/ic_paypal"
+        app:iconGravity="textStart"
+        app:iconPadding="2dp"
+        app:iconSize="16dp" />
+</LinearLayout>

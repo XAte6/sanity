@@ -6,6 +6,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private var statusItem: NSStatusItem!
     private var clipboardMonitor: ClipboardMonitor!
     private var configWindow: ConfigWindowController?
+    private var aboutWindow: AboutWindowController?
     private var refreshTimer: Timer?
 
     private var enabledItem: NSMenuItem!
@@ -33,7 +34,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
         if let openIndex = CommandLine.arguments.firstIndex(of: "--open"),
            openIndex + 1 < CommandLine.arguments.count {
-            _ = LinkOpener.open(CommandLine.arguments[openIndex + 1])
+            let cleaned = LinkOpener.open(CommandLine.arguments[openIndex + 1])
+            if cleaned {
+                showNotification("Tracking removed from clicked URL.")
+                // Allow the notification to be delivered before exit.
+                RunLoop.current.run(until: Date().addingTimeInterval(0.5))
+            }
             NSApp.terminate(nil)
             return
         }
@@ -114,6 +120,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
         menu.addItem(.separator())
 
+        let aboutItem = NSMenuItem(title: "Statistics", action: #selector(openAbout), keyEquivalent: "")
+        aboutItem.target = self
+        menu.addItem(aboutItem)
+
         let exitItem = NSMenuItem(title: "Exit", action: #selector(exitApp), keyEquivalent: "q")
         exitItem.target = self
         menu.addItem(exitItem)
@@ -137,6 +147,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             self.refreshMenuState()
         }
         configWindow?.showWindow()
+    }
+
+    @objc private func openAbout() {
+        aboutWindow = AboutWindowController()
+        aboutWindow?.showWindow()
     }
 
     @objc private func toggleEnabled() {

@@ -1,8 +1,14 @@
 package com.sanity.urlcleaner
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.TextPaint
+import android.text.method.LinkMovementMethod
+import android.text.style.ClickableSpan
 import android.view.View
 import android.widget.ArrayAdapter
 import androidx.activity.OnBackPressedCallback
@@ -51,20 +57,21 @@ class SettingsActivity : AppCompatActivity() {
 
     private fun bindUi() {
         binding.enabledSwitch.isChecked = config.enabled
-        binding.linkProxySwitch.isChecked = config.linkProxyEnabled
         binding.notificationsSwitch.isChecked = config.notificationsEnabled
 
+        bindSetupInstructions()
         updateBrowserSpinner()
         updateChecklist()
 
-        binding.enabledSwitch.setOnCheckedChangeListener { _, checked ->
-            config = config.copy(enabled = checked)
-            save()
-            updateChecklist()
+        binding.statisticsButton.setOnClickListener {
+            startActivity(Intent(this, StatisticsActivity::class.java))
+        }
+        binding.rulesButton.setOnClickListener {
+            startActivity(Intent(this, RulesActivity::class.java))
         }
 
-        binding.linkProxySwitch.setOnCheckedChangeListener { _, checked ->
-            config = config.copy(linkProxyEnabled = checked)
+        binding.enabledSwitch.setOnCheckedChangeListener { _, checked ->
+            config = config.copy(enabled = checked)
             save()
             updateChecklist()
         }
@@ -75,30 +82,66 @@ class SettingsActivity : AppCompatActivity() {
         }
 
         binding.browserSpinner.setOnItemSelectedListener(SimpleItemSelectedListener {
-            val browser = browsers.getOrNull(binding.browserSpinner.selectedItemPosition) ?: return@SimpleItemSelectedListener
+            val browser = browsers.getOrNull(binding.browserSpinner.selectedItemPosition)
+                ?: return@SimpleItemSelectedListener
             config = config.copy(targetBrowser = browser.packageName)
             save()
             updateChecklist()
         })
 
-        binding.defaultBrowserButton.setOnClickListener {
-            startActivity(Intent(Settings.ACTION_MANAGE_DEFAULT_APPS_SETTINGS))
-        }
-
-        binding.editConfigButton.setOnClickListener {
-            startActivity(Intent(this, ConfigEditorActivity::class.java))
-        }
+        binding.supportLinks.githubChip.setOnClickListener { openUrl(AppLinks.GITHUB) }
+        binding.supportLinks.supportChip.setOnClickListener { openUrl(AppLinks.SUPPORT) }
+        binding.supportLinks.tipChip.setOnClickListener { openUrl(AppLinks.TIP) }
 
         binding.closeButton.setOnClickListener {
             attemptExit()
         }
     }
 
+    private fun openUrl(url: String) {
+        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+    }
+
+    private fun bindSetupInstructions() {
+        val prefix = getString(R.string.setup_instructions_prefix)
+        val linkText = getString(R.string.setup_instructions_link)
+        val suffix = getString(R.string.setup_instructions_suffix)
+        val full = prefix + linkText + suffix
+        val spannable = SpannableString(full)
+        val linkStart = prefix.length
+        val linkEnd = linkStart + linkText.length
+        val linkColor = ContextCompat.getColor(this, R.color.sanity_green)
+        spannable.setSpan(
+            object : ClickableSpan() {
+                override fun onClick(widget: View) {
+                    openDefaultAppsSettings()
+                }
+
+                override fun updateDrawState(ds: TextPaint) {
+                    super.updateDrawState(ds)
+                    ds.color = linkColor
+                    ds.isUnderlineText = true
+                }
+            },
+            linkStart,
+            linkEnd,
+            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+        binding.setupInstructions.text = spannable
+        binding.setupInstructions.movementMethod = LinkMovementMethod.getInstance()
+    }
+
+    private fun openDefaultAppsSettings() {
+        startActivity(Intent(Settings.ACTION_MANAGE_DEFAULT_APPS_SETTINGS))
+    }
+
     private fun updateBrowserSpinner() {
         val labels = browsers.map { it.label }
-        binding.browserSpinner.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, labels)
+        binding.browserSpinner.adapter =
+            ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, labels)
         if (labels.isNotEmpty()) {
-            val selectedIndex = browsers.indexOfFirst { it.packageName == config.targetBrowser }.coerceAtLeast(0)
+            val selectedIndex = browsers.indexOfFirst { it.packageName == config.targetBrowser }
+                .coerceAtLeast(0)
             binding.browserSpinner.setSelection(selectedIndex)
         }
     }
@@ -127,16 +170,14 @@ class SettingsActivity : AppCompatActivity() {
             getString(R.string.checklist_enabled_ok),
             getString(R.string.checklist_enabled_fail)
         )
-
-        setChecklistLine(
-            binding.checklistLinkProxy,
-            config.linkProxyEnabled,
-            getString(R.string.checklist_link_proxy_ok),
-            getString(R.string.checklist_link_proxy_fail)
-        )
     }
 
-    private fun setChecklistLine(view: android.widget.TextView, ok: Boolean, okText: String, failText: String) {
+    private fun setChecklistLine(
+        view: android.widget.TextView,
+        ok: Boolean,
+        okText: String,
+        failText: String
+    ) {
         val mark = getString(if (ok) R.string.check_ok else R.string.check_fail)
         val color = ContextCompat.getColor(this, if (ok) R.color.sanity_green else R.color.sanity_red)
         view.text = "$mark ${if (ok) okText else failText}"
@@ -145,7 +186,7 @@ class SettingsActivity : AppCompatActivity() {
 
     private fun isFullyConfigured(): Boolean {
         val targetBrowserOk = browsers.any { it.packageName == config.targetBrowser }
-        return isSanityDefaultBrowser() && targetBrowserOk && config.enabled && config.linkProxyEnabled
+        return isSanityDefaultBrowser() && targetBrowserOk && config.enabled
     }
 
     private fun attemptExit() {
@@ -167,7 +208,7 @@ class SettingsActivity : AppCompatActivity() {
     }
 
     private fun isSanityDefaultBrowser(): Boolean {
-        val intent = Intent(Intent.ACTION_VIEW, android.net.Uri.parse("https://example.com"))
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://example.com"))
         val resolveInfo = packageManager.resolveActivity(intent, 0) ?: return false
         return resolveInfo.activityInfo.packageName == packageName
     }

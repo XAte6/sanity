@@ -4,6 +4,7 @@ final class ConfigWindowController: NSWindowController, NSWindowDelegate, NSTabl
     private var config: AppConfig
     private var rules: [UrlRule]
     private let onSave: (AppConfig) -> Void
+    private var aboutWindow: AboutWindowController?
 
     private let tableView = NSTableView()
     private let domainColumn = NSTableColumn(identifier: NSUserInterfaceItemIdentifier("domain"))
@@ -70,13 +71,14 @@ final class ConfigWindowController: NSWindowController, NSWindowDelegate, NSTabl
 
         let addButton = NSButton(title: "Add Row", target: self, action: #selector(addRow))
         let removeButton = NSButton(title: "Remove Selected", target: self, action: #selector(removeSelected))
+        let aboutButton = NSButton(title: "About", target: self, action: #selector(openAbout))
         let cancelButton = NSButton(title: "Cancel", target: self, action: #selector(cancel))
         let saveButton = NSButton(title: "Save", target: self, action: #selector(save))
 
         saveButton.keyEquivalent = "\r"
         cancelButton.keyEquivalent = "\u{1b}"
 
-        let buttonRow = NSStackView(views: [addButton, removeButton, NSView(), cancelButton, saveButton])
+        let buttonRow = NSStackView(views: [addButton, removeButton, aboutButton, NSView(), cancelButton, saveButton])
         buttonRow.translatesAutoresizingMaskIntoConstraints = false
         buttonRow.orientation = .horizontal
         buttonRow.spacing = 8
@@ -126,6 +128,11 @@ final class ConfigWindowController: NSWindowController, NSWindowDelegate, NSTabl
 
     @objc private func cancel() {
         window?.orderOut(nil)
+    }
+
+    @objc private func openAbout() {
+        aboutWindow = AboutWindowController()
+        aboutWindow?.showWindow()
     }
 
     @objc private func save() {

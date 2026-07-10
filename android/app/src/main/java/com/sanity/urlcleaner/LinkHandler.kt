@@ -23,6 +23,7 @@ object LinkHandler {
             UrlCleaner.tryClean(finalUrl, config.rules)?.let {
                 finalUrl = it
                 cleaned = true
+                UsageMetricsStore.recordClean(context, finalUrl)
             }
         }
 

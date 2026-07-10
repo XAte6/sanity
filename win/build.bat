@@ -27,19 +27,26 @@ if errorlevel 1 (
   /win32icon:app.ico ^
   /reference:System.Windows.Forms.dll ^
   /reference:System.Drawing.dll ^
+  /reference:System.Core.dll ^
   /reference:System.Web.Extensions.dll ^
   src\AppConfig.cs ^
   src\AppIcon.cs ^
+  src\AppLinks.cs ^
   src\BrowserHelper.cs ^
   src\ClipboardMonitor.cs ^
   src\ConfigForm.cs ^
   src\LinkOpener.cs ^
   src\NativeMethods.cs ^
+  src\Notifier.cs ^
   src\Program.cs ^
   src\ProtocolRegistration.cs ^
   src\StartupRegistration.cs ^
+  src\StatisticsForm.cs ^
+  src\SvgPath.cs ^
   src\TrayApplicationContext.cs ^
-  src\UrlCleaner.cs
+  src\UiChrome.cs ^
+  src\UrlCleaner.cs ^
+  src\UsageMetrics.cs
 
 if errorlevel 1 (
     echo Build failed.

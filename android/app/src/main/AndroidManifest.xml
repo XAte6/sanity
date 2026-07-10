@@ -33,8 +33,15 @@
         </activity>
 
         <activity
-            android:name=".ConfigEditorActivity"
-            android:exported="false" />
+            android:name=".StatisticsActivity"
+            android:exported="false"
+            android:parentActivityName=".SettingsActivity" />
+
+        <activity
+            android:name=".RulesActivity"
+            android:exported="false"
+            android:parentActivityName=".SettingsActivity"
+            android:windowSoftInputMode="adjustResize" />
 
         <activity
             android:name=".LinkProxyActivity"

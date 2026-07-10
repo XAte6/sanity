@@ -24,9 +24,11 @@ swiftc -O \
     -framework Cocoa \
     -framework UserNotifications \
     -framework ServiceManagement \
+    "$SRC"/AboutWindowController.swift \
     "$SRC"/AppConfig.swift \
     "$SRC"/AppDelegate.swift \
     "$SRC"/AppIcon.swift \
+    "$SRC"/AppLinks.swift \
     "$SRC"/BrowserHelper.swift \
     "$SRC"/BrowserRegistration.swift \
     "$SRC"/ClipboardMonitor.swift \
@@ -34,6 +36,7 @@ swiftc -O \
     "$SRC"/LinkOpener.swift \
     "$SRC"/StartupRegistration.swift \
     "$SRC"/UrlCleaner.swift \
+    "$SRC"/UsageMetrics.swift \
     "$SRC"/main.swift \
     -o "$MACOS/Sanity"
 

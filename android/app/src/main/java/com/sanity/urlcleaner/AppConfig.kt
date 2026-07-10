@@ -7,7 +7,7 @@ data class UrlRule(
 
 data class AppConfig(
     val enabled: Boolean = true,
-    val linkProxyEnabled: Boolean = false,
+    val linkProxyEnabled: Boolean = true,
     val targetBrowser: String = "",
     val notificationsEnabled: Boolean = true,
     val sleepUntil: String? = null,
@@ -22,5 +22,5 @@ data class AppConfig(
         }
 
     val isLinkProxyActive: Boolean
-        get() = linkProxyEnabled && isActive
+        get() = isActive
 }

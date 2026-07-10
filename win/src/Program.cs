@@ -17,7 +17,8 @@ namespace Sanity
 
             if (args.Length >= 2 && args[0] == "--open")
             {
-                LinkOpener.Open(args[1]);
+                if (LinkOpener.Open(args[1]))
+                    Notifier.Show("Tracking removed from clicked URL.");
                 return;
             }
 

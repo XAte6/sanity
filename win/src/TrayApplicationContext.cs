@@ -23,6 +23,9 @@ namespace Sanity
         private ToolStripMenuItem _sleep4hItem;
         private ToolStripMenuItem _sleep8hItem;
 
+        private Form _statisticsForm;
+        private Form _configForm;
+
         public TrayApplicationContext()
         {
             _config = AppConfig.Load();
@@ -43,7 +46,7 @@ namespace Sanity
                 Visible = true,
                 ContextMenuStrip = _menu
             };
-            _notifyIcon.DoubleClick += (s, e) => OpenConfiguration();
+            _notifyIcon.DoubleClick += (s, e) => OpenStatistics();
 
             _refreshTimer = new Timer { Interval = 30000 };
             _refreshTimer.Tick += (s, e) => RefreshMenuState();
@@ -57,7 +60,10 @@ namespace Sanity
         {
             var menu = new ContextMenuStrip();
 
-            var configItem = new ToolStripMenuItem("Configuration");
+            var statisticsItem = new ToolStripMenuItem("Statistics");
+            statisticsItem.Click += (s, e) => OpenStatistics();
+
+            var configItem = new ToolStripMenuItem("Regex Rules");
             configItem.Click += (s, e) => OpenConfiguration();
 
             _enabledItem = new ToolStripMenuItem("Enabled");
@@ -97,6 +103,7 @@ namespace Sanity
             var exitItem = new ToolStripMenuItem("Exit");
             exitItem.Click += (s, e) => ExitThread();
 
+            menu.Items.Add(statisticsItem);
             menu.Items.Add(configItem);
             menu.Items.Add(new ToolStripSeparator());
             menu.Items.Add(_enabledItem);
@@ -113,14 +120,41 @@ namespace Sanity
 
         private void OpenConfiguration()
         {
-            using (var form = new ConfigForm(_config))
+            if (FocusExisting(_configForm))
+                return;
+
+            var form = new ConfigForm(_config);
+            _configForm = form;
+            form.FormClosed += (s, e) =>
             {
-                if (form.ShowDialog() == DialogResult.OK)
-                {
-                    _config.Save();
-                    RefreshMenuState();
-                }
-            }
+                _configForm = null;
+                RefreshMenuState();
+            };
+            form.Show();
+        }
+
+        private void OpenStatistics()
+        {
+            if (FocusExisting(_statisticsForm))
+                return;
+
+            var form = new StatisticsForm();
+            _statisticsForm = form;
+            form.FormClosed += (s, e) => _statisticsForm = null;
+            form.Show();
+        }
+
+        private static bool FocusExisting(Form form)
+        {
+            if (form == null || form.IsDisposed)
+                return false;
+
+            if (form.WindowState == FormWindowState.Minimized)
+                form.WindowState = FormWindowState.Normal;
+
+            form.BringToFront();
+            form.Activate();
+            return true;
         }
 
         private void ToggleEnabled()

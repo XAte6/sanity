@@ -59,7 +59,7 @@ object AppConfigStore {
         val rules = parseRules(json.optJSONArray("rules"))
         return AppConfig(
             enabled = json.optBoolean("enabled", true),
-            linkProxyEnabled = json.optBoolean("linkProxyEnabled", false),
+            linkProxyEnabled = json.optBoolean("linkProxyEnabled", true),
             targetBrowser = json.optString("targetBrowser", ""),
             notificationsEnabled = json.optBoolean("notificationsEnabled", true),
             sleepUntil = if (json.has("sleepUntil") && !json.isNull("sleepUntil")) {

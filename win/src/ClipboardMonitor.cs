@@ -68,6 +68,7 @@ namespace Sanity
             {
                 _updatingClipboard = true;
                 Clipboard.SetText(cleaned);
+                UsageMetrics.RecordClean(cleaned);
                 if (ClipboardCleaned != null)
                     ClipboardCleaned(this, EventArgs.Empty);
             }

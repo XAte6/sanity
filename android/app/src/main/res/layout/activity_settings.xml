@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?attr/colorSurface"
     android:padding="20dp">
 
     <LinearLayout
@@ -22,7 +23,9 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/app_name"
-                android:textAppearance="?attr/textAppearanceHeadlineSmall" />
+                android:textAppearance="?attr/textAppearanceHeadlineSmall"
+                android:textColor="@color/sanity_ink"
+                android:textStyle="bold" />
 
             <ImageButton
                 android:id="@+id/closeButton"
@@ -32,7 +35,7 @@
                 android:contentDescription="@string/exit_app"
                 android:padding="8dp"
                 android:src="@drawable/ic_close"
-                app:tint="?android:attr/textColorPrimary" />
+                app:tint="@color/sanity_ink" />
         </LinearLayout>
 
         <TextView
@@ -48,8 +51,8 @@
             android:layout_height="wrap_content"
             android:lineSpacingExtra="4dp"
             android:paddingBottom="20dp"
-            android:text="@string/setup_instructions"
-            android:textAppearance="?attr/textAppearanceBodyMedium" />
+            android:textAppearance="?attr/textAppearanceBodyMedium"
+            android:textColor="@color/sanity_muted" />
 
         <TextView
             android:layout_width="match_parent"
@@ -76,13 +79,6 @@
             android:id="@+id/checklistEnabled"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="6dp"
-            android:textAppearance="?attr/textAppearanceBodyLarge" />
-
-        <TextView
-            android:id="@+id/checklistLinkProxy"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:paddingBottom="20dp"
             android:textAppearance="?attr/textAppearanceBodyLarge" />
 
@@ -98,12 +94,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/enabled" />
-
-        <com.google.android.material.materialswitch.MaterialSwitch
-            android:id="@+id/linkProxySwitch"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/clean_clicked_links" />
 
         <com.google.android.material.materialswitch.MaterialSwitch
             android:id="@+id/notificationsSwitch"
@@ -132,19 +122,20 @@
         </LinearLayout>
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/defaultBrowserButton"
+            android:id="@+id/statisticsButton"
+            style="@style/Widget.Material3.Button.TonalButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="@string/open_default_apps" />
+            android:text="@string/statistics" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/editConfigButton"
-            style="@style/Widget.Material3.Button.TextButton"
+            android:id="@+id/rulesButton"
+            style="@style/Widget.Material3.Button.TonalButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:text="@string/edit_configuration" />
+            android:layout_marginTop="8dp"
+            android:text="@string/regex_rules" />
 
         <TextView
             android:id="@+id/noBrowsersWarning"
@@ -155,5 +146,12 @@
             android:textAppearance="?attr/textAppearanceBodySmall"
             android:textColor="@color/sanity_red"
             android:visibility="gone" />
+
+        <include
+            android:id="@+id/supportLinks"
+            layout="@layout/include_support_links"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp" />
     </LinearLayout>
 </ScrollView>

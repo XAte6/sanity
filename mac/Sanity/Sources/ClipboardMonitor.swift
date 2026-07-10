@@ -36,6 +36,7 @@ final class ClipboardMonitor {
         pasteboard.setString(cleaned, forType: .string)
         lastChangeCount = pasteboard.changeCount
         isUpdatingClipboard = false
+        UsageMetrics.recordClean(url: cleaned)
         onCleaned?()
     }
 }

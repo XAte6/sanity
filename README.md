@@ -4,6 +4,8 @@ Sanity strips tracking parameters from URLs before you paste or open them. It ru
 
 No installers, package managers, or runtimes required beyond what ships with each OS (Android requires a standard JDK + Android SDK for building).
 
+**GitHub:** [XAte6/sanity](https://github.com/XAte6/sanity) · **Support:** [Issues](https://github.com/XAte6/sanity/issues) · **Tip me:** [paypal.me/XAte6](https://paypal.me/XAte6)
+
 ## Features
 
 - **Clipboard cleaning** — monitors copied URLs and removes trackers before you paste
@@ -11,14 +13,16 @@ No installers, package managers, or runtimes required beyond what ships with eac
 - **Share target (Android)** — share a URL to Sanity, then forward the cleaned link to another app
 - Configurable rules: **domain** + **regex** pairs
 - Default rules for YouTube, Amazon, Google, Facebook, Instagram, TikTok, X/Twitter, Reddit, and common global trackers (`utm_*`, `fbclid`, `gclid`, etc.)
+- **Usage metrics** — counts cleaned links and unique domains (shown in About)
 - Tray / menu bar controls (desktop):
-  - **Configuration** — edit rules
+  - **Regex Rules** — edit domain + regex patterns
   - **Enabled** — turn clipboard cleaning on or off
   - **Clean clicked links** — register Sanity as the system link handler
   - **Target browser** — browser to forward cleaned links to
-  - **Notifications** — toast popups when a URL is cleaned
+  - **Notifications** — toast popups when a URL is cleaned (clipboard and clicked links)
   - **Launch on startup**
   - **Sleep** → 1h / 2h / 4h / 8h
+  - **Statistics** — usage stats, GitHub, Support, Tip me
   - **Exit**
 
 ## Releases
@@ -67,7 +71,7 @@ sanity/
     bin/         # build output (Sanity.apk)
 ```
 
-Desktop builds read and write `config.json` from each platform's `bin/` folder next to the executable. Android stores config in app-private storage using the same JSON schema.
+Desktop builds read and write `config.json` from each platform's `bin/` folder next to the executable. Usage counts are stored in `metrics.json` beside it. Android stores config and metrics in app-private storage using the same JSON schemas.
 
 ## Windows
 
@@ -195,7 +199,7 @@ adb install -r android\app\build\outputs\apk\release\app-release-unsigned.apk
 
 (`adb` is in `%LOCALAPPDATA%\Android\Sdk\platform-tools\`.)
 
-**Editing rules on device:** open Sanity → **Edit configuration**. This opens `config.json` in a built-in editor. Each rule has a `domain` and `regex` (same format as desktop). Tap **Save** when done, or **Reset rules** to restore the built-in defaults.
+**Editing rules on device:** open Sanity → **Regex Rules**. Filter by domain or regex, tap pencil to edit (with a URL test preview), bin to delete, or + to add. **Statistics** shows cleaned-link totals and per-domain shares.
 
 ## Configuration
 
@@ -222,6 +226,8 @@ Settings are stored in `config.json` (desktop: `win/bin/config.json` or `mac/bin
 - Matching text is removed (e.g. `[?&](utm_[a-zA-Z0-9_]+=[^&]*)`)
 
 On first run, a default `config.json` is created if one does not exist.
+
+Usage is stored separately in `metrics.json` (`linksCleaned` plus a per-host `domains` map). Open **Statistics** from the tray/menu to see totals and links to GitHub, Support, and Tip me.
 
 ## How it works
 
@@ -262,3 +268,7 @@ For in-browser link cleaning, use a browser extension (e.g. ClearURLs) alongside
 ## License
 
 Use and modify as you like.
+
+## Support development
+
+If Sanity is useful, you can [tip via PayPal](https://paypal.me/XAte6). Bug reports and ideas welcome on [GitHub Issues](https://github.com/XAte6/sanity/issues).

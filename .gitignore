@@ -30,3 +30,7 @@ Desktop.ini
 *.log
 *.tmp
 *~
+
+# Local usage counters (created at runtime)
+**/metrics.json
+**/metrics.json.tmp

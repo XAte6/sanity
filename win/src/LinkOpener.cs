@@ -20,6 +20,7 @@ namespace Sanity
                 {
                     finalUrl = cleanedUrl;
                     cleaned = true;
+                    UsageMetrics.RecordClean(finalUrl);
                 }
             }
 

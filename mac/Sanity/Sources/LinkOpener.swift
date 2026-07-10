@@ -11,6 +11,7 @@ enum LinkOpener {
            let cleanedUrl = UrlCleaner.tryClean(finalUrl, rules: config.rules) {
             finalUrl = cleanedUrl
             cleaned = true
+            UsageMetrics.recordClean(url: finalUrl)
         }
 
         BrowserHelper.open(url: finalUrl, targetBrowser: resolveTargetBrowser(config: config))

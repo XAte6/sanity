@@ -15,7 +15,16 @@ object ShareHandler {
         val url = UrlCleaner.extractHttpUrl(text)
             ?: return ShareHandleResult(finalUrl = "", cleaned = false, shared = false)
 
-        val cleanedUrl = UrlCleaner.tryClean(url, config.rules) ?: url
+        val cleanedUrl = if (config.isActive) {
+            UrlCleaner.tryClean(url, config.rules) ?: url
+        } else {
+            url
+        }
+        val wasCleaned = cleanedUrl != url
+        if (wasCleaned) {
+            UsageMetricsStore.recordClean(context, cleanedUrl)
+        }
+
         val shareIntent = Intent(Intent.ACTION_SEND).apply {
             type = "text/plain"
             putExtra(Intent.EXTRA_TEXT, cleanedUrl)
@@ -27,7 +36,7 @@ object ShareHandler {
 
         return ShareHandleResult(
             finalUrl = cleanedUrl,
-            cleaned = cleanedUrl != url,
+            cleaned = wasCleaned,
             shared = true
         )
     }

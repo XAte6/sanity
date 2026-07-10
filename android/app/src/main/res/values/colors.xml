@@ -1,5 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="sanity_green">#228B22</color>
-    <color name="sanity_white">#FFFFFF</color>
+    <color name="sanity_green_container">#E8F5E8</color>
+    <color name="sanity_on_primary">#FFFFFF</color>
+    <color name="sanity_surface">#FFFFFF</color>
     <color name="sanity_red">#C62828</color>
+    <color name="sanity_ink">#1C241C</color>
+    <color name="sanity_muted">#5A645A</color>
+    <color name="sanity_panel">#F8FAF8</color>
+    <color name="sanity_border">#DCE4DC</color>
+    <color name="github_dark">#181717</color>
+    <color name="paypal_dark">#003087</color>
+    <color name="paypal_light">#009CDE</color>
+    <color name="support_blue">#0969DA</color>
 </resources>
