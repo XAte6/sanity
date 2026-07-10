@@ -13,7 +13,6 @@ namespace Sanity
         private readonly ContextMenuStrip _menu;
 
         private ToolStripMenuItem _enabledItem;
-        private ToolStripMenuItem _linkProxyItem;
         private ToolStripMenuItem _targetBrowserMenuItem;
         private ToolStripMenuItem _notificationsItem;
         private ToolStripMenuItem _launchOnStartupItem;
@@ -30,8 +29,7 @@ namespace Sanity
         {
             _config = AppConfig.Load();
             StartupRegistration.Apply(_config.LaunchOnStartup);
-            if (_config.LinkProxyEnabled)
-                ProtocolRegistration.Apply(true, _config);
+            ApplyLinkHandling(_config.Enabled);
 
             _clipboardMonitor = new ClipboardMonitor(_config);
             _clipboardMonitor.Show();
@@ -69,9 +67,6 @@ namespace Sanity
             _enabledItem = new ToolStripMenuItem("Enabled");
             _enabledItem.Click += (s, e) => ToggleEnabled();
 
-            _linkProxyItem = new ToolStripMenuItem("Clean clicked links");
-            _linkProxyItem.Click += (s, e) => ToggleLinkProxy();
-
             _targetBrowserMenuItem = new ToolStripMenuItem("Target browser");
             RebuildTargetBrowserMenu();
 
@@ -107,11 +102,10 @@ namespace Sanity
             menu.Items.Add(configItem);
             menu.Items.Add(new ToolStripSeparator());
             menu.Items.Add(_enabledItem);
-            menu.Items.Add(_linkProxyItem);
+            menu.Items.Add(_sleepMenuItem);
             menu.Items.Add(_targetBrowserMenuItem);
             menu.Items.Add(_notificationsItem);
             menu.Items.Add(_launchOnStartupItem);
-            menu.Items.Add(_sleepMenuItem);
             menu.Items.Add(new ToolStripSeparator());
             menu.Items.Add(exitItem);
 
@@ -163,35 +157,29 @@ namespace Sanity
             if (_config.Enabled)
                 _config.SleepUntil = null;
 
+            ApplyLinkHandling(_config.Enabled);
             _config.Save();
+
+            ProtocolRegistration.OpenDefaultAppsSettings();
+            if (_config.Enabled)
+                ShowBalloon("Set Sanity as the default app for HTTP and HTTPS links.");
+            else
+                ShowBalloon("Choose your browser as the default for HTTP and HTTPS links.");
+
+            RebuildTargetBrowserMenu();
             RefreshMenuState();
         }
 
-        private void ToggleLinkProxy()
+        private void ApplyLinkHandling(bool enabled)
         {
-            _config.LinkProxyEnabled = !_config.LinkProxyEnabled;
-            if (_config.LinkProxyEnabled && string.IsNullOrWhiteSpace(_config.TargetBrowser))
+            _config.LinkProxyEnabled = enabled;
+            if (enabled && string.IsNullOrWhiteSpace(_config.TargetBrowser))
             {
                 var defaultPath = BrowserHelper.GetDefaultBrowserPath();
                 _config.TargetBrowser = defaultPath ?? BrowserHelper.GetDefaultBrowserProgId() ?? string.Empty;
             }
 
-            ProtocolRegistration.Apply(_config.LinkProxyEnabled, _config);
-            _config.Save();
-
-            if (_config.LinkProxyEnabled)
-            {
-                ProtocolRegistration.OpenDefaultAppsSettings();
-                ShowBalloon("Set Sanity as the default app for HTTP and HTTPS links.");
-            }
-            else
-            {
-                ProtocolRegistration.OpenDefaultAppsSettings();
-                ShowBalloon("Choose your browser as the default for HTTP and HTTPS links.");
-            }
-
-            RebuildTargetBrowserMenu();
-            RefreshMenuState();
+            ProtocolRegistration.Apply(enabled, _config);
         }
 
         private void RebuildTargetBrowserMenu()
@@ -262,10 +250,6 @@ namespace Sanity
                 ? "Enabled (sleeping)"
                 : "Enabled";
 
-            _linkProxyItem.Checked = _config.LinkProxyEnabled;
-            _linkProxyItem.Text = _config.LinkProxyEnabled && !ProtocolRegistration.IsRegistered()
-                ? "Clean clicked links (set as default)"
-                : "Clean clicked links";
             UpdateTargetBrowserChecks();
 
             _launchOnStartupItem.Checked = _config.LaunchOnStartup;
@@ -281,7 +265,7 @@ namespace Sanity
             UpdateSleepItem(_sleep8hItem, 8, sleeping);
 
             _notifyIcon.Text = active
-                ? (_config.LinkProxyEnabled ? "Sanity - active (clipboard + links)" : "Sanity - active")
+                ? "Sanity - active"
                 : sleeping
                     ? "Sanity - sleeping until " + _config.SleepUntil.Value.ToString("HH:mm")
                     : "Sanity - disabled";

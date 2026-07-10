@@ -10,7 +10,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private var refreshTimer: Timer?
 
     private var enabledItem: NSMenuItem!
-    private var linkProxyItem: NSMenuItem!
     private var targetBrowserMenu: NSMenuItem!
     private var notificationsItem: NSMenuItem!
     private var launchOnStartupItem: NSMenuItem!
@@ -47,10 +46,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         NSApp.setActivationPolicy(.accessory)
         NSApp.applicationIconImage = AppIcon.create(size: 128)
         StartupRegistration.apply(config.launchOnStartup)
-        if config.linkProxyEnabled {
-            BrowserRegistration.apply(enabled: true, config: &config)
-            config.save()
-        }
+        applyLinkHandling(enabled: config.enabled)
         requestNotificationPermission()
 
         clipboardMonitor = ClipboardMonitor(config: config)
@@ -80,7 +76,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
         let menu = NSMenu()
 
-        let configItem = NSMenuItem(title: "Configuration", action: #selector(openConfiguration), keyEquivalent: "")
+        let aboutItem = NSMenuItem(title: "Statistics", action: #selector(openAbout), keyEquivalent: "")
+        aboutItem.target = self
+        menu.addItem(aboutItem)
+
+        let configItem = NSMenuItem(title: "Regex Rules", action: #selector(openConfiguration), keyEquivalent: "")
         configItem.target = self
         menu.addItem(configItem)
         menu.addItem(.separator())
@@ -88,22 +88,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         enabledItem = NSMenuItem(title: "Enabled", action: #selector(toggleEnabled), keyEquivalent: "")
         enabledItem.target = self
         menu.addItem(enabledItem)
-
-        linkProxyItem = NSMenuItem(title: "Clean clicked links", action: #selector(toggleLinkProxy), keyEquivalent: "")
-        linkProxyItem.target = self
-        menu.addItem(linkProxyItem)
-
-        targetBrowserMenu = NSMenuItem(title: "Target browser", action: nil, keyEquivalent: "")
-        rebuildTargetBrowserMenu()
-        menu.addItem(targetBrowserMenu)
-
-        notificationsItem = NSMenuItem(title: "Notifications", action: #selector(toggleNotifications), keyEquivalent: "")
-        notificationsItem.target = self
-        menu.addItem(notificationsItem)
-
-        launchOnStartupItem = NSMenuItem(title: "Launch on startup", action: #selector(toggleLaunchOnStartup), keyEquivalent: "")
-        launchOnStartupItem.target = self
-        menu.addItem(launchOnStartupItem)
 
         sleepMenu = NSMenuItem(title: "Sleep", action: nil, keyEquivalent: "")
         let sleepSubmenu = NSMenu()
@@ -118,11 +102,19 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         sleepMenu.submenu = sleepSubmenu
         menu.addItem(sleepMenu)
 
-        menu.addItem(.separator())
+        targetBrowserMenu = NSMenuItem(title: "Target browser", action: nil, keyEquivalent: "")
+        rebuildTargetBrowserMenu()
+        menu.addItem(targetBrowserMenu)
 
-        let aboutItem = NSMenuItem(title: "Statistics", action: #selector(openAbout), keyEquivalent: "")
-        aboutItem.target = self
-        menu.addItem(aboutItem)
+        notificationsItem = NSMenuItem(title: "Notifications", action: #selector(toggleNotifications), keyEquivalent: "")
+        notificationsItem.target = self
+        menu.addItem(notificationsItem)
+
+        launchOnStartupItem = NSMenuItem(title: "Launch on startup", action: #selector(toggleLaunchOnStartup), keyEquivalent: "")
+        launchOnStartupItem.target = self
+        menu.addItem(launchOnStartupItem)
+
+        menu.addItem(.separator())
 
         let exitItem = NSMenuItem(title: "Exit", action: #selector(exitApp), keyEquivalent: "q")
         exitItem.target = self
@@ -139,6 +131,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     @objc private func openConfiguration() {
+        if let configWindow, configWindow.window?.isVisible == true {
+            configWindow.showWindow()
+            return
+        }
         configWindow = ConfigWindowController(config: config) { [weak self] updated in
             guard let self else { return }
             self.config = updated
@@ -150,6 +146,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     @objc private func openAbout() {
+        if let aboutWindow, aboutWindow.window?.isVisible == true {
+            aboutWindow.showWindow()
+            return
+        }
         aboutWindow = AboutWindowController()
         aboutWindow?.showWindow()
     }
@@ -159,20 +159,19 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         if config.enabled {
             config.sleepUntil = nil
         }
+        applyLinkHandling(enabled: config.enabled)
         config.save()
         clipboardMonitor.updateConfig(config)
+        rebuildTargetBrowserMenu()
         refreshMenuState()
     }
 
-    @objc private func toggleLinkProxy() {
-        config.linkProxyEnabled.toggle()
-        if config.linkProxyEnabled && config.targetBrowser.isEmpty {
+    private func applyLinkHandling(enabled: Bool) {
+        config.linkProxyEnabled = enabled
+        if enabled && config.targetBrowser.isEmpty {
             config.targetBrowser = BrowserHelper.defaultBrowserBundleId() ?? ""
         }
-        BrowserRegistration.apply(enabled: config.linkProxyEnabled, config: &config)
-        config.save()
-        rebuildTargetBrowserMenu()
-        refreshMenuState()
+        BrowserRegistration.apply(enabled: enabled, config: &config)
     }
 
     private func rebuildTargetBrowserMenu() {
@@ -234,7 +233,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
         enabledItem.state = (config.enabled && !sleeping) ? .on : .off
         enabledItem.title = sleeping ? "Enabled (sleeping)" : "Enabled"
-        linkProxyItem.state = config.linkProxyEnabled ? .on : .off
         updateTargetBrowserChecks()
         notificationsItem.state = config.notificationsEnabled ? .on : .off
         launchOnStartupItem.state = config.launchOnStartup ? .on : .off
@@ -253,9 +251,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         updateSleepItem(sleep8hItem, hours: 8, sleeping: sleeping)
 
         if active {
-            statusItem.button?.toolTip = config.linkProxyEnabled
-                ? "Sanity - active (clipboard + links)"
-                : "Sanity - active"
+            statusItem.button?.toolTip = "Sanity - active"
         } else if sleeping, let until = config.sleepUntilDate() {
             let formatter = DateFormatter()
             formatter.timeStyle = .short

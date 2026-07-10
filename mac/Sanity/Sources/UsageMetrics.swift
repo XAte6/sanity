@@ -56,6 +56,17 @@ struct UsageMetrics: Codable {
         return "\(linksCleaned) \(linkWord) cleaned across \(domainCount) \(domainWord)"
     }
 
+    func domainsByCount() -> [(host: String, count: Int)] {
+        domains
+            .map { (host: $0.key, count: $0.value) }
+            .sorted {
+                if $0.count != $1.count {
+                    return $0.count > $1.count
+                }
+                return $0.host.localizedCaseInsensitiveCompare($1.host) == .orderedAscending
+            }
+    }
+
     private static func empty() -> UsageMetrics {
         UsageMetrics(linksCleaned: 0, domains: [:])
     }

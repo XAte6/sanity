@@ -50,9 +50,6 @@ enum BrowserRegistration {
     }
 
     private static func currentHandler(for scheme: String) -> String? {
-        guard let value = LSCopyDefaultHandlerForURLScheme(scheme as CFString)?.takeRetainedValue() else {
-            return nil
-        }
-        return value as String
+        BrowserHelper.defaultHandlerBundleId(for: scheme)
     }
 }

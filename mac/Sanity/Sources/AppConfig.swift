@@ -21,12 +21,12 @@ struct AppConfig: Codable {
     }
 
     var isLinkProxyActive: Bool {
-        linkProxyEnabled && isActive
+        isActive
     }
 
     init(
         enabled: Bool = true,
-        linkProxyEnabled: Bool = false,
+        linkProxyEnabled: Bool = true,
         targetBrowser: String = "",
         launchOnStartup: Bool = false,
         notificationsEnabled: Bool = true,
@@ -45,7 +45,8 @@ struct AppConfig: Codable {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         enabled = try container.decodeIfPresent(Bool.self, forKey: .enabled) ?? true
-        linkProxyEnabled = try container.decodeIfPresent(Bool.self, forKey: .linkProxyEnabled) ?? false
+        // Kept for config compatibility; sanitisation is gated by `enabled` / `isActive`.
+        linkProxyEnabled = try container.decodeIfPresent(Bool.self, forKey: .linkProxyEnabled) ?? enabled
         targetBrowser = try container.decodeIfPresent(String.self, forKey: .targetBrowser) ?? ""
         launchOnStartup = try container.decodeIfPresent(Bool.self, forKey: .launchOnStartup) ?? false
         notificationsEnabled = try container.decodeIfPresent(Bool.self, forKey: .notificationsEnabled) ?? true

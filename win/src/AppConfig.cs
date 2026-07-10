@@ -47,7 +47,7 @@ namespace Sanity
         [ScriptIgnore]
         public bool IsLinkProxyActive
         {
-            get { return LinkProxyEnabled && IsActive; }
+            get { return IsActive; }
         }
 
         public static AppConfig Load()
@@ -120,7 +120,7 @@ namespace Sanity
             return new AppConfig
             {
                 Enabled = true,
-                LinkProxyEnabled = false,
+                LinkProxyEnabled = true,
                 TargetBrowser = string.Empty,
                 LaunchOnStartup = false,
                 NotificationsEnabled = true,

@@ -9,11 +9,11 @@ struct BrowserInfo {
 
 enum BrowserHelper {
     static func defaultBrowserBundleId() -> String? {
-        guard let httpId = copyDefaultHandler(for: "http") else { return nil }
+        guard let httpId = defaultHandlerBundleId(for: "http") else { return nil }
         if httpId != BrowserRegistration.sanityBundleId {
             return httpId
         }
-        return copyDefaultHandler(for: "https")
+        return defaultHandlerBundleId(for: "https")
     }
 
     static func installedBrowsers() -> [BrowserInfo] {
@@ -85,10 +85,12 @@ enum BrowserHelper {
         return true
     }
 
-    private static func copyDefaultHandler(for scheme: String) -> String? {
-        guard let cfValue = LSCopyDefaultHandlerForURLScheme(scheme as CFString)?.takeRetainedValue() else {
+    static func defaultHandlerBundleId(for scheme: String) -> String? {
+        guard let probeURL = URL(string: "\(scheme)://"),
+              let appURL = NSWorkspace.shared.urlForApplication(toOpen: probeURL),
+              let bundleId = Bundle(url: appURL)?.bundleIdentifier else {
             return nil
         }
-        return cfValue as String
+        return bundleId
     }
 }

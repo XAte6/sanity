@@ -35,6 +35,7 @@ swiftc -O \
     "$SRC"/ConfigWindowController.swift \
     "$SRC"/LinkOpener.swift \
     "$SRC"/StartupRegistration.swift \
+    "$SRC"/UiChrome.swift \
     "$SRC"/UrlCleaner.swift \
     "$SRC"/UsageMetrics.swift \
     "$SRC"/main.swift \
