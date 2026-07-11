@@ -24,10 +24,18 @@ namespace Sanity
 
         private Form _statisticsForm;
         private Form _configForm;
+        private Form _setupWizardForm;
 
         public TrayApplicationContext()
         {
             _config = AppConfig.Load();
+
+            if (!_config.SetupCompleted)
+            {
+                using (var wizard = new SetupWizardForm(_config))
+                    wizard.ShowDialog();
+            }
+
             StartupRegistration.Apply(_config.LaunchOnStartup);
             ApplyLinkHandling(_config.Enabled);
 
@@ -63,6 +71,9 @@ namespace Sanity
 
             var configItem = new ToolStripMenuItem("Regex Rules");
             configItem.Click += (s, e) => OpenConfiguration();
+
+            var runSetupItem = new ToolStripMenuItem("Run Setup");
+            runSetupItem.Click += (s, e) => OpenSetupWizard();
 
             _enabledItem = new ToolStripMenuItem("Enabled");
             _enabledItem.Click += (s, e) => ToggleEnabled();
@@ -100,6 +111,7 @@ namespace Sanity
 
             menu.Items.Add(statisticsItem);
             menu.Items.Add(configItem);
+            menu.Items.Add(runSetupItem);
             menu.Items.Add(new ToolStripSeparator());
             menu.Items.Add(_enabledItem);
             menu.Items.Add(_sleepMenuItem);
@@ -125,6 +137,23 @@ namespace Sanity
                 RefreshMenuState();
             };
             form.Show();
+        }
+
+        private void OpenSetupWizard(bool startAtDefaultApps = false)
+        {
+            if (FocusExisting(_setupWizardForm))
+                return;
+
+            var form = new SetupWizardForm(_config, startAtDefaultApps);
+            _setupWizardForm = form;
+            form.FormClosed += (s, e) =>
+            {
+                _setupWizardForm = null;
+                ApplyLinkHandling(_config.Enabled);
+                RebuildTargetBrowserMenu();
+                RefreshMenuState();
+            };
+            form.ShowDialog();
         }
 
         private void OpenStatistics()
@@ -160,11 +189,16 @@ namespace Sanity
             ApplyLinkHandling(_config.Enabled);
             _config.Save();
 
-            ProtocolRegistration.OpenDefaultAppsSettings();
             if (_config.Enabled)
-                ShowBalloon("Set Sanity as the default app for HTTP and HTTPS links.");
+            {
+                if (!ProtocolRegistration.IsRegistered())
+                    OpenSetupWizard(startAtDefaultApps: true);
+            }
             else
+            {
+                ProtocolRegistration.OpenDefaultAppsSettings();
                 ShowBalloon("Choose your browser as the default for HTTP and HTTPS links.");
+            }
 
             RebuildTargetBrowserMenu();
             RefreshMenuState();

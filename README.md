@@ -2,7 +2,7 @@
 
 Sanity strips tracking parameters from URLs before you paste or open them. It runs as a small system tray / menu bar app on desktop, and as a lightweight link proxy on Android.
 
-No installers, package managers, or runtimes required beyond what ships with each OS (Android requires a standard JDK + Android SDK for building).
+Windows ships a single setup EXE (no separate runtime). macOS and Android need no package managers beyond what each OS already provides (Android builds need a standard JDK + Android SDK).
 
 **GitHub:** [XAte6/sanity](https://github.com/XAte6/sanity) · **Support:** [Issues](https://github.com/XAte6/sanity/issues) · **Tip me:** [paypal.me/XAte6](https://paypal.me/XAte6)
 
@@ -30,18 +30,21 @@ Pre-built binaries live in the [`releases/`](releases/) folder in this repo:
 
 | File | Platform |
 |------|----------|
-| `Sanity-win-x86.exe` | Windows (Intel / AMD64) |
+| `Sanity-win-x86-setup.exe` | Windows installer (Intel / AMD64) |
 | `Sanity-mac-arm.zip` | macOS (Apple Silicon) |
 | `Sanity-android-arm.apk` | Android (ARM64) |
 
-Run each platform's `build.bat` / `build.sh` to refresh these files after code changes.
+Run each platform's `build.bat` / `build.sh` to refresh these files after code changes. Newer Windows setup builds upgrade over a previous Sanity install and keep your settings.
 
 ### Run a release
 
 **Windows**
 
-1. Download or copy [`releases/Sanity-win-x86.exe`](releases/Sanity-win-x86.exe) anywhere (e.g. Desktop).
-2. Run it. On first launch, `config.json` is created next to the exe.
+1. Download [`releases/Sanity-win-x86-setup.exe`](releases/Sanity-win-x86-setup.exe).
+2. Run the installer (no admin required). Sanity installs under `%LocalAppData%\Sanity`, adds a Start Menu shortcut, and can launch when finished.
+3. On first launch, complete the setup wizard (target browser, optional enable / startup / notifications). Cleaning stays off until you enable it in the wizard or later from the tray.
+4. Later versions: run the newer setup EXE — it replaces the previous install and preserves `config.json` / `metrics.json`.
+5. Uninstall from **Settings → Apps** (or Start Menu → Sanity → Uninstall). Your settings files are left in the install folder.
 
 **macOS**
 
@@ -61,8 +64,9 @@ To build from source instead of using a release, see the platform sections below
 
 ```
 sanity/
-  releases/      # shipped binaries (Sanity-{platform}-{arch}.{ext})
-  win/           # Windows (C# / WinForms)
+  releases/      # shipped binaries (Sanity-{platform}-{arch}…); Windows is a setup EXE
+  win/           # Windows (C# / WinForms + Inno Setup)
+    VERSION      # bump before release (e.g. 1.0.1) so setup upgrades prior installs
     bin/         # build output (Sanity.exe, config.json)
   mac/           # macOS (Swift / AppKit)
     bin/         # build output (Sanity.app, config.json)
@@ -74,21 +78,27 @@ Desktop builds read and write `config.json` from each platform's `bin/` folder n
 
 ## Windows
 
-**Requirements:** .NET Framework 4.x (included with Windows; uses the built-in `csc.exe` compiler)
+**Requirements to run:** .NET Framework 4.x (included with modern Windows)
+
+**Requirements to build:** built-in `csc.exe`, plus [Inno Setup 6](https://jrsoftware.org/isinfo.php) for the setup EXE (`winget install --id JRSoftware.InnoSetup -e`)
 
 ```bat
 cd win
 build.bat
-bin\Sanity.exe
 ```
 
-Build output: `win\bin\Sanity.exe`
+Build output:
+
+- `win\bin\Sanity.exe` — local tray build for development
+- `releases\Sanity-win-x86-setup.exe` — single-file installer (bumps over prior installs via a fixed AppId)
+
+Version is set in `win\VERSION` (e.g. `1.0.0`). Bump it before a release so the new setup upgrades the previous one.
 
 ### Link proxy setup (Windows)
 
-1. Run Sanity from the tray.
+1. Complete the first-run wizard (or open the tray menu later).
 2. Choose **Target browser** (e.g. Chrome, Edge, Firefox).
-3. Enable **Clean clicked links**.
+3. Turn on **Enabled** (clipboard cleaning and clicked-link proxy).
 4. If Windows prompts, confirm Sanity as the default app for `http`/`https` links.
 
 Links opened from apps like Slack, Outlook, or Notepad will pass through Sanity, be cleaned, and open in your chosen browser.
@@ -206,11 +216,12 @@ Settings are stored in `config.json` (desktop: `win/bin/config.json` or `mac/bin
 
 | Key | Description |
 |-----|-------------|
-| `enabled` | Master on/off switch for cleaning |
+| `enabled` | Master on/off switch for cleaning (Windows defaults to off until setup) |
 | `linkProxyEnabled` | Intercept clicked links and forward to target browser |
 | `targetBrowser` | Where to forward links (exe path or ProgId on Windows, bundle ID on macOS, package name on Android) |
 | `notificationsEnabled` | Show toast when a URL is cleaned |
 | `launchOnStartup` | Start with the OS (desktop only) |
+| `setupCompleted` | Windows only: first-run wizard finished |
 | `sleepUntil` | ISO timestamp; cleaning paused until this time |
 | `rules` | Array of `{ "domain", "regex" }` objects |
 
@@ -224,7 +235,7 @@ Settings are stored in `config.json` (desktop: `win/bin/config.json` or `mac/bin
 - Applied to the full URL string
 - Matching text is removed (e.g. `[?&](utm_[a-zA-Z0-9_]+=[^&]*)`)
 
-On first run, a default `config.json` is created if one does not exist.
+On first run, a default `config.json` is created if one does not exist. On Windows, the first-run setup wizard runs until `setupCompleted` is true.
 
 Usage is stored separately in `metrics.json` (`linksCleaned` plus a per-host `domains` map). Open **Statistics** from the tray/menu to see totals and links to GitHub, Support, and Tip me.
 

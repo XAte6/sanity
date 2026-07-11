@@ -93,13 +93,13 @@ namespace Sanity
                 Location = new Point(16, 10)
             });
 
-            var topShare = GetTopDomainSharePercent(metrics);
+            var cleanRate = metrics.CleanRatePercent;
             AddStat(
                 panel,
-                metrics.LinksCleaned.ToString("N0"),
-                topShare.HasValue ? topShare.Value + "%" : null,
-                "Total cleaned of " + metrics.LinksCleaned.ToString("N0")
-                    + (metrics.LinksCleaned == 1 ? " click" : " clicks"),
+                metrics.ClicksCleaned.ToString("N0"),
+                cleanRate.HasValue ? cleanRate.Value + "%" : null,
+                "Total cleaned of " + metrics.LinksOpened.ToString("N0")
+                    + (metrics.LinksOpened == 1 ? " click" : " clicks"),
                 16,
                 34);
 
@@ -112,18 +112,6 @@ namespace Sanity
                 34);
 
             return panel;
-        }
-
-        private static int? GetTopDomainSharePercent(UsageMetrics metrics)
-        {
-            if (metrics.LinksCleaned <= 0)
-                return null;
-
-            var rows = metrics.GetDomainsByCount();
-            if (rows.Count == 0)
-                return null;
-
-            return (int)Math.Round(100.0 * rows[0].Value / metrics.LinksCleaned);
         }
 
         private static void AddStat(Control parent, string value, string percent, string caption, int x, int y)
@@ -211,7 +199,7 @@ namespace Sanity
             });
             panel.Controls.Add(new Label
             {
-                Text = "Share of total cleaned clicks",
+                Text = "Cleaned clicks by host",
                 Font = new Font("Segoe UI", 8f),
                 ForeColor = UiChrome.Muted,
                 AutoSize = true,
@@ -237,7 +225,6 @@ namespace Sanity
             list.Columns.Add("Cleans", 136);
 
             var rows = metrics.GetDomainsByCount();
-            var total = Math.Max(metrics.LinksCleaned, 1);
             if (rows.Count == 0)
             {
                 var empty = new ListViewItem(new[] { "No cleans recorded yet — copy or open a tracked link", "—" });
@@ -249,11 +236,10 @@ namespace Sanity
                 var rank = 1;
                 foreach (var row in rows)
                 {
-                    var percent = (int)Math.Round(100.0 * row.Value / total);
                     var item = new ListViewItem(new[]
                     {
                         row.Key,
-                        row.Value.ToString("N0") + "  (" + percent + "%)"
+                        row.Value.ToString("N0")
                     });
                     if (rank <= 3)
                         item.Font = new Font(list.Font, FontStyle.Bold);

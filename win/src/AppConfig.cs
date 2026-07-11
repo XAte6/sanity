@@ -18,6 +18,7 @@ namespace Sanity
         public string TargetBrowser { get; set; }
         public bool LaunchOnStartup { get; set; }
         public bool NotificationsEnabled { get; set; }
+        public bool SetupCompleted { get; set; }
         public DateTime? SleepUntil { get; set; }
         public List<UrlRule> Rules { get; set; }
 
@@ -72,6 +73,9 @@ namespace Sanity
                     config.NotificationsEnabled = true;
                 if (config.TargetBrowser == null)
                     config.TargetBrowser = string.Empty;
+                // Existing installs lack this key — treat as already set up so upgrades skip the wizard.
+                if (!raw.Contains("setupCompleted"))
+                    config.SetupCompleted = true;
                 return config;
             }
             catch
@@ -95,6 +99,7 @@ namespace Sanity
                 .Replace("\"TargetBrowser\":", "\"targetBrowser\":")
                 .Replace("\"LaunchOnStartup\":", "\"launchOnStartup\":")
                 .Replace("\"NotificationsEnabled\":", "\"notificationsEnabled\":")
+                .Replace("\"SetupCompleted\":", "\"setupCompleted\":")
                 .Replace("\"SleepUntil\":", "\"sleepUntil\":")
                 .Replace("\"Rules\":", "\"rules\":")
                 .Replace("\"Domain\":", "\"domain\":")
@@ -109,6 +114,7 @@ namespace Sanity
                 .Replace("\"targetBrowser\":", "\"TargetBrowser\":")
                 .Replace("\"launchOnStartup\":", "\"LaunchOnStartup\":")
                 .Replace("\"notificationsEnabled\":", "\"NotificationsEnabled\":")
+                .Replace("\"setupCompleted\":", "\"SetupCompleted\":")
                 .Replace("\"sleepUntil\":", "\"SleepUntil\":")
                 .Replace("\"rules\":", "\"Rules\":")
                 .Replace("\"domain\":", "\"Domain\":")
@@ -119,11 +125,12 @@ namespace Sanity
         {
             return new AppConfig
             {
-                Enabled = true,
-                LinkProxyEnabled = true,
+                Enabled = false,
+                LinkProxyEnabled = false,
                 TargetBrowser = string.Empty,
                 LaunchOnStartup = false,
                 NotificationsEnabled = true,
+                SetupCompleted = false,
                 SleepUntil = null,
                 Rules = CreateDefaultRules()
             };

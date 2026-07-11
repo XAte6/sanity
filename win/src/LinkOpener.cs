@@ -20,9 +20,10 @@ namespace Sanity
                 {
                     finalUrl = cleanedUrl;
                     cleaned = true;
-                    UsageMetrics.RecordClean(finalUrl);
                 }
             }
+
+            UsageMetrics.RecordOpen(finalUrl, cleaned);
 
             var targetBrowser = ResolveTargetBrowser(config);
             BrowserHelper.TryLaunchBrowser(targetBrowser, finalUrl);

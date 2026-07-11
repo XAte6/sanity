@@ -9,13 +9,26 @@ namespace Sanity
 {
     public class UsageMetrics
     {
+        public int LinksOpened { get; set; }
         public int LinksCleaned { get; set; }
+        public int ClicksCleaned { get; set; }
         public Dictionary<string, int> Domains { get; set; }
 
         [ScriptIgnore]
         public int DomainCount
         {
             get { return Domains == null ? 0 : Domains.Count; }
+        }
+
+        [ScriptIgnore]
+        public int? CleanRatePercent
+        {
+            get
+            {
+                if (LinksOpened <= 0)
+                    return null;
+                return (int)Math.Round(100.0 * ClicksCleaned / LinksOpened);
+            }
         }
 
         public static string MetricsPath
@@ -49,6 +62,38 @@ namespace Sanity
             catch
             {
                 return Empty();
+            }
+        }
+
+        public static void RecordOpen(string url, bool cleaned)
+        {
+            var host = cleaned ? ExtractHost(url) : null;
+
+            for (var attempt = 0; attempt < 5; attempt++)
+            {
+                try
+                {
+                    var metrics = Load();
+                    metrics.LinksOpened++;
+                    if (cleaned)
+                    {
+                        metrics.LinksCleaned++;
+                        metrics.ClicksCleaned++;
+                        if (!string.IsNullOrEmpty(host))
+                        {
+                            int count;
+                            if (!metrics.Domains.TryGetValue(host, out count))
+                                count = 0;
+                            metrics.Domains[host] = count + 1;
+                        }
+                    }
+                    metrics.Save();
+                    return;
+                }
+                catch (IOException)
+                {
+                    Thread.Sleep(40);
+                }
             }
         }
 
@@ -116,7 +161,9 @@ namespace Sanity
         {
             return new UsageMetrics
             {
+                LinksOpened = 0,
                 LinksCleaned = 0,
+                ClicksCleaned = 0,
                 Domains = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase)
             };
         }
@@ -139,14 +186,18 @@ namespace Sanity
         private static string FormatJsonForSave(string json)
         {
             return json
+                .Replace("\"LinksOpened\":", "\"linksOpened\":")
                 .Replace("\"LinksCleaned\":", "\"linksCleaned\":")
+                .Replace("\"ClicksCleaned\":", "\"clicksCleaned\":")
                 .Replace("\"Domains\":", "\"domains\":");
         }
 
         private static string NormalizeJsonForLoad(string json)
         {
             return json
+                .Replace("\"linksOpened\":", "\"LinksOpened\":")
                 .Replace("\"linksCleaned\":", "\"LinksCleaned\":")
+                .Replace("\"clicksCleaned\":", "\"ClicksCleaned\":")
                 .Replace("\"domains\":", "\"Domains\":");
         }
     }

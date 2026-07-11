@@ -66,47 +66,40 @@ namespace Sanity
             var browsers = new List<BrowserInfo>();
             var seen = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
-            using (var clientsKey = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Clients\StartMenuInternet", false))
-            {
-                if (clientsKey != null)
-                {
-                    foreach (var subKeyName in clientsKey.GetSubKeyNames())
-                    {
-                        using (var browserKey = clientsKey.OpenSubKey(subKeyName, false))
-                        {
-                            if (browserKey == null)
-                                continue;
-
-                            var name = browserKey.GetValue(null) as string ?? subKeyName;
-                            var command = GetOpenCommandForProgId(subKeyName);
-                            var path = ExtractExecutablePath(command);
-                            if (string.IsNullOrEmpty(path) || !seen.Add(path))
-                                continue;
-
-                            browsers.Add(new BrowserInfo
-                            {
-                                Name = name,
-                                ProgId = subKeyName,
-                                ExecutablePath = path
-                            });
-                        }
-                    }
-                }
-            }
+            CollectStartMenuBrowsers(Registry.LocalMachine, @"SOFTWARE\Clients\StartMenuInternet", browsers, seen);
+            CollectStartMenuBrowsers(Registry.LocalMachine, @"SOFTWARE\WOW6432Node\Clients\StartMenuInternet", browsers, seen);
+            CollectStartMenuBrowsers(Registry.CurrentUser, @"SOFTWARE\Clients\StartMenuInternet", browsers, seen);
 
             var defaultProgId = GetDefaultBrowserProgId();
-            if (!string.IsNullOrEmpty(defaultProgId))
+            if (string.IsNullOrEmpty(defaultProgId))
+                return browsers;
+
+            var defaultPath = ResolveProgIdToPath(defaultProgId);
+            if (string.IsNullOrEmpty(defaultPath))
+                return browsers;
+
+            var friendlyName = ResolveFriendlyName(defaultProgId, defaultPath, browsers);
+            var existing = FindByPath(browsers, defaultPath);
+            if (existing != null)
             {
-                var defaultPath = ResolveProgIdToPath(defaultProgId);
-                if (!string.IsNullOrEmpty(defaultPath) && seen.Add(defaultPath))
+                browsers.Remove(existing);
+                browsers.Insert(0, new BrowserInfo
                 {
-                    browsers.Insert(0, new BrowserInfo
-                    {
-                        Name = "System default (" + defaultProgId + ")",
-                        ProgId = defaultProgId,
-                        ExecutablePath = defaultPath
-                    });
-                }
+                    Name = "System default (" + existing.Name + ")",
+                    ProgId = defaultProgId,
+                    ExecutablePath = existing.ExecutablePath
+                });
+                return browsers;
+            }
+
+            if (seen.Add(NormalizePathKey(defaultPath)))
+            {
+                browsers.Insert(0, new BrowserInfo
+                {
+                    Name = "System default (" + friendlyName + ")",
+                    ProgId = defaultProgId,
+                    ExecutablePath = defaultPath
+                });
             }
 
             return browsers;
@@ -147,11 +140,129 @@ namespace Sanity
             return true;
         }
 
+        private static void CollectStartMenuBrowsers(
+            RegistryKey hive,
+            string clientsPath,
+            List<BrowserInfo> browsers,
+            HashSet<string> seen)
+        {
+            using (var clientsKey = hive.OpenSubKey(clientsPath, false))
+            {
+                if (clientsKey == null)
+                    return;
+
+                foreach (var subKeyName in clientsKey.GetSubKeyNames())
+                {
+                    using (var browserKey = clientsKey.OpenSubKey(subKeyName, false))
+                    {
+                        if (browserKey == null)
+                            continue;
+
+                        var name = browserKey.GetValue(null) as string ?? subKeyName;
+                        string command = null;
+                        using (var commandKey = browserKey.OpenSubKey(@"shell\open\command", false))
+                        {
+                            if (commandKey != null)
+                                command = commandKey.GetValue(null) as string;
+                        }
+
+                        if (string.IsNullOrEmpty(command))
+                            command = GetOpenCommandForProgId(subKeyName);
+
+                        var path = ExtractExecutablePath(command);
+                        if (string.IsNullOrEmpty(path) || !File.Exists(path))
+                            continue;
+
+                        if (!seen.Add(NormalizePathKey(path)))
+                            continue;
+
+                        browsers.Add(new BrowserInfo
+                        {
+                            Name = name,
+                            ProgId = subKeyName,
+                            ExecutablePath = path
+                        });
+                    }
+                }
+            }
+        }
+
+        private static string ResolveFriendlyName(string progId, string executablePath, List<BrowserInfo> known)
+        {
+            var match = FindByPath(known, executablePath);
+            if (match != null && !string.IsNullOrWhiteSpace(match.Name))
+                return match.Name;
+
+            using (var appKey = Registry.ClassesRoot.OpenSubKey(progId + @"\Application", false))
+            {
+                if (appKey != null)
+                {
+                    var appName = appKey.GetValue("ApplicationName") as string;
+                    if (!string.IsNullOrWhiteSpace(appName))
+                        return appName;
+                }
+            }
+
+            using (var progKey = Registry.ClassesRoot.OpenSubKey(progId, false))
+            {
+                if (progKey != null)
+                {
+                    var description = progKey.GetValue(null) as string;
+                    if (!string.IsNullOrWhiteSpace(description)
+                        && !string.Equals(description, progId, StringComparison.OrdinalIgnoreCase))
+                        return description;
+                }
+            }
+
+            try
+            {
+                if (!string.IsNullOrEmpty(executablePath) && File.Exists(executablePath))
+                {
+                    var info = FileVersionInfo.GetVersionInfo(executablePath);
+                    if (!string.IsNullOrWhiteSpace(info.FileDescription))
+                        return info.FileDescription;
+                    if (!string.IsNullOrWhiteSpace(info.ProductName))
+                        return info.ProductName;
+                }
+            }
+            catch
+            {
+            }
+
+            return Path.GetFileNameWithoutExtension(executablePath) ?? progId;
+        }
+
+        private static BrowserInfo FindByPath(List<BrowserInfo> browsers, string path)
+        {
+            if (string.IsNullOrEmpty(path))
+                return null;
+
+            var key = NormalizePathKey(path);
+            foreach (var browser in browsers)
+            {
+                if (string.Equals(NormalizePathKey(browser.ExecutablePath), key, StringComparison.OrdinalIgnoreCase))
+                    return browser;
+            }
+            return null;
+        }
+
+        private static string NormalizePathKey(string path)
+        {
+            try
+            {
+                return Path.GetFullPath(path);
+            }
+            catch
+            {
+                return path;
+            }
+        }
+
         private static bool PathsEqual(string left, string right)
         {
             return string.Equals(
-                Path.GetFullPath(left),
-                Path.GetFullPath(right),
+                NormalizePathKey(left),
+                NormalizePathKey(right),
                 StringComparison.OrdinalIgnoreCase);
         }
 
