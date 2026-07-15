@@ -117,12 +117,53 @@ namespace Sanity
             _domainFilter.TextChanged += (s, e) => RefreshList();
             _regexFilter.TextChanged += (s, e) => RefreshList();
 
+            var resetButton = new Button
+            {
+                Text = "Reset to defaults",
+                Width = 130,
+                Height = 28,
+                Location = new Point(22, 470),
+                FlatStyle = FlatStyle.System
+            };
+            resetButton.Click += (s, e) => ResetToDefaults();
+            Controls.Add(resetButton);
+
             var links = UiChrome.CreateLinksPanel();
-            links.Location = new Point(22, 470);
+            links.Location = new Point(170, 470);
             Controls.Add(links);
 
             FormClosing += (s, e) => Persist();
             RefreshList();
+        }
+
+        private void ResetToDefaults()
+        {
+            var answer = MessageBox.Show(
+                this,
+                "Replace all current rules with the default list from GitHub?",
+                "Reset regex rules",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+            if (answer != DialogResult.Yes)
+                return;
+
+            try
+            {
+                var catalog = DefaultRules.LoadForReset();
+                _rules.Clear();
+                _rules.AddRange(CloneRules(catalog.Rules));
+                _config.RulesVersion = catalog.Version;
+                RefreshList();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    this,
+                    "Could not load default rules:\n" + ex.Message,
+                    "Reset regex rules",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
         }
 
         private Control BuildHeader()
@@ -331,6 +372,7 @@ namespace Sanity
             _config.Rules = rules;
             _config.Save();
         }
+
 
         private static List<UrlRule> CloneRules(IList<UrlRule> source)
         {

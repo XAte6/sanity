@@ -18,8 +18,11 @@ namespace Sanity
         public string TargetBrowser { get; set; }
         public bool LaunchOnStartup { get; set; }
         public bool NotificationsEnabled { get; set; }
+        public bool UpdatesEnabled { get; set; }
         public bool SetupCompleted { get; set; }
         public DateTime? SleepUntil { get; set; }
+        public int RulesVersion { get; set; }
+        public DateTime? LastUpdateCheck { get; set; }
         public List<UrlRule> Rules { get; set; }
 
         public static string ConfigPath
@@ -71,11 +74,16 @@ namespace Sanity
                     config.Rules = new List<UrlRule>();
                 if (!raw.Contains("notificationsEnabled"))
                     config.NotificationsEnabled = true;
+                if (!raw.Contains("updatesEnabled"))
+                    config.UpdatesEnabled = true;
                 if (config.TargetBrowser == null)
                     config.TargetBrowser = string.Empty;
                 // Existing installs lack this key — treat as already set up so upgrades skip the wizard.
                 if (!raw.Contains("setupCompleted"))
                     config.SetupCompleted = true;
+                // Existing installs without rulesVersion match the first shipped catalog.
+                if (!raw.Contains("rulesVersion"))
+                    config.RulesVersion = 1;
                 return config;
             }
             catch
@@ -99,8 +107,11 @@ namespace Sanity
                 .Replace("\"TargetBrowser\":", "\"targetBrowser\":")
                 .Replace("\"LaunchOnStartup\":", "\"launchOnStartup\":")
                 .Replace("\"NotificationsEnabled\":", "\"notificationsEnabled\":")
+                .Replace("\"UpdatesEnabled\":", "\"updatesEnabled\":")
                 .Replace("\"SetupCompleted\":", "\"setupCompleted\":")
                 .Replace("\"SleepUntil\":", "\"sleepUntil\":")
+                .Replace("\"RulesVersion\":", "\"rulesVersion\":")
+                .Replace("\"LastUpdateCheck\":", "\"lastUpdateCheck\":")
                 .Replace("\"Rules\":", "\"rules\":")
                 .Replace("\"Domain\":", "\"domain\":")
                 .Replace("\"Regex\":", "\"regex\":");
@@ -114,8 +125,11 @@ namespace Sanity
                 .Replace("\"targetBrowser\":", "\"TargetBrowser\":")
                 .Replace("\"launchOnStartup\":", "\"LaunchOnStartup\":")
                 .Replace("\"notificationsEnabled\":", "\"NotificationsEnabled\":")
+                .Replace("\"updatesEnabled\":", "\"UpdatesEnabled\":")
                 .Replace("\"setupCompleted\":", "\"SetupCompleted\":")
                 .Replace("\"sleepUntil\":", "\"SleepUntil\":")
+                .Replace("\"rulesVersion\":", "\"RulesVersion\":")
+                .Replace("\"lastUpdateCheck\":", "\"LastUpdateCheck\":")
                 .Replace("\"rules\":", "\"Rules\":")
                 .Replace("\"domain\":", "\"Domain\":")
                 .Replace("\"regex\":", "\"Regex\":");
@@ -123,6 +137,7 @@ namespace Sanity
 
         public static AppConfig CreateDefault()
         {
+            var catalog = DefaultRules.LoadLocal();
             return new AppConfig
             {
                 Enabled = false,
@@ -130,72 +145,13 @@ namespace Sanity
                 TargetBrowser = string.Empty,
                 LaunchOnStartup = false,
                 NotificationsEnabled = true,
+                UpdatesEnabled = true,
                 SetupCompleted = false,
                 SleepUntil = null,
-                Rules = CreateDefaultRules()
+                RulesVersion = catalog.Version,
+                LastUpdateCheck = null,
+                Rules = catalog.Rules
             };
-        }
-
-        private static List<UrlRule> CreateDefaultRules()
-        {
-            var rules = new List<UrlRule>();
-
-            // Universal tracking parameters
-            rules.Add(new UrlRule { Domain = "*", Regex = "[?&](utm_[a-zA-Z0-9_]+=[^&]*)" });
-            rules.Add(new UrlRule { Domain = "*", Regex = "[?&](fbclid=[^&]*)" });
-            rules.Add(new UrlRule { Domain = "*", Regex = "[?&](gclid=[^&]*)" });
-            rules.Add(new UrlRule { Domain = "*", Regex = "[?&](msclkid=[^&]*)" });
-            rules.Add(new UrlRule { Domain = "*", Regex = "[?&](twclid=[^&]*)" });
-            rules.Add(new UrlRule { Domain = "*", Regex = "[?&](dclid=[^&]*)" });
-            rules.Add(new UrlRule { Domain = "*", Regex = "[?&](gbraid=[^&]*)" });
-            rules.Add(new UrlRule { Domain = "*", Regex = "[?&](wbraid=[^&]*)" });
-            rules.Add(new UrlRule { Domain = "*", Regex = "[?&](srsltid=[^&]*)" });
-            rules.Add(new UrlRule { Domain = "*", Regex = "[?&](mc_[a-z]+=[^&]*)" });
-
-            AddPlatformRules(rules, new[] { "youtube.com", "youtu.be" },
-                "si=[^&]*", "is=[^&]*", "feature=[^&]*", "pp=[^&]*", "embeds_referring_euri=[^&]*");
-
-            AddPlatformRules(rules, new[] { "amazon.com", "amazon.co.uk", "amazon.de", "amazon.fr", "amazon.ca", "amazon.es", "amazon.it", "amazon.co.jp", "amzn.to", "a.co" },
-                "tag=[^&]*", "linkCode=[^&]*", "ref_=[^&]*", "ascsubtag=[^&]*", "creative=[^&]*",
-                "creativeASIN=[^&]*", "linkId=[^&]*", "pd_rd_w=[^&]*", "pd_rd_wg=[^&]*", "pd_rd_r=[^&]*",
-                "pf_rd_p=[^&]*", "pf_rd_r=[^&]*");
-
-            AddPlatformRules(rules, new[] { "google.com", "google.co.uk", "google.de", "google.fr", "google.ca", "google.com.au" },
-                "ved=[^&]*", "usg=[^&]*", "sa=[^&]*", "source=[^&]*", "gs_lcp=[^&]*", "ei=[^&]*",
-                "sclient=[^&]*", "oq=[^&]*", "gs_l=[^&]*", "cad=[^&]*");
-
-            AddPlatformRules(rules, new[] { "facebook.com", "fb.com", "fb.watch", "m.facebook.com" },
-                "ref=[^&]*", "refid=[^&]*", "__tn__=[^&]*", "__cft__=[^&]*", "mibextid=[^&]*");
-
-            AddPlatformRules(rules, new[] { "instagram.com" },
-                "igsh=[^&]*", "ig_rid=[^&]*");
-
-            AddPlatformRules(rules, new[] { "tiktok.com", "vm.tiktok.com", "www.tiktok.com" },
-                "_t=[^&]*", "_r=[^&]*", "share_app_id=[^&]*", "share_link_id=[^&]*",
-                "tt_medium=[^&]*", "tt_source=[^&]*", "is_from_webapp=[^&]*");
-
-            AddPlatformRules(rules, new[] { "x.com", "twitter.com", "t.co", "mobile.twitter.com" },
-                "s=[^&]*", "ref_src=[^&]*", "ref_url=[^&]*", "t=[^&]*");
-
-            AddPlatformRules(rules, new[] { "reddit.com", "old.reddit.com", "www.reddit.com", "redd.it", "new.reddit.com" },
-                "share_id=[^&]*", "ref_source=[^&]*", "ref_campaign=[^&]*", "embed=[^&]*");
-
-            return rules;
-        }
-
-        private static void AddPlatformRules(List<UrlRule> rules, string[] domains, params string[] paramPatterns)
-        {
-            foreach (var domain in domains)
-            {
-                foreach (var param in paramPatterns)
-                {
-                    rules.Add(new UrlRule
-                    {
-                        Domain = domain,
-                        Regex = "[?&](" + param + ")"
-                    });
-                }
-            }
         }
     }
 }

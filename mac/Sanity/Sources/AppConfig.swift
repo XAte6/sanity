@@ -11,7 +11,10 @@ struct AppConfig: Codable {
     var targetBrowser: String
     var launchOnStartup: Bool
     var notificationsEnabled: Bool
+    var updatesEnabled: Bool
     var sleepUntil: String?
+    var rulesVersion: Int
+    var lastUpdateCheck: String?
     var rules: [UrlRule]
 
     var isActive: Bool {
@@ -30,7 +33,10 @@ struct AppConfig: Codable {
         targetBrowser: String = "",
         launchOnStartup: Bool = false,
         notificationsEnabled: Bool = true,
+        updatesEnabled: Bool = true,
         sleepUntil: String? = nil,
+        rulesVersion: Int = 1,
+        lastUpdateCheck: String? = nil,
         rules: [UrlRule] = []
     ) {
         self.enabled = enabled
@@ -38,7 +44,10 @@ struct AppConfig: Codable {
         self.targetBrowser = targetBrowser
         self.launchOnStartup = launchOnStartup
         self.notificationsEnabled = notificationsEnabled
+        self.updatesEnabled = updatesEnabled
         self.sleepUntil = sleepUntil
+        self.rulesVersion = rulesVersion
+        self.lastUpdateCheck = lastUpdateCheck
         self.rules = rules
     }
 
@@ -50,7 +59,10 @@ struct AppConfig: Codable {
         targetBrowser = try container.decodeIfPresent(String.self, forKey: .targetBrowser) ?? ""
         launchOnStartup = try container.decodeIfPresent(Bool.self, forKey: .launchOnStartup) ?? false
         notificationsEnabled = try container.decodeIfPresent(Bool.self, forKey: .notificationsEnabled) ?? true
+        updatesEnabled = try container.decodeIfPresent(Bool.self, forKey: .updatesEnabled) ?? true
         sleepUntil = try container.decodeIfPresent(String.self, forKey: .sleepUntil)
+        rulesVersion = try container.decodeIfPresent(Int.self, forKey: .rulesVersion) ?? 1
+        lastUpdateCheck = try container.decodeIfPresent(String.self, forKey: .lastUpdateCheck)
         rules = try container.decodeIfPresent([UrlRule].self, forKey: .rules) ?? []
     }
 
@@ -72,7 +84,9 @@ struct AppConfig: Codable {
             let data = try Data(contentsOf: url)
             var config = try JSONDecoder().decode(AppConfig.self, from: data)
             if config.rules.isEmpty {
-                config.rules = createDefaultRules()
+                let catalog = try DefaultRules.loadLocal()
+                config.rules = catalog.rules
+                config.rulesVersion = catalog.version
             }
             return config
         } catch {
@@ -109,7 +123,13 @@ struct AppConfig: Codable {
     }
 
     static func createDefault() -> AppConfig {
-        AppConfig(rules: createDefaultRules())
+        do {
+            let catalog = try DefaultRules.loadLocal()
+            return AppConfig(rulesVersion: catalog.version, rules: catalog.rules)
+        } catch {
+            fputs("Failed to load default rules: \(error)\n", stderr)
+            return AppConfig()
+        }
     }
 
     private static let isoFormatter: ISO8601DateFormatter = {
@@ -124,50 +144,5 @@ struct AppConfig: Codable {
         let digits = inner.prefix { $0.isNumber || $0 == "-" }
         guard let millis = Double(digits) else { return nil }
         return Date(timeIntervalSince1970: millis / 1000.0)
-    }
-
-    private static func createDefaultRules() -> [UrlRule] {
-        var rules: [UrlRule] = []
-
-        rules += globalRule("[?&](utm_[a-zA-Z0-9_]+=[^&]*)")
-        rules += globalRule("[?&](fbclid=[^&]*)")
-        rules += globalRule("[?&](gclid=[^&]*)")
-        rules += globalRule("[?&](msclkid=[^&]*)")
-        rules += globalRule("[?&](twclid=[^&]*)")
-        rules += globalRule("[?&](dclid=[^&]*)")
-        rules += globalRule("[?&](gbraid=[^&]*)")
-        rules += globalRule("[?&](wbraid=[^&]*)")
-        rules += globalRule("[?&](srsltid=[^&]*)")
-        rules += globalRule("[?&](mc_[a-z]+=[^&]*)")
-
-        addPlatformRules(&rules, domains: ["youtube.com", "youtu.be"],
-                         params: ["si=[^&]*", "is=[^&]*", "feature=[^&]*", "pp=[^&]*", "embeds_referring_euri=[^&]*"])
-        addPlatformRules(&rules, domains: ["amazon.com", "amazon.co.uk", "amazon.de", "amazon.fr", "amazon.ca", "amazon.es", "amazon.it", "amazon.co.jp", "amzn.to", "a.co"],
-                         params: ["tag=[^&]*", "linkCode=[^&]*", "ref_=[^&]*", "ascsubtag=[^&]*", "creative=[^&]*", "creativeASIN=[^&]*", "linkId=[^&]*", "pd_rd_w=[^&]*", "pd_rd_wg=[^&]*", "pd_rd_r=[^&]*", "pf_rd_p=[^&]*", "pf_rd_r=[^&]*"])
-        addPlatformRules(&rules, domains: ["google.com", "google.co.uk", "google.de", "google.fr", "google.ca", "google.com.au"],
-                         params: ["ved=[^&]*", "usg=[^&]*", "sa=[^&]*", "source=[^&]*", "gs_lcp=[^&]*", "ei=[^&]*", "sclient=[^&]*", "oq=[^&]*", "gs_l=[^&]*", "cad=[^&]*"])
-        addPlatformRules(&rules, domains: ["facebook.com", "fb.com", "fb.watch", "m.facebook.com"],
-                         params: ["ref=[^&]*", "refid=[^&]*", "__tn__=[^&]*", "__cft__=[^&]*", "mibextid=[^&]*"])
-        addPlatformRules(&rules, domains: ["instagram.com"], params: ["igsh=[^&]*", "ig_rid=[^&]*"])
-        addPlatformRules(&rules, domains: ["tiktok.com", "vm.tiktok.com", "www.tiktok.com"],
-                         params: ["_t=[^&]*", "_r=[^&]*", "share_app_id=[^&]*", "share_link_id=[^&]*", "tt_medium=[^&]*", "tt_source=[^&]*", "is_from_webapp=[^&]*"])
-        addPlatformRules(&rules, domains: ["x.com", "twitter.com", "t.co", "mobile.twitter.com"],
-                         params: ["s=[^&]*", "ref_src=[^&]*", "ref_url=[^&]*", "t=[^&]*"])
-        addPlatformRules(&rules, domains: ["reddit.com", "old.reddit.com", "www.reddit.com", "redd.it", "new.reddit.com"],
-                         params: ["share_id=[^&]*", "ref_source=[^&]*", "ref_campaign=[^&]*", "embed=[^&]*"])
-
-        return rules
-    }
-
-    private static func globalRule(_ regex: String) -> [UrlRule] {
-        [UrlRule(domain: "*", regex: regex)]
-    }
-
-    private static func addPlatformRules(_ rules: inout [UrlRule], domains: [String], params: [String]) {
-        for domain in domains {
-            for param in params {
-                rules.append(UrlRule(domain: domain, regex: "[?&](\(param))"))
-            }
-        }
     }
 }

@@ -38,5 +38,8 @@ final class ClipboardMonitor {
         isUpdatingClipboard = false
         UsageMetrics.recordClean(url: cleaned)
         onCleaned?()
+        UpdateChecker.runAsync(config: config) { [weak self] updated in
+            self?.updateConfig(updated)
+        }
     }
 }

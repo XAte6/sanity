@@ -58,6 +58,7 @@ class SettingsActivity : AppCompatActivity() {
     private fun bindUi() {
         binding.enabledSwitch.isChecked = config.enabled
         binding.notificationsSwitch.isChecked = config.notificationsEnabled
+        binding.updatesSwitch.isChecked = config.updatesEnabled
 
         bindSetupInstructions()
         updateBrowserSpinner()
@@ -81,6 +82,11 @@ class SettingsActivity : AppCompatActivity() {
             save()
         }
 
+        binding.updatesSwitch.setOnCheckedChangeListener { _, checked ->
+            config = config.copy(updatesEnabled = checked)
+            save()
+        }
+
         binding.browserSpinner.setOnItemSelectedListener(SimpleItemSelectedListener {
             val browser = browsers.getOrNull(binding.browserSpinner.selectedItemPosition)
                 ?: return@SimpleItemSelectedListener
@@ -95,6 +101,10 @@ class SettingsActivity : AppCompatActivity() {
 
         binding.closeButton.setOnClickListener {
             attemptExit()
+        }
+
+        UpdateChecker.runAsync(this, config) { updated ->
+            config = updated
         }
     }
 

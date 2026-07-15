@@ -14,6 +14,8 @@ if errorlevel 1 (
 )
 
 pushd "%ROOT%"
+copy /Y "%ROOT%..\defaults\regex-rules.json" "app\src\main\assets\regex-rules.json" >nul
+copy /Y "%ROOT%..\defaults\regex-rules.json" "app\src\test\resources\regex-rules.json" >nul
 gradle :app:assembleRelease
 if errorlevel 1 (
     echo Android build failed.

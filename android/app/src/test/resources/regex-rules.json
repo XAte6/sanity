@@ -1,0 +1,3513 @@
+{
+  "version": 2,
+  "rules": [
+    {
+      "domain": "*",
+      "regex": "[?&](utm_[a-zA-Z0-9_]+=[^&]*)"
+    },
+    {
+      "domain": "*",
+      "regex": "[?&](fbclid=[^&]*)"
+    },
+    {
+      "domain": "*",
+      "regex": "[?&](gclid=[^&]*)"
+    },
+    {
+      "domain": "*",
+      "regex": "[?&](msclkid=[^&]*)"
+    },
+    {
+      "domain": "*",
+      "regex": "[?&](twclid=[^&]*)"
+    },
+    {
+      "domain": "*",
+      "regex": "[?&](dclid=[^&]*)"
+    },
+    {
+      "domain": "*",
+      "regex": "[?&](gbraid=[^&]*)"
+    },
+    {
+      "domain": "*",
+      "regex": "[?&](wbraid=[^&]*)"
+    },
+    {
+      "domain": "*",
+      "regex": "[?&](srsltid=[^&]*)"
+    },
+    {
+      "domain": "*",
+      "regex": "[?&](mc_[a-z]+=[^&]*)"
+    },
+    {
+      "domain": "*",
+      "regex": "[?&](yclid=[^&]*)"
+    },
+    {
+      "domain": "*",
+      "regex": "[?&](ttclid=[^&]*)"
+    },
+    {
+      "domain": "*",
+      "regex": "[?&](li_fat_id=[^&]*)"
+    },
+    {
+      "domain": "*",
+      "regex": "[?&](igshid=[^&]*)"
+    },
+    {
+      "domain": "*",
+      "regex": "[?&](_hsenc=[^&]*)"
+    },
+    {
+      "domain": "*",
+      "regex": "[?&](_hsmi=[^&]*)"
+    },
+    {
+      "domain": "*",
+      "regex": "[?&](hsCtaTracking=[^&]*)"
+    },
+    {
+      "domain": "*",
+      "regex": "[?&](mkt_tok=[^&]*)"
+    },
+    {
+      "domain": "*",
+      "regex": "[?&](vero_id=[^&]*)"
+    },
+    {
+      "domain": "*",
+      "regex": "[?&](oly_anon_id=[^&]*)"
+    },
+    {
+      "domain": "*",
+      "regex": "[?&](oly_enc_id=[^&]*)"
+    },
+    {
+      "domain": "*",
+      "regex": "[?&](ncid=[^&]*)"
+    },
+    {
+      "domain": "*",
+      "regex": "[?&](ocid=[^&]*)"
+    },
+    {
+      "domain": "*",
+      "regex": "[?&](ito=[^&]*)"
+    },
+    {
+      "domain": "*",
+      "regex": "[?&](ns_mchannel=[^&]*)"
+    },
+    {
+      "domain": "*",
+      "regex": "[?&](ns_campaign=[^&]*)"
+    },
+    {
+      "domain": "*",
+      "regex": "[?&](ns_source=[^&]*)"
+    },
+    {
+      "domain": "*",
+      "regex": "[?&](ns_linkname=[^&]*)"
+    },
+    {
+      "domain": "*",
+      "regex": "[?&](spm=[^&]*)"
+    },
+    {
+      "domain": "*",
+      "regex": "[?&](scm=[^&]*)"
+    },
+    {
+      "domain": "*",
+      "regex": "[?&](trk=[^&]*)"
+    },
+    {
+      "domain": "*",
+      "regex": "[?&](trkCampaign=[^&]*)"
+    },
+    {
+      "domain": "youtube.com",
+      "regex": "[?&](si=[^&]*)"
+    },
+    {
+      "domain": "youtube.com",
+      "regex": "[?&](is=[^&]*)"
+    },
+    {
+      "domain": "youtube.com",
+      "regex": "[?&](feature=[^&]*)"
+    },
+    {
+      "domain": "youtube.com",
+      "regex": "[?&](pp=[^&]*)"
+    },
+    {
+      "domain": "youtube.com",
+      "regex": "[?&](embeds_referring_euri=[^&]*)"
+    },
+    {
+      "domain": "youtu.be",
+      "regex": "[?&](si=[^&]*)"
+    },
+    {
+      "domain": "youtu.be",
+      "regex": "[?&](is=[^&]*)"
+    },
+    {
+      "domain": "youtu.be",
+      "regex": "[?&](feature=[^&]*)"
+    },
+    {
+      "domain": "youtu.be",
+      "regex": "[?&](pp=[^&]*)"
+    },
+    {
+      "domain": "youtu.be",
+      "regex": "[?&](embeds_referring_euri=[^&]*)"
+    },
+    {
+      "domain": "www.youtube.com",
+      "regex": "[?&](si=[^&]*)"
+    },
+    {
+      "domain": "www.youtube.com",
+      "regex": "[?&](is=[^&]*)"
+    },
+    {
+      "domain": "www.youtube.com",
+      "regex": "[?&](feature=[^&]*)"
+    },
+    {
+      "domain": "www.youtube.com",
+      "regex": "[?&](pp=[^&]*)"
+    },
+    {
+      "domain": "www.youtube.com",
+      "regex": "[?&](embeds_referring_euri=[^&]*)"
+    },
+    {
+      "domain": "m.youtube.com",
+      "regex": "[?&](si=[^&]*)"
+    },
+    {
+      "domain": "m.youtube.com",
+      "regex": "[?&](is=[^&]*)"
+    },
+    {
+      "domain": "m.youtube.com",
+      "regex": "[?&](feature=[^&]*)"
+    },
+    {
+      "domain": "m.youtube.com",
+      "regex": "[?&](pp=[^&]*)"
+    },
+    {
+      "domain": "m.youtube.com",
+      "regex": "[?&](embeds_referring_euri=[^&]*)"
+    },
+    {
+      "domain": "amazon.com",
+      "regex": "[?&](tag=[^&]*)"
+    },
+    {
+      "domain": "amazon.com",
+      "regex": "[?&](linkCode=[^&]*)"
+    },
+    {
+      "domain": "amazon.com",
+      "regex": "[?&](ref_=[^&]*)"
+    },
+    {
+      "domain": "amazon.com",
+      "regex": "[?&](ascsubtag=[^&]*)"
+    },
+    {
+      "domain": "amazon.com",
+      "regex": "[?&](creative=[^&]*)"
+    },
+    {
+      "domain": "amazon.com",
+      "regex": "[?&](creativeASIN=[^&]*)"
+    },
+    {
+      "domain": "amazon.com",
+      "regex": "[?&](linkId=[^&]*)"
+    },
+    {
+      "domain": "amazon.com",
+      "regex": "[?&](pd_rd_w=[^&]*)"
+    },
+    {
+      "domain": "amazon.com",
+      "regex": "[?&](pd_rd_wg=[^&]*)"
+    },
+    {
+      "domain": "amazon.com",
+      "regex": "[?&](pd_rd_r=[^&]*)"
+    },
+    {
+      "domain": "amazon.com",
+      "regex": "[?&](pf_rd_p=[^&]*)"
+    },
+    {
+      "domain": "amazon.com",
+      "regex": "[?&](pf_rd_r=[^&]*)"
+    },
+    {
+      "domain": "amazon.com",
+      "regex": "[?&](qid=[^&]*)"
+    },
+    {
+      "domain": "amazon.com",
+      "regex": "[?&](sr=[^&]*)"
+    },
+    {
+      "domain": "amazon.com",
+      "regex": "[?&](keywords=[^&]*)"
+    },
+    {
+      "domain": "amazon.com",
+      "regex": "[?&](sprefix=[^&]*)"
+    },
+    {
+      "domain": "amazon.com",
+      "regex": "[?&](crid=[^&]*)"
+    },
+    {
+      "domain": "amazon.com",
+      "regex": "[?&](dib=[^&]*)"
+    },
+    {
+      "domain": "amazon.com",
+      "regex": "[?&](dib_tag=[^&]*)"
+    },
+    {
+      "domain": "amazon.com",
+      "regex": "[?&](th=[^&]*)"
+    },
+    {
+      "domain": "amazon.com",
+      "regex": "[?&](psc=[^&]*)"
+    },
+    {
+      "domain": "amazon.co.uk",
+      "regex": "[?&](tag=[^&]*)"
+    },
+    {
+      "domain": "amazon.co.uk",
+      "regex": "[?&](linkCode=[^&]*)"
+    },
+    {
+      "domain": "amazon.co.uk",
+      "regex": "[?&](ref_=[^&]*)"
+    },
+    {
+      "domain": "amazon.co.uk",
+      "regex": "[?&](ascsubtag=[^&]*)"
+    },
+    {
+      "domain": "amazon.co.uk",
+      "regex": "[?&](creative=[^&]*)"
+    },
+    {
+      "domain": "amazon.co.uk",
+      "regex": "[?&](creativeASIN=[^&]*)"
+    },
+    {
+      "domain": "amazon.co.uk",
+      "regex": "[?&](linkId=[^&]*)"
+    },
+    {
+      "domain": "amazon.co.uk",
+      "regex": "[?&](pd_rd_w=[^&]*)"
+    },
+    {
+      "domain": "amazon.co.uk",
+      "regex": "[?&](pd_rd_wg=[^&]*)"
+    },
+    {
+      "domain": "amazon.co.uk",
+      "regex": "[?&](pd_rd_r=[^&]*)"
+    },
+    {
+      "domain": "amazon.co.uk",
+      "regex": "[?&](pf_rd_p=[^&]*)"
+    },
+    {
+      "domain": "amazon.co.uk",
+      "regex": "[?&](pf_rd_r=[^&]*)"
+    },
+    {
+      "domain": "amazon.co.uk",
+      "regex": "[?&](qid=[^&]*)"
+    },
+    {
+      "domain": "amazon.co.uk",
+      "regex": "[?&](sr=[^&]*)"
+    },
+    {
+      "domain": "amazon.co.uk",
+      "regex": "[?&](keywords=[^&]*)"
+    },
+    {
+      "domain": "amazon.co.uk",
+      "regex": "[?&](sprefix=[^&]*)"
+    },
+    {
+      "domain": "amazon.co.uk",
+      "regex": "[?&](crid=[^&]*)"
+    },
+    {
+      "domain": "amazon.co.uk",
+      "regex": "[?&](dib=[^&]*)"
+    },
+    {
+      "domain": "amazon.co.uk",
+      "regex": "[?&](dib_tag=[^&]*)"
+    },
+    {
+      "domain": "amazon.co.uk",
+      "regex": "[?&](th=[^&]*)"
+    },
+    {
+      "domain": "amazon.co.uk",
+      "regex": "[?&](psc=[^&]*)"
+    },
+    {
+      "domain": "amazon.de",
+      "regex": "[?&](tag=[^&]*)"
+    },
+    {
+      "domain": "amazon.de",
+      "regex": "[?&](linkCode=[^&]*)"
+    },
+    {
+      "domain": "amazon.de",
+      "regex": "[?&](ref_=[^&]*)"
+    },
+    {
+      "domain": "amazon.de",
+      "regex": "[?&](ascsubtag=[^&]*)"
+    },
+    {
+      "domain": "amazon.de",
+      "regex": "[?&](creative=[^&]*)"
+    },
+    {
+      "domain": "amazon.de",
+      "regex": "[?&](creativeASIN=[^&]*)"
+    },
+    {
+      "domain": "amazon.de",
+      "regex": "[?&](linkId=[^&]*)"
+    },
+    {
+      "domain": "amazon.de",
+      "regex": "[?&](pd_rd_w=[^&]*)"
+    },
+    {
+      "domain": "amazon.de",
+      "regex": "[?&](pd_rd_wg=[^&]*)"
+    },
+    {
+      "domain": "amazon.de",
+      "regex": "[?&](pd_rd_r=[^&]*)"
+    },
+    {
+      "domain": "amazon.de",
+      "regex": "[?&](pf_rd_p=[^&]*)"
+    },
+    {
+      "domain": "amazon.de",
+      "regex": "[?&](pf_rd_r=[^&]*)"
+    },
+    {
+      "domain": "amazon.de",
+      "regex": "[?&](qid=[^&]*)"
+    },
+    {
+      "domain": "amazon.de",
+      "regex": "[?&](sr=[^&]*)"
+    },
+    {
+      "domain": "amazon.de",
+      "regex": "[?&](keywords=[^&]*)"
+    },
+    {
+      "domain": "amazon.de",
+      "regex": "[?&](sprefix=[^&]*)"
+    },
+    {
+      "domain": "amazon.de",
+      "regex": "[?&](crid=[^&]*)"
+    },
+    {
+      "domain": "amazon.de",
+      "regex": "[?&](dib=[^&]*)"
+    },
+    {
+      "domain": "amazon.de",
+      "regex": "[?&](dib_tag=[^&]*)"
+    },
+    {
+      "domain": "amazon.de",
+      "regex": "[?&](th=[^&]*)"
+    },
+    {
+      "domain": "amazon.de",
+      "regex": "[?&](psc=[^&]*)"
+    },
+    {
+      "domain": "amazon.fr",
+      "regex": "[?&](tag=[^&]*)"
+    },
+    {
+      "domain": "amazon.fr",
+      "regex": "[?&](linkCode=[^&]*)"
+    },
+    {
+      "domain": "amazon.fr",
+      "regex": "[?&](ref_=[^&]*)"
+    },
+    {
+      "domain": "amazon.fr",
+      "regex": "[?&](ascsubtag=[^&]*)"
+    },
+    {
+      "domain": "amazon.fr",
+      "regex": "[?&](creative=[^&]*)"
+    },
+    {
+      "domain": "amazon.fr",
+      "regex": "[?&](creativeASIN=[^&]*)"
+    },
+    {
+      "domain": "amazon.fr",
+      "regex": "[?&](linkId=[^&]*)"
+    },
+    {
+      "domain": "amazon.fr",
+      "regex": "[?&](pd_rd_w=[^&]*)"
+    },
+    {
+      "domain": "amazon.fr",
+      "regex": "[?&](pd_rd_wg=[^&]*)"
+    },
+    {
+      "domain": "amazon.fr",
+      "regex": "[?&](pd_rd_r=[^&]*)"
+    },
+    {
+      "domain": "amazon.fr",
+      "regex": "[?&](pf_rd_p=[^&]*)"
+    },
+    {
+      "domain": "amazon.fr",
+      "regex": "[?&](pf_rd_r=[^&]*)"
+    },
+    {
+      "domain": "amazon.fr",
+      "regex": "[?&](qid=[^&]*)"
+    },
+    {
+      "domain": "amazon.fr",
+      "regex": "[?&](sr=[^&]*)"
+    },
+    {
+      "domain": "amazon.fr",
+      "regex": "[?&](keywords=[^&]*)"
+    },
+    {
+      "domain": "amazon.fr",
+      "regex": "[?&](sprefix=[^&]*)"
+    },
+    {
+      "domain": "amazon.fr",
+      "regex": "[?&](crid=[^&]*)"
+    },
+    {
+      "domain": "amazon.fr",
+      "regex": "[?&](dib=[^&]*)"
+    },
+    {
+      "domain": "amazon.fr",
+      "regex": "[?&](dib_tag=[^&]*)"
+    },
+    {
+      "domain": "amazon.fr",
+      "regex": "[?&](th=[^&]*)"
+    },
+    {
+      "domain": "amazon.fr",
+      "regex": "[?&](psc=[^&]*)"
+    },
+    {
+      "domain": "amazon.ca",
+      "regex": "[?&](tag=[^&]*)"
+    },
+    {
+      "domain": "amazon.ca",
+      "regex": "[?&](linkCode=[^&]*)"
+    },
+    {
+      "domain": "amazon.ca",
+      "regex": "[?&](ref_=[^&]*)"
+    },
+    {
+      "domain": "amazon.ca",
+      "regex": "[?&](ascsubtag=[^&]*)"
+    },
+    {
+      "domain": "amazon.ca",
+      "regex": "[?&](creative=[^&]*)"
+    },
+    {
+      "domain": "amazon.ca",
+      "regex": "[?&](creativeASIN=[^&]*)"
+    },
+    {
+      "domain": "amazon.ca",
+      "regex": "[?&](linkId=[^&]*)"
+    },
+    {
+      "domain": "amazon.ca",
+      "regex": "[?&](pd_rd_w=[^&]*)"
+    },
+    {
+      "domain": "amazon.ca",
+      "regex": "[?&](pd_rd_wg=[^&]*)"
+    },
+    {
+      "domain": "amazon.ca",
+      "regex": "[?&](pd_rd_r=[^&]*)"
+    },
+    {
+      "domain": "amazon.ca",
+      "regex": "[?&](pf_rd_p=[^&]*)"
+    },
+    {
+      "domain": "amazon.ca",
+      "regex": "[?&](pf_rd_r=[^&]*)"
+    },
+    {
+      "domain": "amazon.ca",
+      "regex": "[?&](qid=[^&]*)"
+    },
+    {
+      "domain": "amazon.ca",
+      "regex": "[?&](sr=[^&]*)"
+    },
+    {
+      "domain": "amazon.ca",
+      "regex": "[?&](keywords=[^&]*)"
+    },
+    {
+      "domain": "amazon.ca",
+      "regex": "[?&](sprefix=[^&]*)"
+    },
+    {
+      "domain": "amazon.ca",
+      "regex": "[?&](crid=[^&]*)"
+    },
+    {
+      "domain": "amazon.ca",
+      "regex": "[?&](dib=[^&]*)"
+    },
+    {
+      "domain": "amazon.ca",
+      "regex": "[?&](dib_tag=[^&]*)"
+    },
+    {
+      "domain": "amazon.ca",
+      "regex": "[?&](th=[^&]*)"
+    },
+    {
+      "domain": "amazon.ca",
+      "regex": "[?&](psc=[^&]*)"
+    },
+    {
+      "domain": "amazon.es",
+      "regex": "[?&](tag=[^&]*)"
+    },
+    {
+      "domain": "amazon.es",
+      "regex": "[?&](linkCode=[^&]*)"
+    },
+    {
+      "domain": "amazon.es",
+      "regex": "[?&](ref_=[^&]*)"
+    },
+    {
+      "domain": "amazon.es",
+      "regex": "[?&](ascsubtag=[^&]*)"
+    },
+    {
+      "domain": "amazon.es",
+      "regex": "[?&](creative=[^&]*)"
+    },
+    {
+      "domain": "amazon.es",
+      "regex": "[?&](creativeASIN=[^&]*)"
+    },
+    {
+      "domain": "amazon.es",
+      "regex": "[?&](linkId=[^&]*)"
+    },
+    {
+      "domain": "amazon.es",
+      "regex": "[?&](pd_rd_w=[^&]*)"
+    },
+    {
+      "domain": "amazon.es",
+      "regex": "[?&](pd_rd_wg=[^&]*)"
+    },
+    {
+      "domain": "amazon.es",
+      "regex": "[?&](pd_rd_r=[^&]*)"
+    },
+    {
+      "domain": "amazon.es",
+      "regex": "[?&](pf_rd_p=[^&]*)"
+    },
+    {
+      "domain": "amazon.es",
+      "regex": "[?&](pf_rd_r=[^&]*)"
+    },
+    {
+      "domain": "amazon.es",
+      "regex": "[?&](qid=[^&]*)"
+    },
+    {
+      "domain": "amazon.es",
+      "regex": "[?&](sr=[^&]*)"
+    },
+    {
+      "domain": "amazon.es",
+      "regex": "[?&](keywords=[^&]*)"
+    },
+    {
+      "domain": "amazon.es",
+      "regex": "[?&](sprefix=[^&]*)"
+    },
+    {
+      "domain": "amazon.es",
+      "regex": "[?&](crid=[^&]*)"
+    },
+    {
+      "domain": "amazon.es",
+      "regex": "[?&](dib=[^&]*)"
+    },
+    {
+      "domain": "amazon.es",
+      "regex": "[?&](dib_tag=[^&]*)"
+    },
+    {
+      "domain": "amazon.es",
+      "regex": "[?&](th=[^&]*)"
+    },
+    {
+      "domain": "amazon.es",
+      "regex": "[?&](psc=[^&]*)"
+    },
+    {
+      "domain": "amazon.it",
+      "regex": "[?&](tag=[^&]*)"
+    },
+    {
+      "domain": "amazon.it",
+      "regex": "[?&](linkCode=[^&]*)"
+    },
+    {
+      "domain": "amazon.it",
+      "regex": "[?&](ref_=[^&]*)"
+    },
+    {
+      "domain": "amazon.it",
+      "regex": "[?&](ascsubtag=[^&]*)"
+    },
+    {
+      "domain": "amazon.it",
+      "regex": "[?&](creative=[^&]*)"
+    },
+    {
+      "domain": "amazon.it",
+      "regex": "[?&](creativeASIN=[^&]*)"
+    },
+    {
+      "domain": "amazon.it",
+      "regex": "[?&](linkId=[^&]*)"
+    },
+    {
+      "domain": "amazon.it",
+      "regex": "[?&](pd_rd_w=[^&]*)"
+    },
+    {
+      "domain": "amazon.it",
+      "regex": "[?&](pd_rd_wg=[^&]*)"
+    },
+    {
+      "domain": "amazon.it",
+      "regex": "[?&](pd_rd_r=[^&]*)"
+    },
+    {
+      "domain": "amazon.it",
+      "regex": "[?&](pf_rd_p=[^&]*)"
+    },
+    {
+      "domain": "amazon.it",
+      "regex": "[?&](pf_rd_r=[^&]*)"
+    },
+    {
+      "domain": "amazon.it",
+      "regex": "[?&](qid=[^&]*)"
+    },
+    {
+      "domain": "amazon.it",
+      "regex": "[?&](sr=[^&]*)"
+    },
+    {
+      "domain": "amazon.it",
+      "regex": "[?&](keywords=[^&]*)"
+    },
+    {
+      "domain": "amazon.it",
+      "regex": "[?&](sprefix=[^&]*)"
+    },
+    {
+      "domain": "amazon.it",
+      "regex": "[?&](crid=[^&]*)"
+    },
+    {
+      "domain": "amazon.it",
+      "regex": "[?&](dib=[^&]*)"
+    },
+    {
+      "domain": "amazon.it",
+      "regex": "[?&](dib_tag=[^&]*)"
+    },
+    {
+      "domain": "amazon.it",
+      "regex": "[?&](th=[^&]*)"
+    },
+    {
+      "domain": "amazon.it",
+      "regex": "[?&](psc=[^&]*)"
+    },
+    {
+      "domain": "amazon.co.jp",
+      "regex": "[?&](tag=[^&]*)"
+    },
+    {
+      "domain": "amazon.co.jp",
+      "regex": "[?&](linkCode=[^&]*)"
+    },
+    {
+      "domain": "amazon.co.jp",
+      "regex": "[?&](ref_=[^&]*)"
+    },
+    {
+      "domain": "amazon.co.jp",
+      "regex": "[?&](ascsubtag=[^&]*)"
+    },
+    {
+      "domain": "amazon.co.jp",
+      "regex": "[?&](creative=[^&]*)"
+    },
+    {
+      "domain": "amazon.co.jp",
+      "regex": "[?&](creativeASIN=[^&]*)"
+    },
+    {
+      "domain": "amazon.co.jp",
+      "regex": "[?&](linkId=[^&]*)"
+    },
+    {
+      "domain": "amazon.co.jp",
+      "regex": "[?&](pd_rd_w=[^&]*)"
+    },
+    {
+      "domain": "amazon.co.jp",
+      "regex": "[?&](pd_rd_wg=[^&]*)"
+    },
+    {
+      "domain": "amazon.co.jp",
+      "regex": "[?&](pd_rd_r=[^&]*)"
+    },
+    {
+      "domain": "amazon.co.jp",
+      "regex": "[?&](pf_rd_p=[^&]*)"
+    },
+    {
+      "domain": "amazon.co.jp",
+      "regex": "[?&](pf_rd_r=[^&]*)"
+    },
+    {
+      "domain": "amazon.co.jp",
+      "regex": "[?&](qid=[^&]*)"
+    },
+    {
+      "domain": "amazon.co.jp",
+      "regex": "[?&](sr=[^&]*)"
+    },
+    {
+      "domain": "amazon.co.jp",
+      "regex": "[?&](keywords=[^&]*)"
+    },
+    {
+      "domain": "amazon.co.jp",
+      "regex": "[?&](sprefix=[^&]*)"
+    },
+    {
+      "domain": "amazon.co.jp",
+      "regex": "[?&](crid=[^&]*)"
+    },
+    {
+      "domain": "amazon.co.jp",
+      "regex": "[?&](dib=[^&]*)"
+    },
+    {
+      "domain": "amazon.co.jp",
+      "regex": "[?&](dib_tag=[^&]*)"
+    },
+    {
+      "domain": "amazon.co.jp",
+      "regex": "[?&](th=[^&]*)"
+    },
+    {
+      "domain": "amazon.co.jp",
+      "regex": "[?&](psc=[^&]*)"
+    },
+    {
+      "domain": "amzn.to",
+      "regex": "[?&](tag=[^&]*)"
+    },
+    {
+      "domain": "amzn.to",
+      "regex": "[?&](linkCode=[^&]*)"
+    },
+    {
+      "domain": "amzn.to",
+      "regex": "[?&](ref_=[^&]*)"
+    },
+    {
+      "domain": "amzn.to",
+      "regex": "[?&](ascsubtag=[^&]*)"
+    },
+    {
+      "domain": "amzn.to",
+      "regex": "[?&](creative=[^&]*)"
+    },
+    {
+      "domain": "amzn.to",
+      "regex": "[?&](creativeASIN=[^&]*)"
+    },
+    {
+      "domain": "amzn.to",
+      "regex": "[?&](linkId=[^&]*)"
+    },
+    {
+      "domain": "amzn.to",
+      "regex": "[?&](pd_rd_w=[^&]*)"
+    },
+    {
+      "domain": "amzn.to",
+      "regex": "[?&](pd_rd_wg=[^&]*)"
+    },
+    {
+      "domain": "amzn.to",
+      "regex": "[?&](pd_rd_r=[^&]*)"
+    },
+    {
+      "domain": "amzn.to",
+      "regex": "[?&](pf_rd_p=[^&]*)"
+    },
+    {
+      "domain": "amzn.to",
+      "regex": "[?&](pf_rd_r=[^&]*)"
+    },
+    {
+      "domain": "amzn.to",
+      "regex": "[?&](qid=[^&]*)"
+    },
+    {
+      "domain": "amzn.to",
+      "regex": "[?&](sr=[^&]*)"
+    },
+    {
+      "domain": "amzn.to",
+      "regex": "[?&](keywords=[^&]*)"
+    },
+    {
+      "domain": "amzn.to",
+      "regex": "[?&](sprefix=[^&]*)"
+    },
+    {
+      "domain": "amzn.to",
+      "regex": "[?&](crid=[^&]*)"
+    },
+    {
+      "domain": "amzn.to",
+      "regex": "[?&](dib=[^&]*)"
+    },
+    {
+      "domain": "amzn.to",
+      "regex": "[?&](dib_tag=[^&]*)"
+    },
+    {
+      "domain": "amzn.to",
+      "regex": "[?&](th=[^&]*)"
+    },
+    {
+      "domain": "amzn.to",
+      "regex": "[?&](psc=[^&]*)"
+    },
+    {
+      "domain": "a.co",
+      "regex": "[?&](tag=[^&]*)"
+    },
+    {
+      "domain": "a.co",
+      "regex": "[?&](linkCode=[^&]*)"
+    },
+    {
+      "domain": "a.co",
+      "regex": "[?&](ref_=[^&]*)"
+    },
+    {
+      "domain": "a.co",
+      "regex": "[?&](ascsubtag=[^&]*)"
+    },
+    {
+      "domain": "a.co",
+      "regex": "[?&](creative=[^&]*)"
+    },
+    {
+      "domain": "a.co",
+      "regex": "[?&](creativeASIN=[^&]*)"
+    },
+    {
+      "domain": "a.co",
+      "regex": "[?&](linkId=[^&]*)"
+    },
+    {
+      "domain": "a.co",
+      "regex": "[?&](pd_rd_w=[^&]*)"
+    },
+    {
+      "domain": "a.co",
+      "regex": "[?&](pd_rd_wg=[^&]*)"
+    },
+    {
+      "domain": "a.co",
+      "regex": "[?&](pd_rd_r=[^&]*)"
+    },
+    {
+      "domain": "a.co",
+      "regex": "[?&](pf_rd_p=[^&]*)"
+    },
+    {
+      "domain": "a.co",
+      "regex": "[?&](pf_rd_r=[^&]*)"
+    },
+    {
+      "domain": "a.co",
+      "regex": "[?&](qid=[^&]*)"
+    },
+    {
+      "domain": "a.co",
+      "regex": "[?&](sr=[^&]*)"
+    },
+    {
+      "domain": "a.co",
+      "regex": "[?&](keywords=[^&]*)"
+    },
+    {
+      "domain": "a.co",
+      "regex": "[?&](sprefix=[^&]*)"
+    },
+    {
+      "domain": "a.co",
+      "regex": "[?&](crid=[^&]*)"
+    },
+    {
+      "domain": "a.co",
+      "regex": "[?&](dib=[^&]*)"
+    },
+    {
+      "domain": "a.co",
+      "regex": "[?&](dib_tag=[^&]*)"
+    },
+    {
+      "domain": "a.co",
+      "regex": "[?&](th=[^&]*)"
+    },
+    {
+      "domain": "a.co",
+      "regex": "[?&](psc=[^&]*)"
+    },
+    {
+      "domain": "ebay.com",
+      "regex": "\\\\?.*"
+    },
+    {
+      "domain": "ebay.co.uk",
+      "regex": "\\\\?.*"
+    },
+    {
+      "domain": "ebay.de",
+      "regex": "\\\\?.*"
+    },
+    {
+      "domain": "ebay.fr",
+      "regex": "\\\\?.*"
+    },
+    {
+      "domain": "ebay.it",
+      "regex": "\\\\?.*"
+    },
+    {
+      "domain": "ebay.es",
+      "regex": "\\\\?.*"
+    },
+    {
+      "domain": "ebay.ca",
+      "regex": "\\\\?.*"
+    },
+    {
+      "domain": "ebay.com.au",
+      "regex": "\\\\?.*"
+    },
+    {
+      "domain": "ebay.at",
+      "regex": "\\\\?.*"
+    },
+    {
+      "domain": "ebay.ch",
+      "regex": "\\\\?.*"
+    },
+    {
+      "domain": "ebay.nl",
+      "regex": "\\\\?.*"
+    },
+    {
+      "domain": "ebay.ie",
+      "regex": "\\\\?.*"
+    },
+    {
+      "domain": "ebay.pl",
+      "regex": "\\\\?.*"
+    },
+    {
+      "domain": "etsy.com",
+      "regex": "\\\\?.*"
+    },
+    {
+      "domain": "walmart.com",
+      "regex": "\\\\?.*"
+    },
+    {
+      "domain": "target.com",
+      "regex": "\\\\?.*"
+    },
+    {
+      "domain": "bestbuy.com",
+      "regex": "\\\\?.*"
+    },
+    {
+      "domain": "aliexpress.com",
+      "regex": "\\\\?.*"
+    },
+    {
+      "domain": "aliexpress.us",
+      "regex": "\\\\?.*"
+    },
+    {
+      "domain": "temu.com",
+      "regex": "\\\\?.*"
+    },
+    {
+      "domain": "shein.com",
+      "regex": "\\\\?.*"
+    },
+    {
+      "domain": "newegg.com",
+      "regex": "\\\\?.*"
+    },
+    {
+      "domain": "wayfair.com",
+      "regex": "\\\\?.*"
+    },
+    {
+      "domain": "wayfair.co.uk",
+      "regex": "\\\\?.*"
+    },
+    {
+      "domain": "argos.co.uk",
+      "regex": "\\\\?.*"
+    },
+    {
+      "domain": "asos.com",
+      "regex": "\\\\?.*"
+    },
+    {
+      "domain": "johnlewis.com",
+      "regex": "\\\\?.*"
+    },
+    {
+      "domain": "currys.co.uk",
+      "regex": "\\\\?.*"
+    },
+    {
+      "domain": "zalando.co.uk",
+      "regex": "\\\\?.*"
+    },
+    {
+      "domain": "zalando.de",
+      "regex": "\\\\?.*"
+    },
+    {
+      "domain": "zalando.com",
+      "regex": "\\\\?.*"
+    },
+    {
+      "domain": "gumtree.com",
+      "regex": "\\\\?.*"
+    },
+    {
+      "domain": "costco.com",
+      "regex": "\\\\?.*"
+    },
+    {
+      "domain": "homedepot.com",
+      "regex": "\\\\?.*"
+    },
+    {
+      "domain": "lowes.com",
+      "regex": "\\\\?.*"
+    },
+    {
+      "domain": "ikea.com",
+      "regex": "\\\\?.*"
+    },
+    {
+      "domain": "shopee.com",
+      "regex": "\\\\?.*"
+    },
+    {
+      "domain": "shopee.co.uk",
+      "regex": "\\\\?.*"
+    },
+    {
+      "domain": "shopee.sg",
+      "regex": "\\\\?.*"
+    },
+    {
+      "domain": "shopee.com.my",
+      "regex": "\\\\?.*"
+    },
+    {
+      "domain": "shopee.ph",
+      "regex": "\\\\?.*"
+    },
+    {
+      "domain": "shopee.vn",
+      "regex": "\\\\?.*"
+    },
+    {
+      "domain": "shopee.co.th",
+      "regex": "\\\\?.*"
+    },
+    {
+      "domain": "shopee.co.id",
+      "regex": "\\\\?.*"
+    },
+    {
+      "domain": "lazada.com",
+      "regex": "\\\\?.*"
+    },
+    {
+      "domain": "lazada.sg",
+      "regex": "\\\\?.*"
+    },
+    {
+      "domain": "lazada.com.my",
+      "regex": "\\\\?.*"
+    },
+    {
+      "domain": "lazada.co.th",
+      "regex": "\\\\?.*"
+    },
+    {
+      "domain": "lazada.vn",
+      "regex": "\\\\?.*"
+    },
+    {
+      "domain": "lazada.co.id",
+      "regex": "\\\\?.*"
+    },
+    {
+      "domain": "lazada.com.ph",
+      "regex": "\\\\?.*"
+    },
+    {
+      "domain": "mercadolibre.com",
+      "regex": "\\\\?.*"
+    },
+    {
+      "domain": "mercadolibre.com.ar",
+      "regex": "\\\\?.*"
+    },
+    {
+      "domain": "mercadolibre.com.mx",
+      "regex": "\\\\?.*"
+    },
+    {
+      "domain": "mercadolivre.com.br",
+      "regex": "\\\\?.*"
+    },
+    {
+      "domain": "flipkart.com",
+      "regex": "\\\\?.*"
+    },
+    {
+      "domain": "rakuten.com",
+      "regex": "\\\\?.*"
+    },
+    {
+      "domain": "rakuten.co.jp",
+      "regex": "\\\\?.*"
+    },
+    {
+      "domain": "rakuten.co.uk",
+      "regex": "\\\\?.*"
+    },
+    {
+      "domain": "depop.com",
+      "regex": "\\\\?.*"
+    },
+    {
+      "domain": "vinted.com",
+      "regex": "\\\\?.*"
+    },
+    {
+      "domain": "vinted.co.uk",
+      "regex": "\\\\?.*"
+    },
+    {
+      "domain": "vinted.fr",
+      "regex": "\\\\?.*"
+    },
+    {
+      "domain": "vinted.de",
+      "regex": "\\\\?.*"
+    },
+    {
+      "domain": "vinted.pl",
+      "regex": "\\\\?.*"
+    },
+    {
+      "domain": "poshmark.com",
+      "regex": "\\\\?.*"
+    },
+    {
+      "domain": "poshmark.ca",
+      "regex": "\\\\?.*"
+    },
+    {
+      "domain": "stockx.com",
+      "regex": "\\\\?.*"
+    },
+    {
+      "domain": "goat.com",
+      "regex": "\\\\?.*"
+    },
+    {
+      "domain": "apple.com",
+      "regex": "\\\\?.*"
+    },
+    {
+      "domain": "store.apple.com",
+      "regex": "\\\\?.*"
+    },
+    {
+      "domain": "samsung.com",
+      "regex": "\\\\?.*"
+    },
+    {
+      "domain": "dell.com",
+      "regex": "\\\\?.*"
+    },
+    {
+      "domain": "hp.com",
+      "regex": "\\\\?.*"
+    },
+    {
+      "domain": "lenovo.com",
+      "regex": "\\\\?.*"
+    },
+    {
+      "domain": "booking.com",
+      "regex": "\\\\?.*"
+    },
+    {
+      "domain": "airbnb.com",
+      "regex": "\\\\?.*"
+    },
+    {
+      "domain": "airbnb.co.uk",
+      "regex": "\\\\?.*"
+    },
+    {
+      "domain": "expedia.com",
+      "regex": "\\\\?.*"
+    },
+    {
+      "domain": "expedia.co.uk",
+      "regex": "\\\\?.*"
+    },
+    {
+      "domain": "tripadvisor.com",
+      "regex": "\\\\?.*"
+    },
+    {
+      "domain": "tripadvisor.co.uk",
+      "regex": "\\\\?.*"
+    },
+    {
+      "domain": "ubereats.com",
+      "regex": "\\\\?.*"
+    },
+    {
+      "domain": "doordash.com",
+      "regex": "\\\\?.*"
+    },
+    {
+      "domain": "deliveroo.co.uk",
+      "regex": "\\\\?.*"
+    },
+    {
+      "domain": "deliveroo.com",
+      "regex": "\\\\?.*"
+    },
+    {
+      "domain": "google.com",
+      "regex": "[?&](ved=[^&]*)"
+    },
+    {
+      "domain": "google.com",
+      "regex": "[?&](usg=[^&]*)"
+    },
+    {
+      "domain": "google.com",
+      "regex": "[?&](sa=[^&]*)"
+    },
+    {
+      "domain": "google.com",
+      "regex": "[?&](source=[^&]*)"
+    },
+    {
+      "domain": "google.com",
+      "regex": "[?&](gs_lcp=[^&]*)"
+    },
+    {
+      "domain": "google.com",
+      "regex": "[?&](ei=[^&]*)"
+    },
+    {
+      "domain": "google.com",
+      "regex": "[?&](sclient=[^&]*)"
+    },
+    {
+      "domain": "google.com",
+      "regex": "[?&](oq=[^&]*)"
+    },
+    {
+      "domain": "google.com",
+      "regex": "[?&](gs_l=[^&]*)"
+    },
+    {
+      "domain": "google.com",
+      "regex": "[?&](cad=[^&]*)"
+    },
+    {
+      "domain": "google.co.uk",
+      "regex": "[?&](ved=[^&]*)"
+    },
+    {
+      "domain": "google.co.uk",
+      "regex": "[?&](usg=[^&]*)"
+    },
+    {
+      "domain": "google.co.uk",
+      "regex": "[?&](sa=[^&]*)"
+    },
+    {
+      "domain": "google.co.uk",
+      "regex": "[?&](source=[^&]*)"
+    },
+    {
+      "domain": "google.co.uk",
+      "regex": "[?&](gs_lcp=[^&]*)"
+    },
+    {
+      "domain": "google.co.uk",
+      "regex": "[?&](ei=[^&]*)"
+    },
+    {
+      "domain": "google.co.uk",
+      "regex": "[?&](sclient=[^&]*)"
+    },
+    {
+      "domain": "google.co.uk",
+      "regex": "[?&](oq=[^&]*)"
+    },
+    {
+      "domain": "google.co.uk",
+      "regex": "[?&](gs_l=[^&]*)"
+    },
+    {
+      "domain": "google.co.uk",
+      "regex": "[?&](cad=[^&]*)"
+    },
+    {
+      "domain": "google.de",
+      "regex": "[?&](ved=[^&]*)"
+    },
+    {
+      "domain": "google.de",
+      "regex": "[?&](usg=[^&]*)"
+    },
+    {
+      "domain": "google.de",
+      "regex": "[?&](sa=[^&]*)"
+    },
+    {
+      "domain": "google.de",
+      "regex": "[?&](source=[^&]*)"
+    },
+    {
+      "domain": "google.de",
+      "regex": "[?&](gs_lcp=[^&]*)"
+    },
+    {
+      "domain": "google.de",
+      "regex": "[?&](ei=[^&]*)"
+    },
+    {
+      "domain": "google.de",
+      "regex": "[?&](sclient=[^&]*)"
+    },
+    {
+      "domain": "google.de",
+      "regex": "[?&](oq=[^&]*)"
+    },
+    {
+      "domain": "google.de",
+      "regex": "[?&](gs_l=[^&]*)"
+    },
+    {
+      "domain": "google.de",
+      "regex": "[?&](cad=[^&]*)"
+    },
+    {
+      "domain": "google.fr",
+      "regex": "[?&](ved=[^&]*)"
+    },
+    {
+      "domain": "google.fr",
+      "regex": "[?&](usg=[^&]*)"
+    },
+    {
+      "domain": "google.fr",
+      "regex": "[?&](sa=[^&]*)"
+    },
+    {
+      "domain": "google.fr",
+      "regex": "[?&](source=[^&]*)"
+    },
+    {
+      "domain": "google.fr",
+      "regex": "[?&](gs_lcp=[^&]*)"
+    },
+    {
+      "domain": "google.fr",
+      "regex": "[?&](ei=[^&]*)"
+    },
+    {
+      "domain": "google.fr",
+      "regex": "[?&](sclient=[^&]*)"
+    },
+    {
+      "domain": "google.fr",
+      "regex": "[?&](oq=[^&]*)"
+    },
+    {
+      "domain": "google.fr",
+      "regex": "[?&](gs_l=[^&]*)"
+    },
+    {
+      "domain": "google.fr",
+      "regex": "[?&](cad=[^&]*)"
+    },
+    {
+      "domain": "google.ca",
+      "regex": "[?&](ved=[^&]*)"
+    },
+    {
+      "domain": "google.ca",
+      "regex": "[?&](usg=[^&]*)"
+    },
+    {
+      "domain": "google.ca",
+      "regex": "[?&](sa=[^&]*)"
+    },
+    {
+      "domain": "google.ca",
+      "regex": "[?&](source=[^&]*)"
+    },
+    {
+      "domain": "google.ca",
+      "regex": "[?&](gs_lcp=[^&]*)"
+    },
+    {
+      "domain": "google.ca",
+      "regex": "[?&](ei=[^&]*)"
+    },
+    {
+      "domain": "google.ca",
+      "regex": "[?&](sclient=[^&]*)"
+    },
+    {
+      "domain": "google.ca",
+      "regex": "[?&](oq=[^&]*)"
+    },
+    {
+      "domain": "google.ca",
+      "regex": "[?&](gs_l=[^&]*)"
+    },
+    {
+      "domain": "google.ca",
+      "regex": "[?&](cad=[^&]*)"
+    },
+    {
+      "domain": "google.com.au",
+      "regex": "[?&](ved=[^&]*)"
+    },
+    {
+      "domain": "google.com.au",
+      "regex": "[?&](usg=[^&]*)"
+    },
+    {
+      "domain": "google.com.au",
+      "regex": "[?&](sa=[^&]*)"
+    },
+    {
+      "domain": "google.com.au",
+      "regex": "[?&](source=[^&]*)"
+    },
+    {
+      "domain": "google.com.au",
+      "regex": "[?&](gs_lcp=[^&]*)"
+    },
+    {
+      "domain": "google.com.au",
+      "regex": "[?&](ei=[^&]*)"
+    },
+    {
+      "domain": "google.com.au",
+      "regex": "[?&](sclient=[^&]*)"
+    },
+    {
+      "domain": "google.com.au",
+      "regex": "[?&](oq=[^&]*)"
+    },
+    {
+      "domain": "google.com.au",
+      "regex": "[?&](gs_l=[^&]*)"
+    },
+    {
+      "domain": "google.com.au",
+      "regex": "[?&](cad=[^&]*)"
+    },
+    {
+      "domain": "news.google.com",
+      "regex": "[?&](ved=[^&]*)"
+    },
+    {
+      "domain": "news.google.com",
+      "regex": "[?&](usg=[^&]*)"
+    },
+    {
+      "domain": "news.google.com",
+      "regex": "[?&](sa=[^&]*)"
+    },
+    {
+      "domain": "news.google.com",
+      "regex": "[?&](source=[^&]*)"
+    },
+    {
+      "domain": "news.google.com",
+      "regex": "[?&](gs_lcp=[^&]*)"
+    },
+    {
+      "domain": "news.google.com",
+      "regex": "[?&](ei=[^&]*)"
+    },
+    {
+      "domain": "news.google.com",
+      "regex": "[?&](sclient=[^&]*)"
+    },
+    {
+      "domain": "news.google.com",
+      "regex": "[?&](oq=[^&]*)"
+    },
+    {
+      "domain": "news.google.com",
+      "regex": "[?&](gs_l=[^&]*)"
+    },
+    {
+      "domain": "news.google.com",
+      "regex": "[?&](cad=[^&]*)"
+    },
+    {
+      "domain": "bing.com",
+      "regex": "[?&](form=[^&]*)"
+    },
+    {
+      "domain": "bing.com",
+      "regex": "[?&](sk=[^&]*)"
+    },
+    {
+      "domain": "bing.com",
+      "regex": "[?&](sp=[^&]*)"
+    },
+    {
+      "domain": "bing.com",
+      "regex": "[?&](sc=[^&]*)"
+    },
+    {
+      "domain": "bing.com",
+      "regex": "[?&](qs=[^&]*)"
+    },
+    {
+      "domain": "bing.com",
+      "regex": "[?&](pq=[^&]*)"
+    },
+    {
+      "domain": "bing.com",
+      "regex": "[?&](cvid=[^&]*)"
+    },
+    {
+      "domain": "bing.com",
+      "regex": "[?&](PC=[^&]*)"
+    },
+    {
+      "domain": "www.bing.com",
+      "regex": "[?&](form=[^&]*)"
+    },
+    {
+      "domain": "www.bing.com",
+      "regex": "[?&](sk=[^&]*)"
+    },
+    {
+      "domain": "www.bing.com",
+      "regex": "[?&](sp=[^&]*)"
+    },
+    {
+      "domain": "www.bing.com",
+      "regex": "[?&](sc=[^&]*)"
+    },
+    {
+      "domain": "www.bing.com",
+      "regex": "[?&](qs=[^&]*)"
+    },
+    {
+      "domain": "www.bing.com",
+      "regex": "[?&](pq=[^&]*)"
+    },
+    {
+      "domain": "www.bing.com",
+      "regex": "[?&](cvid=[^&]*)"
+    },
+    {
+      "domain": "www.bing.com",
+      "regex": "[?&](PC=[^&]*)"
+    },
+    {
+      "domain": "duckduckgo.com",
+      "regex": "[?&](t=[^&]*)"
+    },
+    {
+      "domain": "duckduckgo.com",
+      "regex": "[?&](ia=[^&]*)"
+    },
+    {
+      "domain": "duckduckgo.com",
+      "regex": "[?&](ko=[^&]*)"
+    },
+    {
+      "domain": "yahoo.com",
+      "regex": "[?&](fr=[^&]*)"
+    },
+    {
+      "domain": "yahoo.com",
+      "regex": "[?&](guccounter=[^&]*)"
+    },
+    {
+      "domain": "yahoo.com",
+      "regex": "[?&](guce_referrer=[^&]*)"
+    },
+    {
+      "domain": "yahoo.com",
+      "regex": "[?&](guce_referrer_sig=[^&]*)"
+    },
+    {
+      "domain": "search.yahoo.com",
+      "regex": "[?&](fr=[^&]*)"
+    },
+    {
+      "domain": "search.yahoo.com",
+      "regex": "[?&](guccounter=[^&]*)"
+    },
+    {
+      "domain": "search.yahoo.com",
+      "regex": "[?&](guce_referrer=[^&]*)"
+    },
+    {
+      "domain": "search.yahoo.com",
+      "regex": "[?&](guce_referrer_sig=[^&]*)"
+    },
+    {
+      "domain": "yandex.com",
+      "regex": "[?&](lr=[^&]*)"
+    },
+    {
+      "domain": "yandex.com",
+      "regex": "[?&](search_source=[^&]*)"
+    },
+    {
+      "domain": "yandex.com",
+      "regex": "[?&](clid=[^&]*)"
+    },
+    {
+      "domain": "yandex.ru",
+      "regex": "[?&](lr=[^&]*)"
+    },
+    {
+      "domain": "yandex.ru",
+      "regex": "[?&](search_source=[^&]*)"
+    },
+    {
+      "domain": "yandex.ru",
+      "regex": "[?&](clid=[^&]*)"
+    },
+    {
+      "domain": "facebook.com",
+      "regex": "[?&](ref=[^&]*)"
+    },
+    {
+      "domain": "facebook.com",
+      "regex": "[?&](refid=[^&]*)"
+    },
+    {
+      "domain": "facebook.com",
+      "regex": "[?&](__tn__=[^&]*)"
+    },
+    {
+      "domain": "facebook.com",
+      "regex": "[?&](__cft__=[^&]*)"
+    },
+    {
+      "domain": "facebook.com",
+      "regex": "[?&](mibextid=[^&]*)"
+    },
+    {
+      "domain": "fb.com",
+      "regex": "[?&](ref=[^&]*)"
+    },
+    {
+      "domain": "fb.com",
+      "regex": "[?&](refid=[^&]*)"
+    },
+    {
+      "domain": "fb.com",
+      "regex": "[?&](__tn__=[^&]*)"
+    },
+    {
+      "domain": "fb.com",
+      "regex": "[?&](__cft__=[^&]*)"
+    },
+    {
+      "domain": "fb.com",
+      "regex": "[?&](mibextid=[^&]*)"
+    },
+    {
+      "domain": "fb.watch",
+      "regex": "[?&](ref=[^&]*)"
+    },
+    {
+      "domain": "fb.watch",
+      "regex": "[?&](refid=[^&]*)"
+    },
+    {
+      "domain": "fb.watch",
+      "regex": "[?&](__tn__=[^&]*)"
+    },
+    {
+      "domain": "fb.watch",
+      "regex": "[?&](__cft__=[^&]*)"
+    },
+    {
+      "domain": "fb.watch",
+      "regex": "[?&](mibextid=[^&]*)"
+    },
+    {
+      "domain": "m.facebook.com",
+      "regex": "[?&](ref=[^&]*)"
+    },
+    {
+      "domain": "m.facebook.com",
+      "regex": "[?&](refid=[^&]*)"
+    },
+    {
+      "domain": "m.facebook.com",
+      "regex": "[?&](__tn__=[^&]*)"
+    },
+    {
+      "domain": "m.facebook.com",
+      "regex": "[?&](__cft__=[^&]*)"
+    },
+    {
+      "domain": "m.facebook.com",
+      "regex": "[?&](mibextid=[^&]*)"
+    },
+    {
+      "domain": "instagram.com",
+      "regex": "[?&](igsh=[^&]*)"
+    },
+    {
+      "domain": "instagram.com",
+      "regex": "[?&](ig_rid=[^&]*)"
+    },
+    {
+      "domain": "instagram.com",
+      "regex": "[?&](img_index=[^&]*)"
+    },
+    {
+      "domain": "threads.net",
+      "regex": "[?&](igshid=[^&]*)"
+    },
+    {
+      "domain": "threads.net",
+      "regex": "[?&](xmt=[^&]*)"
+    },
+    {
+      "domain": "www.threads.net",
+      "regex": "[?&](igshid=[^&]*)"
+    },
+    {
+      "domain": "www.threads.net",
+      "regex": "[?&](xmt=[^&]*)"
+    },
+    {
+      "domain": "tiktok.com",
+      "regex": "[?&](_t=[^&]*)"
+    },
+    {
+      "domain": "tiktok.com",
+      "regex": "[?&](_r=[^&]*)"
+    },
+    {
+      "domain": "tiktok.com",
+      "regex": "[?&](share_app_id=[^&]*)"
+    },
+    {
+      "domain": "tiktok.com",
+      "regex": "[?&](share_link_id=[^&]*)"
+    },
+    {
+      "domain": "tiktok.com",
+      "regex": "[?&](tt_medium=[^&]*)"
+    },
+    {
+      "domain": "tiktok.com",
+      "regex": "[?&](tt_source=[^&]*)"
+    },
+    {
+      "domain": "tiktok.com",
+      "regex": "[?&](is_from_webapp=[^&]*)"
+    },
+    {
+      "domain": "vm.tiktok.com",
+      "regex": "[?&](_t=[^&]*)"
+    },
+    {
+      "domain": "vm.tiktok.com",
+      "regex": "[?&](_r=[^&]*)"
+    },
+    {
+      "domain": "vm.tiktok.com",
+      "regex": "[?&](share_app_id=[^&]*)"
+    },
+    {
+      "domain": "vm.tiktok.com",
+      "regex": "[?&](share_link_id=[^&]*)"
+    },
+    {
+      "domain": "vm.tiktok.com",
+      "regex": "[?&](tt_medium=[^&]*)"
+    },
+    {
+      "domain": "vm.tiktok.com",
+      "regex": "[?&](tt_source=[^&]*)"
+    },
+    {
+      "domain": "vm.tiktok.com",
+      "regex": "[?&](is_from_webapp=[^&]*)"
+    },
+    {
+      "domain": "www.tiktok.com",
+      "regex": "[?&](_t=[^&]*)"
+    },
+    {
+      "domain": "www.tiktok.com",
+      "regex": "[?&](_r=[^&]*)"
+    },
+    {
+      "domain": "www.tiktok.com",
+      "regex": "[?&](share_app_id=[^&]*)"
+    },
+    {
+      "domain": "www.tiktok.com",
+      "regex": "[?&](share_link_id=[^&]*)"
+    },
+    {
+      "domain": "www.tiktok.com",
+      "regex": "[?&](tt_medium=[^&]*)"
+    },
+    {
+      "domain": "www.tiktok.com",
+      "regex": "[?&](tt_source=[^&]*)"
+    },
+    {
+      "domain": "www.tiktok.com",
+      "regex": "[?&](is_from_webapp=[^&]*)"
+    },
+    {
+      "domain": "x.com",
+      "regex": "[?&](s=[^&]*)"
+    },
+    {
+      "domain": "x.com",
+      "regex": "[?&](ref_src=[^&]*)"
+    },
+    {
+      "domain": "x.com",
+      "regex": "[?&](ref_url=[^&]*)"
+    },
+    {
+      "domain": "x.com",
+      "regex": "[?&](t=[^&]*)"
+    },
+    {
+      "domain": "twitter.com",
+      "regex": "[?&](s=[^&]*)"
+    },
+    {
+      "domain": "twitter.com",
+      "regex": "[?&](ref_src=[^&]*)"
+    },
+    {
+      "domain": "twitter.com",
+      "regex": "[?&](ref_url=[^&]*)"
+    },
+    {
+      "domain": "twitter.com",
+      "regex": "[?&](t=[^&]*)"
+    },
+    {
+      "domain": "t.co",
+      "regex": "[?&](s=[^&]*)"
+    },
+    {
+      "domain": "t.co",
+      "regex": "[?&](ref_src=[^&]*)"
+    },
+    {
+      "domain": "t.co",
+      "regex": "[?&](ref_url=[^&]*)"
+    },
+    {
+      "domain": "t.co",
+      "regex": "[?&](t=[^&]*)"
+    },
+    {
+      "domain": "mobile.twitter.com",
+      "regex": "[?&](s=[^&]*)"
+    },
+    {
+      "domain": "mobile.twitter.com",
+      "regex": "[?&](ref_src=[^&]*)"
+    },
+    {
+      "domain": "mobile.twitter.com",
+      "regex": "[?&](ref_url=[^&]*)"
+    },
+    {
+      "domain": "mobile.twitter.com",
+      "regex": "[?&](t=[^&]*)"
+    },
+    {
+      "domain": "reddit.com",
+      "regex": "[?&](share_id=[^&]*)"
+    },
+    {
+      "domain": "reddit.com",
+      "regex": "[?&](ref_source=[^&]*)"
+    },
+    {
+      "domain": "reddit.com",
+      "regex": "[?&](ref_campaign=[^&]*)"
+    },
+    {
+      "domain": "reddit.com",
+      "regex": "[?&](embed=[^&]*)"
+    },
+    {
+      "domain": "old.reddit.com",
+      "regex": "[?&](share_id=[^&]*)"
+    },
+    {
+      "domain": "old.reddit.com",
+      "regex": "[?&](ref_source=[^&]*)"
+    },
+    {
+      "domain": "old.reddit.com",
+      "regex": "[?&](ref_campaign=[^&]*)"
+    },
+    {
+      "domain": "old.reddit.com",
+      "regex": "[?&](embed=[^&]*)"
+    },
+    {
+      "domain": "www.reddit.com",
+      "regex": "[?&](share_id=[^&]*)"
+    },
+    {
+      "domain": "www.reddit.com",
+      "regex": "[?&](ref_source=[^&]*)"
+    },
+    {
+      "domain": "www.reddit.com",
+      "regex": "[?&](ref_campaign=[^&]*)"
+    },
+    {
+      "domain": "www.reddit.com",
+      "regex": "[?&](embed=[^&]*)"
+    },
+    {
+      "domain": "redd.it",
+      "regex": "[?&](share_id=[^&]*)"
+    },
+    {
+      "domain": "redd.it",
+      "regex": "[?&](ref_source=[^&]*)"
+    },
+    {
+      "domain": "redd.it",
+      "regex": "[?&](ref_campaign=[^&]*)"
+    },
+    {
+      "domain": "redd.it",
+      "regex": "[?&](embed=[^&]*)"
+    },
+    {
+      "domain": "new.reddit.com",
+      "regex": "[?&](share_id=[^&]*)"
+    },
+    {
+      "domain": "new.reddit.com",
+      "regex": "[?&](ref_source=[^&]*)"
+    },
+    {
+      "domain": "new.reddit.com",
+      "regex": "[?&](ref_campaign=[^&]*)"
+    },
+    {
+      "domain": "new.reddit.com",
+      "regex": "[?&](embed=[^&]*)"
+    },
+    {
+      "domain": "linkedin.com",
+      "regex": "[?&](trk=[^&]*)"
+    },
+    {
+      "domain": "linkedin.com",
+      "regex": "[?&](originalSubdomain=[^&]*)"
+    },
+    {
+      "domain": "linkedin.com",
+      "regex": "[?&](rcm=[^&]*)"
+    },
+    {
+      "domain": "linkedin.com",
+      "regex": "[?&](lipi=[^&]*)"
+    },
+    {
+      "domain": "www.linkedin.com",
+      "regex": "[?&](trk=[^&]*)"
+    },
+    {
+      "domain": "www.linkedin.com",
+      "regex": "[?&](originalSubdomain=[^&]*)"
+    },
+    {
+      "domain": "www.linkedin.com",
+      "regex": "[?&](rcm=[^&]*)"
+    },
+    {
+      "domain": "www.linkedin.com",
+      "regex": "[?&](lipi=[^&]*)"
+    },
+    {
+      "domain": "lnkd.in",
+      "regex": "[?&](trk=[^&]*)"
+    },
+    {
+      "domain": "lnkd.in",
+      "regex": "[?&](originalSubdomain=[^&]*)"
+    },
+    {
+      "domain": "lnkd.in",
+      "regex": "[?&](rcm=[^&]*)"
+    },
+    {
+      "domain": "lnkd.in",
+      "regex": "[?&](lipi=[^&]*)"
+    },
+    {
+      "domain": "pinterest.com",
+      "regex": "[?&](epik=[^&]*)"
+    },
+    {
+      "domain": "pinterest.com",
+      "regex": "[?&](invite_code=[^&]*)"
+    },
+    {
+      "domain": "pinterest.com",
+      "regex": "[?&](sender=[^&]*)"
+    },
+    {
+      "domain": "www.pinterest.com",
+      "regex": "[?&](epik=[^&]*)"
+    },
+    {
+      "domain": "www.pinterest.com",
+      "regex": "[?&](invite_code=[^&]*)"
+    },
+    {
+      "domain": "www.pinterest.com",
+      "regex": "[?&](sender=[^&]*)"
+    },
+    {
+      "domain": "pin.it",
+      "regex": "[?&](epik=[^&]*)"
+    },
+    {
+      "domain": "pin.it",
+      "regex": "[?&](invite_code=[^&]*)"
+    },
+    {
+      "domain": "pin.it",
+      "regex": "[?&](sender=[^&]*)"
+    },
+    {
+      "domain": "snapchat.com",
+      "regex": "[?&](share_id=[^&]*)"
+    },
+    {
+      "domain": "snapchat.com",
+      "regex": "[?&](locale=[^&]*)"
+    },
+    {
+      "domain": "snapchat.com",
+      "regex": "[?&](sid=[^&]*)"
+    },
+    {
+      "domain": "www.snapchat.com",
+      "regex": "[?&](share_id=[^&]*)"
+    },
+    {
+      "domain": "www.snapchat.com",
+      "regex": "[?&](locale=[^&]*)"
+    },
+    {
+      "domain": "www.snapchat.com",
+      "regex": "[?&](sid=[^&]*)"
+    },
+    {
+      "domain": "t.snapchat.com",
+      "regex": "[?&](share_id=[^&]*)"
+    },
+    {
+      "domain": "t.snapchat.com",
+      "regex": "[?&](locale=[^&]*)"
+    },
+    {
+      "domain": "t.snapchat.com",
+      "regex": "[?&](sid=[^&]*)"
+    },
+    {
+      "domain": "discord.com",
+      "regex": "[?&](source=[^&]*)"
+    },
+    {
+      "domain": "bsky.app",
+      "regex": "[?&](ref_src=[^&]*)"
+    },
+    {
+      "domain": "bsky.app",
+      "regex": "[?&](ref_url=[^&]*)"
+    },
+    {
+      "domain": "twitch.tv",
+      "regex": "[?&](tt_medium=[^&]*)"
+    },
+    {
+      "domain": "twitch.tv",
+      "regex": "[?&](tt_content=[^&]*)"
+    },
+    {
+      "domain": "twitch.tv",
+      "regex": "[?&](sr=[^&]*)"
+    },
+    {
+      "domain": "www.twitch.tv",
+      "regex": "[?&](tt_medium=[^&]*)"
+    },
+    {
+      "domain": "www.twitch.tv",
+      "regex": "[?&](tt_content=[^&]*)"
+    },
+    {
+      "domain": "www.twitch.tv",
+      "regex": "[?&](sr=[^&]*)"
+    },
+    {
+      "domain": "m.twitch.tv",
+      "regex": "[?&](tt_medium=[^&]*)"
+    },
+    {
+      "domain": "m.twitch.tv",
+      "regex": "[?&](tt_content=[^&]*)"
+    },
+    {
+      "domain": "m.twitch.tv",
+      "regex": "[?&](sr=[^&]*)"
+    },
+    {
+      "domain": "spotify.com",
+      "regex": "[?&](si=[^&]*)"
+    },
+    {
+      "domain": "spotify.com",
+      "regex": "[?&](nd=[^&]*)"
+    },
+    {
+      "domain": "open.spotify.com",
+      "regex": "[?&](si=[^&]*)"
+    },
+    {
+      "domain": "open.spotify.com",
+      "regex": "[?&](nd=[^&]*)"
+    },
+    {
+      "domain": "soundcloud.com",
+      "regex": "[?&](si=[^&]*)"
+    },
+    {
+      "domain": "medium.com",
+      "regex": "[?&](source=[^&]*)"
+    },
+    {
+      "domain": "medium.com",
+      "regex": "[?&](sk=[^&]*)"
+    },
+    {
+      "domain": "medium.com",
+      "regex": "[?&](gi=[^&]*)"
+    },
+    {
+      "domain": "substack.com",
+      "regex": "[?&](r=[^&]*)"
+    },
+    {
+      "domain": "substack.com",
+      "regex": "[?&](triedRedirect=[^&]*)"
+    },
+    {
+      "domain": "bbc.com",
+      "regex": "[?&](ocid=[^&]*)"
+    },
+    {
+      "domain": "bbc.com",
+      "regex": "[?&](ncid=[^&]*)"
+    },
+    {
+      "domain": "bbc.com",
+      "regex": "[?&](ito=[^&]*)"
+    },
+    {
+      "domain": "bbc.com",
+      "regex": "[?&](CMP=[^&]*)"
+    },
+    {
+      "domain": "bbc.com",
+      "regex": "[?&](ns_mchannel=[^&]*)"
+    },
+    {
+      "domain": "bbc.com",
+      "regex": "[?&](ns_campaign=[^&]*)"
+    },
+    {
+      "domain": "bbc.com",
+      "regex": "[?&](ns_source=[^&]*)"
+    },
+    {
+      "domain": "bbc.com",
+      "regex": "[?&](ns_linkname=[^&]*)"
+    },
+    {
+      "domain": "bbc.com",
+      "regex": "[?&](at_medium=[^&]*)"
+    },
+    {
+      "domain": "bbc.com",
+      "regex": "[?&](at_campaign=[^&]*)"
+    },
+    {
+      "domain": "bbc.co.uk",
+      "regex": "[?&](ocid=[^&]*)"
+    },
+    {
+      "domain": "bbc.co.uk",
+      "regex": "[?&](ncid=[^&]*)"
+    },
+    {
+      "domain": "bbc.co.uk",
+      "regex": "[?&](ito=[^&]*)"
+    },
+    {
+      "domain": "bbc.co.uk",
+      "regex": "[?&](CMP=[^&]*)"
+    },
+    {
+      "domain": "bbc.co.uk",
+      "regex": "[?&](ns_mchannel=[^&]*)"
+    },
+    {
+      "domain": "bbc.co.uk",
+      "regex": "[?&](ns_campaign=[^&]*)"
+    },
+    {
+      "domain": "bbc.co.uk",
+      "regex": "[?&](ns_source=[^&]*)"
+    },
+    {
+      "domain": "bbc.co.uk",
+      "regex": "[?&](ns_linkname=[^&]*)"
+    },
+    {
+      "domain": "bbc.co.uk",
+      "regex": "[?&](at_medium=[^&]*)"
+    },
+    {
+      "domain": "bbc.co.uk",
+      "regex": "[?&](at_campaign=[^&]*)"
+    },
+    {
+      "domain": "www.bbc.com",
+      "regex": "[?&](ocid=[^&]*)"
+    },
+    {
+      "domain": "www.bbc.com",
+      "regex": "[?&](ncid=[^&]*)"
+    },
+    {
+      "domain": "www.bbc.com",
+      "regex": "[?&](ito=[^&]*)"
+    },
+    {
+      "domain": "www.bbc.com",
+      "regex": "[?&](CMP=[^&]*)"
+    },
+    {
+      "domain": "www.bbc.com",
+      "regex": "[?&](ns_mchannel=[^&]*)"
+    },
+    {
+      "domain": "www.bbc.com",
+      "regex": "[?&](ns_campaign=[^&]*)"
+    },
+    {
+      "domain": "www.bbc.com",
+      "regex": "[?&](ns_source=[^&]*)"
+    },
+    {
+      "domain": "www.bbc.com",
+      "regex": "[?&](ns_linkname=[^&]*)"
+    },
+    {
+      "domain": "www.bbc.com",
+      "regex": "[?&](at_medium=[^&]*)"
+    },
+    {
+      "domain": "www.bbc.com",
+      "regex": "[?&](at_campaign=[^&]*)"
+    },
+    {
+      "domain": "www.bbc.co.uk",
+      "regex": "[?&](ocid=[^&]*)"
+    },
+    {
+      "domain": "www.bbc.co.uk",
+      "regex": "[?&](ncid=[^&]*)"
+    },
+    {
+      "domain": "www.bbc.co.uk",
+      "regex": "[?&](ito=[^&]*)"
+    },
+    {
+      "domain": "www.bbc.co.uk",
+      "regex": "[?&](CMP=[^&]*)"
+    },
+    {
+      "domain": "www.bbc.co.uk",
+      "regex": "[?&](ns_mchannel=[^&]*)"
+    },
+    {
+      "domain": "www.bbc.co.uk",
+      "regex": "[?&](ns_campaign=[^&]*)"
+    },
+    {
+      "domain": "www.bbc.co.uk",
+      "regex": "[?&](ns_source=[^&]*)"
+    },
+    {
+      "domain": "www.bbc.co.uk",
+      "regex": "[?&](ns_linkname=[^&]*)"
+    },
+    {
+      "domain": "www.bbc.co.uk",
+      "regex": "[?&](at_medium=[^&]*)"
+    },
+    {
+      "domain": "www.bbc.co.uk",
+      "regex": "[?&](at_campaign=[^&]*)"
+    },
+    {
+      "domain": "cnn.com",
+      "regex": "[?&](ocid=[^&]*)"
+    },
+    {
+      "domain": "cnn.com",
+      "regex": "[?&](ncid=[^&]*)"
+    },
+    {
+      "domain": "cnn.com",
+      "regex": "[?&](ito=[^&]*)"
+    },
+    {
+      "domain": "cnn.com",
+      "regex": "[?&](CMP=[^&]*)"
+    },
+    {
+      "domain": "cnn.com",
+      "regex": "[?&](ns_mchannel=[^&]*)"
+    },
+    {
+      "domain": "cnn.com",
+      "regex": "[?&](ns_campaign=[^&]*)"
+    },
+    {
+      "domain": "cnn.com",
+      "regex": "[?&](ns_source=[^&]*)"
+    },
+    {
+      "domain": "cnn.com",
+      "regex": "[?&](ns_linkname=[^&]*)"
+    },
+    {
+      "domain": "cnn.com",
+      "regex": "[?&](at_medium=[^&]*)"
+    },
+    {
+      "domain": "cnn.com",
+      "regex": "[?&](at_campaign=[^&]*)"
+    },
+    {
+      "domain": "www.cnn.com",
+      "regex": "[?&](ocid=[^&]*)"
+    },
+    {
+      "domain": "www.cnn.com",
+      "regex": "[?&](ncid=[^&]*)"
+    },
+    {
+      "domain": "www.cnn.com",
+      "regex": "[?&](ito=[^&]*)"
+    },
+    {
+      "domain": "www.cnn.com",
+      "regex": "[?&](CMP=[^&]*)"
+    },
+    {
+      "domain": "www.cnn.com",
+      "regex": "[?&](ns_mchannel=[^&]*)"
+    },
+    {
+      "domain": "www.cnn.com",
+      "regex": "[?&](ns_campaign=[^&]*)"
+    },
+    {
+      "domain": "www.cnn.com",
+      "regex": "[?&](ns_source=[^&]*)"
+    },
+    {
+      "domain": "www.cnn.com",
+      "regex": "[?&](ns_linkname=[^&]*)"
+    },
+    {
+      "domain": "www.cnn.com",
+      "regex": "[?&](at_medium=[^&]*)"
+    },
+    {
+      "domain": "www.cnn.com",
+      "regex": "[?&](at_campaign=[^&]*)"
+    },
+    {
+      "domain": "edition.cnn.com",
+      "regex": "[?&](ocid=[^&]*)"
+    },
+    {
+      "domain": "edition.cnn.com",
+      "regex": "[?&](ncid=[^&]*)"
+    },
+    {
+      "domain": "edition.cnn.com",
+      "regex": "[?&](ito=[^&]*)"
+    },
+    {
+      "domain": "edition.cnn.com",
+      "regex": "[?&](CMP=[^&]*)"
+    },
+    {
+      "domain": "edition.cnn.com",
+      "regex": "[?&](ns_mchannel=[^&]*)"
+    },
+    {
+      "domain": "edition.cnn.com",
+      "regex": "[?&](ns_campaign=[^&]*)"
+    },
+    {
+      "domain": "edition.cnn.com",
+      "regex": "[?&](ns_source=[^&]*)"
+    },
+    {
+      "domain": "edition.cnn.com",
+      "regex": "[?&](ns_linkname=[^&]*)"
+    },
+    {
+      "domain": "edition.cnn.com",
+      "regex": "[?&](at_medium=[^&]*)"
+    },
+    {
+      "domain": "edition.cnn.com",
+      "regex": "[?&](at_campaign=[^&]*)"
+    },
+    {
+      "domain": "nytimes.com",
+      "regex": "[?&](ocid=[^&]*)"
+    },
+    {
+      "domain": "nytimes.com",
+      "regex": "[?&](ncid=[^&]*)"
+    },
+    {
+      "domain": "nytimes.com",
+      "regex": "[?&](ito=[^&]*)"
+    },
+    {
+      "domain": "nytimes.com",
+      "regex": "[?&](CMP=[^&]*)"
+    },
+    {
+      "domain": "nytimes.com",
+      "regex": "[?&](ns_mchannel=[^&]*)"
+    },
+    {
+      "domain": "nytimes.com",
+      "regex": "[?&](ns_campaign=[^&]*)"
+    },
+    {
+      "domain": "nytimes.com",
+      "regex": "[?&](ns_source=[^&]*)"
+    },
+    {
+      "domain": "nytimes.com",
+      "regex": "[?&](ns_linkname=[^&]*)"
+    },
+    {
+      "domain": "nytimes.com",
+      "regex": "[?&](at_medium=[^&]*)"
+    },
+    {
+      "domain": "nytimes.com",
+      "regex": "[?&](at_campaign=[^&]*)"
+    },
+    {
+      "domain": "www.nytimes.com",
+      "regex": "[?&](ocid=[^&]*)"
+    },
+    {
+      "domain": "www.nytimes.com",
+      "regex": "[?&](ncid=[^&]*)"
+    },
+    {
+      "domain": "www.nytimes.com",
+      "regex": "[?&](ito=[^&]*)"
+    },
+    {
+      "domain": "www.nytimes.com",
+      "regex": "[?&](CMP=[^&]*)"
+    },
+    {
+      "domain": "www.nytimes.com",
+      "regex": "[?&](ns_mchannel=[^&]*)"
+    },
+    {
+      "domain": "www.nytimes.com",
+      "regex": "[?&](ns_campaign=[^&]*)"
+    },
+    {
+      "domain": "www.nytimes.com",
+      "regex": "[?&](ns_source=[^&]*)"
+    },
+    {
+      "domain": "www.nytimes.com",
+      "regex": "[?&](ns_linkname=[^&]*)"
+    },
+    {
+      "domain": "www.nytimes.com",
+      "regex": "[?&](at_medium=[^&]*)"
+    },
+    {
+      "domain": "www.nytimes.com",
+      "regex": "[?&](at_campaign=[^&]*)"
+    },
+    {
+      "domain": "theguardian.com",
+      "regex": "[?&](ocid=[^&]*)"
+    },
+    {
+      "domain": "theguardian.com",
+      "regex": "[?&](ncid=[^&]*)"
+    },
+    {
+      "domain": "theguardian.com",
+      "regex": "[?&](ito=[^&]*)"
+    },
+    {
+      "domain": "theguardian.com",
+      "regex": "[?&](CMP=[^&]*)"
+    },
+    {
+      "domain": "theguardian.com",
+      "regex": "[?&](ns_mchannel=[^&]*)"
+    },
+    {
+      "domain": "theguardian.com",
+      "regex": "[?&](ns_campaign=[^&]*)"
+    },
+    {
+      "domain": "theguardian.com",
+      "regex": "[?&](ns_source=[^&]*)"
+    },
+    {
+      "domain": "theguardian.com",
+      "regex": "[?&](ns_linkname=[^&]*)"
+    },
+    {
+      "domain": "theguardian.com",
+      "regex": "[?&](at_medium=[^&]*)"
+    },
+    {
+      "domain": "theguardian.com",
+      "regex": "[?&](at_campaign=[^&]*)"
+    },
+    {
+      "domain": "www.theguardian.com",
+      "regex": "[?&](ocid=[^&]*)"
+    },
+    {
+      "domain": "www.theguardian.com",
+      "regex": "[?&](ncid=[^&]*)"
+    },
+    {
+      "domain": "www.theguardian.com",
+      "regex": "[?&](ito=[^&]*)"
+    },
+    {
+      "domain": "www.theguardian.com",
+      "regex": "[?&](CMP=[^&]*)"
+    },
+    {
+      "domain": "www.theguardian.com",
+      "regex": "[?&](ns_mchannel=[^&]*)"
+    },
+    {
+      "domain": "www.theguardian.com",
+      "regex": "[?&](ns_campaign=[^&]*)"
+    },
+    {
+      "domain": "www.theguardian.com",
+      "regex": "[?&](ns_source=[^&]*)"
+    },
+    {
+      "domain": "www.theguardian.com",
+      "regex": "[?&](ns_linkname=[^&]*)"
+    },
+    {
+      "domain": "www.theguardian.com",
+      "regex": "[?&](at_medium=[^&]*)"
+    },
+    {
+      "domain": "www.theguardian.com",
+      "regex": "[?&](at_campaign=[^&]*)"
+    },
+    {
+      "domain": "washingtonpost.com",
+      "regex": "[?&](ocid=[^&]*)"
+    },
+    {
+      "domain": "washingtonpost.com",
+      "regex": "[?&](ncid=[^&]*)"
+    },
+    {
+      "domain": "washingtonpost.com",
+      "regex": "[?&](ito=[^&]*)"
+    },
+    {
+      "domain": "washingtonpost.com",
+      "regex": "[?&](CMP=[^&]*)"
+    },
+    {
+      "domain": "washingtonpost.com",
+      "regex": "[?&](ns_mchannel=[^&]*)"
+    },
+    {
+      "domain": "washingtonpost.com",
+      "regex": "[?&](ns_campaign=[^&]*)"
+    },
+    {
+      "domain": "washingtonpost.com",
+      "regex": "[?&](ns_source=[^&]*)"
+    },
+    {
+      "domain": "washingtonpost.com",
+      "regex": "[?&](ns_linkname=[^&]*)"
+    },
+    {
+      "domain": "washingtonpost.com",
+      "regex": "[?&](at_medium=[^&]*)"
+    },
+    {
+      "domain": "washingtonpost.com",
+      "regex": "[?&](at_campaign=[^&]*)"
+    },
+    {
+      "domain": "www.washingtonpost.com",
+      "regex": "[?&](ocid=[^&]*)"
+    },
+    {
+      "domain": "www.washingtonpost.com",
+      "regex": "[?&](ncid=[^&]*)"
+    },
+    {
+      "domain": "www.washingtonpost.com",
+      "regex": "[?&](ito=[^&]*)"
+    },
+    {
+      "domain": "www.washingtonpost.com",
+      "regex": "[?&](CMP=[^&]*)"
+    },
+    {
+      "domain": "www.washingtonpost.com",
+      "regex": "[?&](ns_mchannel=[^&]*)"
+    },
+    {
+      "domain": "www.washingtonpost.com",
+      "regex": "[?&](ns_campaign=[^&]*)"
+    },
+    {
+      "domain": "www.washingtonpost.com",
+      "regex": "[?&](ns_source=[^&]*)"
+    },
+    {
+      "domain": "www.washingtonpost.com",
+      "regex": "[?&](ns_linkname=[^&]*)"
+    },
+    {
+      "domain": "www.washingtonpost.com",
+      "regex": "[?&](at_medium=[^&]*)"
+    },
+    {
+      "domain": "www.washingtonpost.com",
+      "regex": "[?&](at_campaign=[^&]*)"
+    },
+    {
+      "domain": "reuters.com",
+      "regex": "[?&](ocid=[^&]*)"
+    },
+    {
+      "domain": "reuters.com",
+      "regex": "[?&](ncid=[^&]*)"
+    },
+    {
+      "domain": "reuters.com",
+      "regex": "[?&](ito=[^&]*)"
+    },
+    {
+      "domain": "reuters.com",
+      "regex": "[?&](CMP=[^&]*)"
+    },
+    {
+      "domain": "reuters.com",
+      "regex": "[?&](ns_mchannel=[^&]*)"
+    },
+    {
+      "domain": "reuters.com",
+      "regex": "[?&](ns_campaign=[^&]*)"
+    },
+    {
+      "domain": "reuters.com",
+      "regex": "[?&](ns_source=[^&]*)"
+    },
+    {
+      "domain": "reuters.com",
+      "regex": "[?&](ns_linkname=[^&]*)"
+    },
+    {
+      "domain": "reuters.com",
+      "regex": "[?&](at_medium=[^&]*)"
+    },
+    {
+      "domain": "reuters.com",
+      "regex": "[?&](at_campaign=[^&]*)"
+    },
+    {
+      "domain": "www.reuters.com",
+      "regex": "[?&](ocid=[^&]*)"
+    },
+    {
+      "domain": "www.reuters.com",
+      "regex": "[?&](ncid=[^&]*)"
+    },
+    {
+      "domain": "www.reuters.com",
+      "regex": "[?&](ito=[^&]*)"
+    },
+    {
+      "domain": "www.reuters.com",
+      "regex": "[?&](CMP=[^&]*)"
+    },
+    {
+      "domain": "www.reuters.com",
+      "regex": "[?&](ns_mchannel=[^&]*)"
+    },
+    {
+      "domain": "www.reuters.com",
+      "regex": "[?&](ns_campaign=[^&]*)"
+    },
+    {
+      "domain": "www.reuters.com",
+      "regex": "[?&](ns_source=[^&]*)"
+    },
+    {
+      "domain": "www.reuters.com",
+      "regex": "[?&](ns_linkname=[^&]*)"
+    },
+    {
+      "domain": "www.reuters.com",
+      "regex": "[?&](at_medium=[^&]*)"
+    },
+    {
+      "domain": "www.reuters.com",
+      "regex": "[?&](at_campaign=[^&]*)"
+    },
+    {
+      "domain": "bloomberg.com",
+      "regex": "[?&](ocid=[^&]*)"
+    },
+    {
+      "domain": "bloomberg.com",
+      "regex": "[?&](ncid=[^&]*)"
+    },
+    {
+      "domain": "bloomberg.com",
+      "regex": "[?&](ito=[^&]*)"
+    },
+    {
+      "domain": "bloomberg.com",
+      "regex": "[?&](CMP=[^&]*)"
+    },
+    {
+      "domain": "bloomberg.com",
+      "regex": "[?&](ns_mchannel=[^&]*)"
+    },
+    {
+      "domain": "bloomberg.com",
+      "regex": "[?&](ns_campaign=[^&]*)"
+    },
+    {
+      "domain": "bloomberg.com",
+      "regex": "[?&](ns_source=[^&]*)"
+    },
+    {
+      "domain": "bloomberg.com",
+      "regex": "[?&](ns_linkname=[^&]*)"
+    },
+    {
+      "domain": "bloomberg.com",
+      "regex": "[?&](at_medium=[^&]*)"
+    },
+    {
+      "domain": "bloomberg.com",
+      "regex": "[?&](at_campaign=[^&]*)"
+    },
+    {
+      "domain": "www.bloomberg.com",
+      "regex": "[?&](ocid=[^&]*)"
+    },
+    {
+      "domain": "www.bloomberg.com",
+      "regex": "[?&](ncid=[^&]*)"
+    },
+    {
+      "domain": "www.bloomberg.com",
+      "regex": "[?&](ito=[^&]*)"
+    },
+    {
+      "domain": "www.bloomberg.com",
+      "regex": "[?&](CMP=[^&]*)"
+    },
+    {
+      "domain": "www.bloomberg.com",
+      "regex": "[?&](ns_mchannel=[^&]*)"
+    },
+    {
+      "domain": "www.bloomberg.com",
+      "regex": "[?&](ns_campaign=[^&]*)"
+    },
+    {
+      "domain": "www.bloomberg.com",
+      "regex": "[?&](ns_source=[^&]*)"
+    },
+    {
+      "domain": "www.bloomberg.com",
+      "regex": "[?&](ns_linkname=[^&]*)"
+    },
+    {
+      "domain": "www.bloomberg.com",
+      "regex": "[?&](at_medium=[^&]*)"
+    },
+    {
+      "domain": "www.bloomberg.com",
+      "regex": "[?&](at_campaign=[^&]*)"
+    },
+    {
+      "domain": "forbes.com",
+      "regex": "[?&](ocid=[^&]*)"
+    },
+    {
+      "domain": "forbes.com",
+      "regex": "[?&](ncid=[^&]*)"
+    },
+    {
+      "domain": "forbes.com",
+      "regex": "[?&](ito=[^&]*)"
+    },
+    {
+      "domain": "forbes.com",
+      "regex": "[?&](CMP=[^&]*)"
+    },
+    {
+      "domain": "forbes.com",
+      "regex": "[?&](ns_mchannel=[^&]*)"
+    },
+    {
+      "domain": "forbes.com",
+      "regex": "[?&](ns_campaign=[^&]*)"
+    },
+    {
+      "domain": "forbes.com",
+      "regex": "[?&](ns_source=[^&]*)"
+    },
+    {
+      "domain": "forbes.com",
+      "regex": "[?&](ns_linkname=[^&]*)"
+    },
+    {
+      "domain": "forbes.com",
+      "regex": "[?&](at_medium=[^&]*)"
+    },
+    {
+      "domain": "forbes.com",
+      "regex": "[?&](at_campaign=[^&]*)"
+    },
+    {
+      "domain": "www.forbes.com",
+      "regex": "[?&](ocid=[^&]*)"
+    },
+    {
+      "domain": "www.forbes.com",
+      "regex": "[?&](ncid=[^&]*)"
+    },
+    {
+      "domain": "www.forbes.com",
+      "regex": "[?&](ito=[^&]*)"
+    },
+    {
+      "domain": "www.forbes.com",
+      "regex": "[?&](CMP=[^&]*)"
+    },
+    {
+      "domain": "www.forbes.com",
+      "regex": "[?&](ns_mchannel=[^&]*)"
+    },
+    {
+      "domain": "www.forbes.com",
+      "regex": "[?&](ns_campaign=[^&]*)"
+    },
+    {
+      "domain": "www.forbes.com",
+      "regex": "[?&](ns_source=[^&]*)"
+    },
+    {
+      "domain": "www.forbes.com",
+      "regex": "[?&](ns_linkname=[^&]*)"
+    },
+    {
+      "domain": "www.forbes.com",
+      "regex": "[?&](at_medium=[^&]*)"
+    },
+    {
+      "domain": "www.forbes.com",
+      "regex": "[?&](at_campaign=[^&]*)"
+    },
+    {
+      "domain": "wsj.com",
+      "regex": "[?&](ocid=[^&]*)"
+    },
+    {
+      "domain": "wsj.com",
+      "regex": "[?&](ncid=[^&]*)"
+    },
+    {
+      "domain": "wsj.com",
+      "regex": "[?&](ito=[^&]*)"
+    },
+    {
+      "domain": "wsj.com",
+      "regex": "[?&](CMP=[^&]*)"
+    },
+    {
+      "domain": "wsj.com",
+      "regex": "[?&](ns_mchannel=[^&]*)"
+    },
+    {
+      "domain": "wsj.com",
+      "regex": "[?&](ns_campaign=[^&]*)"
+    },
+    {
+      "domain": "wsj.com",
+      "regex": "[?&](ns_source=[^&]*)"
+    },
+    {
+      "domain": "wsj.com",
+      "regex": "[?&](ns_linkname=[^&]*)"
+    },
+    {
+      "domain": "wsj.com",
+      "regex": "[?&](at_medium=[^&]*)"
+    },
+    {
+      "domain": "wsj.com",
+      "regex": "[?&](at_campaign=[^&]*)"
+    },
+    {
+      "domain": "www.wsj.com",
+      "regex": "[?&](ocid=[^&]*)"
+    },
+    {
+      "domain": "www.wsj.com",
+      "regex": "[?&](ncid=[^&]*)"
+    },
+    {
+      "domain": "www.wsj.com",
+      "regex": "[?&](ito=[^&]*)"
+    },
+    {
+      "domain": "www.wsj.com",
+      "regex": "[?&](CMP=[^&]*)"
+    },
+    {
+      "domain": "www.wsj.com",
+      "regex": "[?&](ns_mchannel=[^&]*)"
+    },
+    {
+      "domain": "www.wsj.com",
+      "regex": "[?&](ns_campaign=[^&]*)"
+    },
+    {
+      "domain": "www.wsj.com",
+      "regex": "[?&](ns_source=[^&]*)"
+    },
+    {
+      "domain": "www.wsj.com",
+      "regex": "[?&](ns_linkname=[^&]*)"
+    },
+    {
+      "domain": "www.wsj.com",
+      "regex": "[?&](at_medium=[^&]*)"
+    },
+    {
+      "domain": "www.wsj.com",
+      "regex": "[?&](at_campaign=[^&]*)"
+    },
+    {
+      "domain": "independent.co.uk",
+      "regex": "[?&](ocid=[^&]*)"
+    },
+    {
+      "domain": "independent.co.uk",
+      "regex": "[?&](ncid=[^&]*)"
+    },
+    {
+      "domain": "independent.co.uk",
+      "regex": "[?&](ito=[^&]*)"
+    },
+    {
+      "domain": "independent.co.uk",
+      "regex": "[?&](CMP=[^&]*)"
+    },
+    {
+      "domain": "independent.co.uk",
+      "regex": "[?&](ns_mchannel=[^&]*)"
+    },
+    {
+      "domain": "independent.co.uk",
+      "regex": "[?&](ns_campaign=[^&]*)"
+    },
+    {
+      "domain": "independent.co.uk",
+      "regex": "[?&](ns_source=[^&]*)"
+    },
+    {
+      "domain": "independent.co.uk",
+      "regex": "[?&](ns_linkname=[^&]*)"
+    },
+    {
+      "domain": "independent.co.uk",
+      "regex": "[?&](at_medium=[^&]*)"
+    },
+    {
+      "domain": "independent.co.uk",
+      "regex": "[?&](at_campaign=[^&]*)"
+    },
+    {
+      "domain": "www.independent.co.uk",
+      "regex": "[?&](ocid=[^&]*)"
+    },
+    {
+      "domain": "www.independent.co.uk",
+      "regex": "[?&](ncid=[^&]*)"
+    },
+    {
+      "domain": "www.independent.co.uk",
+      "regex": "[?&](ito=[^&]*)"
+    },
+    {
+      "domain": "www.independent.co.uk",
+      "regex": "[?&](CMP=[^&]*)"
+    },
+    {
+      "domain": "www.independent.co.uk",
+      "regex": "[?&](ns_mchannel=[^&]*)"
+    },
+    {
+      "domain": "www.independent.co.uk",
+      "regex": "[?&](ns_campaign=[^&]*)"
+    },
+    {
+      "domain": "www.independent.co.uk",
+      "regex": "[?&](ns_source=[^&]*)"
+    },
+    {
+      "domain": "www.independent.co.uk",
+      "regex": "[?&](ns_linkname=[^&]*)"
+    },
+    {
+      "domain": "www.independent.co.uk",
+      "regex": "[?&](at_medium=[^&]*)"
+    },
+    {
+      "domain": "www.independent.co.uk",
+      "regex": "[?&](at_campaign=[^&]*)"
+    },
+    {
+      "domain": "telegraph.co.uk",
+      "regex": "[?&](ocid=[^&]*)"
+    },
+    {
+      "domain": "telegraph.co.uk",
+      "regex": "[?&](ncid=[^&]*)"
+    },
+    {
+      "domain": "telegraph.co.uk",
+      "regex": "[?&](ito=[^&]*)"
+    },
+    {
+      "domain": "telegraph.co.uk",
+      "regex": "[?&](CMP=[^&]*)"
+    },
+    {
+      "domain": "telegraph.co.uk",
+      "regex": "[?&](ns_mchannel=[^&]*)"
+    },
+    {
+      "domain": "telegraph.co.uk",
+      "regex": "[?&](ns_campaign=[^&]*)"
+    },
+    {
+      "domain": "telegraph.co.uk",
+      "regex": "[?&](ns_source=[^&]*)"
+    },
+    {
+      "domain": "telegraph.co.uk",
+      "regex": "[?&](ns_linkname=[^&]*)"
+    },
+    {
+      "domain": "telegraph.co.uk",
+      "regex": "[?&](at_medium=[^&]*)"
+    },
+    {
+      "domain": "telegraph.co.uk",
+      "regex": "[?&](at_campaign=[^&]*)"
+    },
+    {
+      "domain": "www.telegraph.co.uk",
+      "regex": "[?&](ocid=[^&]*)"
+    },
+    {
+      "domain": "www.telegraph.co.uk",
+      "regex": "[?&](ncid=[^&]*)"
+    },
+    {
+      "domain": "www.telegraph.co.uk",
+      "regex": "[?&](ito=[^&]*)"
+    },
+    {
+      "domain": "www.telegraph.co.uk",
+      "regex": "[?&](CMP=[^&]*)"
+    },
+    {
+      "domain": "www.telegraph.co.uk",
+      "regex": "[?&](ns_mchannel=[^&]*)"
+    },
+    {
+      "domain": "www.telegraph.co.uk",
+      "regex": "[?&](ns_campaign=[^&]*)"
+    },
+    {
+      "domain": "www.telegraph.co.uk",
+      "regex": "[?&](ns_source=[^&]*)"
+    },
+    {
+      "domain": "www.telegraph.co.uk",
+      "regex": "[?&](ns_linkname=[^&]*)"
+    },
+    {
+      "domain": "www.telegraph.co.uk",
+      "regex": "[?&](at_medium=[^&]*)"
+    },
+    {
+      "domain": "www.telegraph.co.uk",
+      "regex": "[?&](at_campaign=[^&]*)"
+    },
+    {
+      "domain": "dailymail.co.uk",
+      "regex": "[?&](ocid=[^&]*)"
+    },
+    {
+      "domain": "dailymail.co.uk",
+      "regex": "[?&](ncid=[^&]*)"
+    },
+    {
+      "domain": "dailymail.co.uk",
+      "regex": "[?&](ito=[^&]*)"
+    },
+    {
+      "domain": "dailymail.co.uk",
+      "regex": "[?&](CMP=[^&]*)"
+    },
+    {
+      "domain": "dailymail.co.uk",
+      "regex": "[?&](ns_mchannel=[^&]*)"
+    },
+    {
+      "domain": "dailymail.co.uk",
+      "regex": "[?&](ns_campaign=[^&]*)"
+    },
+    {
+      "domain": "dailymail.co.uk",
+      "regex": "[?&](ns_source=[^&]*)"
+    },
+    {
+      "domain": "dailymail.co.uk",
+      "regex": "[?&](ns_linkname=[^&]*)"
+    },
+    {
+      "domain": "dailymail.co.uk",
+      "regex": "[?&](at_medium=[^&]*)"
+    },
+    {
+      "domain": "dailymail.co.uk",
+      "regex": "[?&](at_campaign=[^&]*)"
+    },
+    {
+      "domain": "www.dailymail.co.uk",
+      "regex": "[?&](ocid=[^&]*)"
+    },
+    {
+      "domain": "www.dailymail.co.uk",
+      "regex": "[?&](ncid=[^&]*)"
+    },
+    {
+      "domain": "www.dailymail.co.uk",
+      "regex": "[?&](ito=[^&]*)"
+    },
+    {
+      "domain": "www.dailymail.co.uk",
+      "regex": "[?&](CMP=[^&]*)"
+    },
+    {
+      "domain": "www.dailymail.co.uk",
+      "regex": "[?&](ns_mchannel=[^&]*)"
+    },
+    {
+      "domain": "www.dailymail.co.uk",
+      "regex": "[?&](ns_campaign=[^&]*)"
+    },
+    {
+      "domain": "www.dailymail.co.uk",
+      "regex": "[?&](ns_source=[^&]*)"
+    },
+    {
+      "domain": "www.dailymail.co.uk",
+      "regex": "[?&](ns_linkname=[^&]*)"
+    },
+    {
+      "domain": "www.dailymail.co.uk",
+      "regex": "[?&](at_medium=[^&]*)"
+    },
+    {
+      "domain": "www.dailymail.co.uk",
+      "regex": "[?&](at_campaign=[^&]*)"
+    },
+    {
+      "domain": "npr.org",
+      "regex": "[?&](ocid=[^&]*)"
+    },
+    {
+      "domain": "npr.org",
+      "regex": "[?&](ncid=[^&]*)"
+    },
+    {
+      "domain": "npr.org",
+      "regex": "[?&](ito=[^&]*)"
+    },
+    {
+      "domain": "npr.org",
+      "regex": "[?&](CMP=[^&]*)"
+    },
+    {
+      "domain": "npr.org",
+      "regex": "[?&](ns_mchannel=[^&]*)"
+    },
+    {
+      "domain": "npr.org",
+      "regex": "[?&](ns_campaign=[^&]*)"
+    },
+    {
+      "domain": "npr.org",
+      "regex": "[?&](ns_source=[^&]*)"
+    },
+    {
+      "domain": "npr.org",
+      "regex": "[?&](ns_linkname=[^&]*)"
+    },
+    {
+      "domain": "npr.org",
+      "regex": "[?&](at_medium=[^&]*)"
+    },
+    {
+      "domain": "npr.org",
+      "regex": "[?&](at_campaign=[^&]*)"
+    },
+    {
+      "domain": "www.npr.org",
+      "regex": "[?&](ocid=[^&]*)"
+    },
+    {
+      "domain": "www.npr.org",
+      "regex": "[?&](ncid=[^&]*)"
+    },
+    {
+      "domain": "www.npr.org",
+      "regex": "[?&](ito=[^&]*)"
+    },
+    {
+      "domain": "www.npr.org",
+      "regex": "[?&](CMP=[^&]*)"
+    },
+    {
+      "domain": "www.npr.org",
+      "regex": "[?&](ns_mchannel=[^&]*)"
+    },
+    {
+      "domain": "www.npr.org",
+      "regex": "[?&](ns_campaign=[^&]*)"
+    },
+    {
+      "domain": "www.npr.org",
+      "regex": "[?&](ns_source=[^&]*)"
+    },
+    {
+      "domain": "www.npr.org",
+      "regex": "[?&](ns_linkname=[^&]*)"
+    },
+    {
+      "domain": "www.npr.org",
+      "regex": "[?&](at_medium=[^&]*)"
+    },
+    {
+      "domain": "www.npr.org",
+      "regex": "[?&](at_campaign=[^&]*)"
+    }
+  ]
+}

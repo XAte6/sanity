@@ -12,7 +12,7 @@ Windows ships a single setup EXE (no separate runtime). macOS and Android need n
 - **Link proxy** — intercepts clicked links from other apps, cleans them, and forwards to your real browser
 - **Share target (Android)** — share a URL to Sanity, then forward the cleaned link to another app
 - Configurable rules: **domain** + **regex** pairs
-- Default rules for YouTube, Amazon, Google, Facebook, Instagram, TikTok, X/Twitter, Reddit, and common global trackers (`utm_*`, `fbclid`, `gclid`, etc.)
+- Default rules (see `defaults/regex-rules.json`) for shopping, social, search, news publishers, and common global trackers (`utm_*`, click IDs, HubSpot/Marketo, etc.)
 - **Usage metrics** — counts cleaned links and unique domains (shown in About)
 - Tray / menu bar controls (desktop):
   - **Regex Rules** — edit domain + regex patterns
@@ -64,6 +64,7 @@ To build from source instead of using a release, see the platform sections below
 
 ```
 sanity/
+  defaults/      # shared regex-rules.json (versioned; source for reset + weekly updates)
   releases/      # shipped binaries (Sanity-{platform}-{arch}…); Windows is a setup EXE
   win/           # Windows (C# / WinForms + Inno Setup)
     VERSION      # bump before release (e.g. 1.0.1) so setup upgrades prior installs
@@ -75,6 +76,14 @@ sanity/
 ```
 
 Desktop builds read and write `config.json` from each platform's `bin/` folder next to the executable. Usage counts are stored in `metrics.json` beside it. Android stores config and metrics in app-private storage using the same JSON schemas.
+
+### Default regex list
+
+The shared defaults live at [`defaults/regex-rules.json`](defaults/regex-rules.json). Bump the top-level `version` whenever the rule list changes. Clients use that file for:
+
+- First-run / reset defaults (local copy shipped with the app; reset prefers the GitHub raw URL)
+- A once-weekly check (on tray/settings launch, clicked-link / share handling, and clipboard cleaning): if the remote `version` is higher than `rulesVersion` in the user's config, Sanity asks whether to replace their rules
+- The same weekly check compares the last commit date of the platform file under `releases/` on GitHub to the installed executable (or package) date and asks to open the download if the release file is newer
 
 ## Windows
 
@@ -220,8 +229,11 @@ Settings are stored in `config.json` (desktop: `win/bin/config.json` or `mac/bin
 | `linkProxyEnabled` | Intercept clicked links and forward to target browser |
 | `targetBrowser` | Where to forward links (exe path or ProgId on Windows, bundle ID on macOS, package name on Android) |
 | `notificationsEnabled` | Show toast when a URL is cleaned |
+| `updatesEnabled` | Weekly checks for regex catalog + newer release builds (default on) |
 | `launchOnStartup` | Start with the OS (desktop only) |
 | `setupCompleted` | Windows only: first-run wizard finished |
+| `rulesVersion` | Version of the applied default regex catalog |
+| `lastUpdateCheck` | UTC time of the last weekly update check |
 | `sleepUntil` | ISO timestamp; cleaning paused until this time |
 | `rules` | Array of `{ "domain", "regex" }` objects |
 

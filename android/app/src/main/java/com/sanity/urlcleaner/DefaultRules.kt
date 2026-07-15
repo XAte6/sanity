@@ -1,51 +1,71 @@
 package com.sanity.urlcleaner
 
+import android.content.Context
+import org.json.JSONObject
+import java.io.BufferedReader
+import java.io.InputStreamReader
+import java.net.HttpURLConnection
+import java.net.URL
+
+data class RegexRulesCatalog(
+    val version: Int,
+    val rules: List<UrlRule>
+)
+
 object DefaultRules {
-    fun create(): List<UrlRule> {
-        val rules = mutableListOf<UrlRule>()
+    private const val ASSET_NAME = "regex-rules.json"
 
-        rules += global("[?&](utm_[a-zA-Z0-9_]+=[^&]*)")
-        rules += global("[?&](fbclid=[^&]*)")
-        rules += global("[?&](gclid=[^&]*)")
-        rules += global("[?&](msclkid=[^&]*)")
-        rules += global("[?&](twclid=[^&]*)")
-        rules += global("[?&](dclid=[^&]*)")
-        rules += global("[?&](gbraid=[^&]*)")
-        rules += global("[?&](wbraid=[^&]*)")
-        rules += global("[?&](srsltid=[^&]*)")
-        rules += global("[?&](mc_[a-z]+=[^&]*)")
+    fun create(context: Context): List<UrlRule> = loadLocal(context).rules
 
-        addPlatform(rules, listOf("youtube.com", "youtu.be"),
-            "si=[^&]*", "is=[^&]*", "feature=[^&]*", "pp=[^&]*", "embeds_referring_euri=[^&]*")
-        addPlatform(rules, listOf("amazon.com", "amazon.co.uk", "amazon.de", "amazon.fr", "amazon.ca",
-            "amazon.es", "amazon.it", "amazon.co.jp", "amzn.to", "a.co"),
-            "tag=[^&]*", "linkCode=[^&]*", "ref_=[^&]*", "ascsubtag=[^&]*", "creative=[^&]*",
-            "creativeASIN=[^&]*", "linkId=[^&]*", "pd_rd_w=[^&]*", "pd_rd_wg=[^&]*", "pd_rd_r=[^&]*",
-            "pf_rd_p=[^&]*", "pf_rd_r=[^&]*")
-        addPlatform(rules, listOf("google.com", "google.co.uk", "google.de", "google.fr", "google.ca", "google.com.au"),
-            "ved=[^&]*", "usg=[^&]*", "sa=[^&]*", "source=[^&]*", "gs_lcp=[^&]*", "ei=[^&]*",
-            "sclient=[^&]*", "oq=[^&]*", "gs_l=[^&]*", "cad=[^&]*")
-        addPlatform(rules, listOf("facebook.com", "fb.com", "fb.watch", "m.facebook.com"),
-            "ref=[^&]*", "refid=[^&]*", "__tn__=[^&]*", "__cft__=[^&]*", "mibextid=[^&]*")
-        addPlatform(rules, listOf("instagram.com"), "igsh=[^&]*", "ig_rid=[^&]*")
-        addPlatform(rules, listOf("tiktok.com", "vm.tiktok.com", "www.tiktok.com"),
-            "_t=[^&]*", "_r=[^&]*", "share_app_id=[^&]*", "share_link_id=[^&]*",
-            "tt_medium=[^&]*", "tt_source=[^&]*", "is_from_webapp=[^&]*")
-        addPlatform(rules, listOf("x.com", "twitter.com", "t.co", "mobile.twitter.com"),
-            "s=[^&]*", "ref_src=[^&]*", "ref_url=[^&]*", "t=[^&]*")
-        addPlatform(rules, listOf("reddit.com", "old.reddit.com", "www.reddit.com", "redd.it", "new.reddit.com"),
-            "share_id=[^&]*", "ref_source=[^&]*", "ref_campaign=[^&]*", "embed=[^&]*")
-
-        return rules
+    fun loadLocal(context: Context): RegexRulesCatalog {
+        context.assets.open(ASSET_NAME).use { stream ->
+            val text = BufferedReader(InputStreamReader(stream, Charsets.UTF_8)).readText()
+            return parse(text)
+        }
     }
 
-    private fun global(regex: String) = UrlRule(domain = "*", regex = regex)
-
-    private fun addPlatform(rules: MutableList<UrlRule>, domains: List<String>, vararg params: String) {
-        for (domain in domains) {
-            for (param in params) {
-                rules.add(UrlRule(domain = domain, regex = "[?&]($param)"))
-            }
+    fun fetchRemote(): RegexRulesCatalog {
+        val connection = (URL(AppLinks.REGEX_RULES_RAW).openConnection() as HttpURLConnection).apply {
+            connectTimeout = 15000
+            readTimeout = 15000
+            requestMethod = "GET"
+            setRequestProperty("User-Agent", "Sanity")
         }
+        try {
+            val code = connection.responseCode
+            if (code !in 200..299) {
+                throw IllegalStateException("HTTP $code fetching regex rules")
+            }
+            val text = connection.inputStream.bufferedReader(Charsets.UTF_8).readText()
+            return parse(text)
+        } finally {
+            connection.disconnect()
+        }
+    }
+
+    fun loadForReset(context: Context): RegexRulesCatalog {
+        return try {
+            fetchRemote()
+        } catch (_: Exception) {
+            loadLocal(context)
+        }
+    }
+
+    fun parse(text: String): RegexRulesCatalog {
+        val json = JSONObject(text)
+        val version = json.optInt("version", 1)
+        val array = json.getJSONArray("rules")
+        val rules = mutableListOf<UrlRule>()
+        for (i in 0 until array.length()) {
+            val item = array.getJSONObject(i)
+            rules.add(
+                UrlRule(
+                    domain = item.optString("domain", "*"),
+                    regex = item.optString("regex", "")
+                )
+            )
+        }
+        require(rules.isNotEmpty()) { "Regex rules catalog is empty." }
+        return RegexRulesCatalog(version = version.coerceAtLeast(1), rules = rules)
     }
 }

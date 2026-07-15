@@ -101,6 +101,12 @@
             android:layout_height="wrap_content"
             android:text="@string/notifications" />
 
+        <com.google.android.material.materialswitch.MaterialSwitch
+            android:id="@+id/updatesSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/updates" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -130,13 +130,22 @@ final class ConfigWindowController: NSWindowController, NSWindowDelegate, NSTabl
         countLabel.translatesAutoresizingMaskIntoConstraints = false
 
         let links = UiChrome.makeLinksPanel()
+        let resetButton = NSButton(title: "Reset to defaults", target: self, action: #selector(resetToDefaults))
+        resetButton.bezelStyle = .rounded
+        resetButton.translatesAutoresizingMaskIntoConstraints = false
+
+        let footer = NSStackView(views: [resetButton, NSView(), links])
+        footer.orientation = .horizontal
+        footer.alignment = .centerY
+        footer.spacing = 12
+        footer.translatesAutoresizingMaskIntoConstraints = false
 
         content.addSubview(header)
         content.addSubview(headerRow)
         content.addSubview(filterRow)
         content.addSubview(scrollView)
         content.addSubview(countLabel)
-        content.addSubview(links)
+        content.addSubview(footer)
 
         NSLayoutConstraint.activate([
             header.topAnchor.constraint(equalTo: content.topAnchor, constant: 16),
@@ -158,13 +167,34 @@ final class ConfigWindowController: NSWindowController, NSWindowDelegate, NSTabl
             scrollView.bottomAnchor.constraint(equalTo: countLabel.topAnchor, constant: -8),
 
             countLabel.leadingAnchor.constraint(equalTo: content.leadingAnchor, constant: 22),
-            countLabel.bottomAnchor.constraint(equalTo: links.topAnchor, constant: -12),
+            countLabel.bottomAnchor.constraint(equalTo: footer.topAnchor, constant: -12),
 
-            links.leadingAnchor.constraint(equalTo: content.leadingAnchor, constant: 22),
-            links.bottomAnchor.constraint(equalTo: content.bottomAnchor, constant: -18)
+            footer.leadingAnchor.constraint(equalTo: content.leadingAnchor, constant: 22),
+            footer.trailingAnchor.constraint(equalTo: content.trailingAnchor, constant: -22),
+            footer.bottomAnchor.constraint(equalTo: content.bottomAnchor, constant: -18)
         ])
 
         return content
+    }
+
+    @objc private func resetToDefaults() {
+        let alert = NSAlert()
+        alert.messageText = "Reset regex rules"
+        alert.informativeText = "Replace all current rules with the default list from GitHub?"
+        alert.addButton(withTitle: "Reset")
+        alert.addButton(withTitle: "Cancel")
+        guard alert.runModal() == .alertFirstButtonReturn else { return }
+
+        do {
+            let catalog = try DefaultRules.loadForReset()
+            rules = catalog.rules.map { UrlRule(domain: $0.domain, regex: $0.regex) }
+            config.rulesVersion = catalog.version
+            refreshList()
+        } catch {
+            let failure = NSAlert(error: error)
+            failure.messageText = "Could not load default rules"
+            failure.runModal()
+        }
     }
 
     private func refreshList() {

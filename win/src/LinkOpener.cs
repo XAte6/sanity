@@ -27,6 +27,7 @@ namespace Sanity
 
             var targetBrowser = ResolveTargetBrowser(config);
             BrowserHelper.TryLaunchBrowser(targetBrowser, finalUrl);
+            UpdateChecker.RunSync(config);
             return cleaned;
         }
 

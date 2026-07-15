@@ -99,5 +99,12 @@
             android:layout_weight="1"
             android:clipToPadding="false"
             android:paddingBottom="8dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/resetRulesButton"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/reset_to_defaults" />
     </LinearLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

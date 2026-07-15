@@ -71,6 +71,8 @@ namespace Sanity
                 UsageMetrics.RecordClean(cleaned);
                 if (ClipboardCleaned != null)
                     ClipboardCleaned(this, EventArgs.Empty);
+                BeginInvoke(new MethodInvoker(() =>
+                    UpdateChecker.RunAsync(_config, System.Threading.SynchronizationContext.Current)));
             }
             catch
             {

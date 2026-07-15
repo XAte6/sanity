@@ -53,6 +53,7 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 [Files]
 ; Replace the app binary on every install/upgrade.
 Source: "bin\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
+Source: "bin\regex-rules.json"; DestDir: "{app}"; Flags: ignoreversion
 ; Seed defaults only on first install; never overwrite or uninstall user config/metrics.
 Source: "bin\config.json"; DestDir: "{app}"; Flags: onlyifdoesntexist uninsneveruninstall
 

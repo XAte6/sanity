@@ -16,11 +16,7 @@ namespace Sanity
         private ToolStripMenuItem _targetBrowserMenuItem;
         private ToolStripMenuItem _notificationsItem;
         private ToolStripMenuItem _launchOnStartupItem;
-        private ToolStripMenuItem _sleepMenuItem;
-        private ToolStripMenuItem _sleep1hItem;
-        private ToolStripMenuItem _sleep2hItem;
-        private ToolStripMenuItem _sleep4hItem;
-        private ToolStripMenuItem _sleep8hItem;
+        private ToolStripMenuItem _updatesItem;
 
         private Form _statisticsForm;
         private Form _configForm;
@@ -59,6 +55,8 @@ namespace Sanity
             _refreshTimer.Start();
 
             RefreshMenuState();
+            _clipboardMonitor.BeginInvoke(new MethodInvoker(() =>
+                UpdateChecker.RunAsync(_config, System.Threading.SynchronizationContext.Current)));
             Application.ApplicationExit += (s, e) => Cleanup();
         }
 
@@ -87,24 +85,8 @@ namespace Sanity
             _notificationsItem = new ToolStripMenuItem("Notifications");
             _notificationsItem.Click += (s, e) => ToggleNotifications();
 
-            _sleepMenuItem = new ToolStripMenuItem("Sleep");
-
-            _sleep1hItem = new ToolStripMenuItem("1 hour");
-            _sleep1hItem.Click += (s, e) => SetSleep(1);
-
-            _sleep2hItem = new ToolStripMenuItem("2 hours");
-            _sleep2hItem.Click += (s, e) => SetSleep(2);
-
-            _sleep4hItem = new ToolStripMenuItem("4 hours");
-            _sleep4hItem.Click += (s, e) => SetSleep(4);
-
-            _sleep8hItem = new ToolStripMenuItem("8 hours");
-            _sleep8hItem.Click += (s, e) => SetSleep(8);
-
-            _sleepMenuItem.DropDownItems.Add(_sleep1hItem);
-            _sleepMenuItem.DropDownItems.Add(_sleep2hItem);
-            _sleepMenuItem.DropDownItems.Add(_sleep4hItem);
-            _sleepMenuItem.DropDownItems.Add(_sleep8hItem);
+            _updatesItem = new ToolStripMenuItem("Check for updates");
+            _updatesItem.Click += (s, e) => ToggleUpdates();
 
             var exitItem = new ToolStripMenuItem("Exit");
             exitItem.Click += (s, e) => ExitThread();
@@ -114,7 +96,7 @@ namespace Sanity
             menu.Items.Add(runSetupItem);
             menu.Items.Add(new ToolStripSeparator());
             menu.Items.Add(_enabledItem);
-            menu.Items.Add(_sleepMenuItem);
+            menu.Items.Add(_updatesItem);
             menu.Items.Add(_targetBrowserMenuItem);
             menu.Items.Add(_notificationsItem);
             menu.Items.Add(_launchOnStartupItem);
@@ -257,19 +239,9 @@ namespace Sanity
             RefreshMenuState();
         }
 
-        private void SetSleep(int hours)
+        private void ToggleUpdates()
         {
-            if (_config.SleepUntil.HasValue
-                && _config.SleepUntil.Value > DateTime.Now
-                && _config.SleepUntil.Value <= DateTime.Now.AddHours(hours + 0.1))
-            {
-                _config.SleepUntil = null;
-            }
-            else
-            {
-                _config.SleepUntil = DateTime.Now.AddHours(hours);
-            }
-
+            _config.UpdatesEnabled = !_config.UpdatesEnabled;
             _config.Save();
             RefreshMenuState();
         }
@@ -288,15 +260,7 @@ namespace Sanity
 
             _launchOnStartupItem.Checked = _config.LaunchOnStartup;
             _notificationsItem.Checked = _config.NotificationsEnabled;
-
-            _sleepMenuItem.Text = sleeping
-                ? "Sleep (until " + _config.SleepUntil.Value.ToString("HH:mm") + ")"
-                : "Sleep";
-
-            UpdateSleepItem(_sleep1hItem, 1, sleeping);
-            UpdateSleepItem(_sleep2hItem, 2, sleeping);
-            UpdateSleepItem(_sleep4hItem, 4, sleeping);
-            UpdateSleepItem(_sleep8hItem, 8, sleeping);
+            _updatesItem.Checked = _config.UpdatesEnabled;
 
             _notifyIcon.Text = active
                 ? "Sanity - active"
@@ -324,16 +288,6 @@ namespace Sanity
                 item.Checked = string.Equals(target, browser.ExecutablePath, StringComparison.OrdinalIgnoreCase)
                     || string.Equals(target, browser.ProgId, StringComparison.OrdinalIgnoreCase);
             }
-        }
-
-        private void UpdateSleepItem(ToolStripMenuItem item, int hours, bool sleeping)
-        {
-            var until = DateTime.Now.AddHours(hours);
-            var isSelected = sleeping
-                && _config.SleepUntil.HasValue
-                && Math.Abs((_config.SleepUntil.Value - until).TotalMinutes) < 5;
-
-            item.Checked = isSelected;
         }
 
         private void ShowBalloon(string message)

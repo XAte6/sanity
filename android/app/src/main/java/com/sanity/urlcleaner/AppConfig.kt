@@ -10,8 +10,11 @@ data class AppConfig(
     val linkProxyEnabled: Boolean = true,
     val targetBrowser: String = "",
     val notificationsEnabled: Boolean = true,
+    val updatesEnabled: Boolean = true,
     val sleepUntil: String? = null,
-    val rules: List<UrlRule> = DefaultRules.create()
+    val rulesVersion: Int = 1,
+    val lastUpdateCheck: String? = null,
+    val rules: List<UrlRule> = emptyList()
 ) {
     val isActive: Boolean
         get() {

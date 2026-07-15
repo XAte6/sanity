@@ -33,6 +33,7 @@ class RulesActivity : AppCompatActivity() {
 
         binding.toolbar.setNavigationOnClickListener { finish() }
         binding.addRuleButton.setOnClickListener { showRuleDialog(null, -1) }
+        binding.resetRulesButton.setOnClickListener { confirmReset() }
 
         adapter = RuleAdapter(
             onEdit = { index -> showRuleDialog(rules[index], index) },
@@ -150,11 +151,39 @@ class RulesActivity : AppCompatActivity() {
             .show()
     }
 
+    private fun confirmReset() {
+        AlertDialog.Builder(this)
+            .setTitle(R.string.reset_rules_title)
+            .setMessage(R.string.reset_rules_message)
+            .setNegativeButton(R.string.cancel, null)
+            .setPositiveButton(R.string.reset_to_defaults) { _, _ ->
+                try {
+                    val catalog = DefaultRules.loadForReset(this)
+                    rules.clear()
+                    rules.addAll(catalog.rules)
+                    config = config.copy(rules = catalog.rules, rulesVersion = catalog.version)
+                    AppConfigStore.save(this, config)
+                    refreshList()
+                } catch (ex: Exception) {
+                    AlertDialog.Builder(this)
+                        .setTitle(R.string.reset_rules_title)
+                        .setMessage(getString(R.string.reset_rules_failed, ex.message ?: ""))
+                        .setPositiveButton(android.R.string.ok, null)
+                        .show()
+                }
+            }
+            .show()
+    }
+
     private fun persist() {
         val cleaned = rules.filter {
             it.domain.isNotBlank() || it.regex.isNotBlank()
         }
-        config = config.copy(rules = cleaned.ifEmpty { DefaultRules.create() })
+        val fallback = if (cleaned.isEmpty()) DefaultRules.loadLocal(this) else null
+        config = config.copy(
+            rules = fallback?.rules ?: cleaned,
+            rulesVersion = fallback?.version ?: config.rulesVersion
+        )
         AppConfigStore.save(this, config)
         rules.clear()
         rules.addAll(config.rules)

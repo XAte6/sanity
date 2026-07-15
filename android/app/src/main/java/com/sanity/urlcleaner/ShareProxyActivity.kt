@@ -28,7 +28,7 @@ class ShareProxyActivity : AppCompatActivity() {
             }
         }
 
-        finish()
+        UpdateChecker.runAsync(this, config) { finish() }
     }
 
     override fun onNewIntent(intent: Intent) {

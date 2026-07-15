@@ -3,6 +3,7 @@
     <string name="app_name">Sanity</string>
     <string name="enabled">Enabled</string>
     <string name="notifications">Notifications</string>
+    <string name="updates">Check for updates</string>
     <string name="target_browser">Target browser</string>
     <string name="regex_rules">Regex Rules</string>
     <string name="statistics">Statistics</string>
@@ -35,6 +36,10 @@
     <string name="rules_showing">Showing %1$d of %2$d rules</string>
     <string name="save">Save</string>
     <string name="cancel">Cancel</string>
+    <string name="reset_to_defaults">Reset to defaults</string>
+    <string name="reset_rules_title">Reset regex rules</string>
+    <string name="reset_rules_message">Replace all current rules with the default list from GitHub?</string>
+    <string name="reset_rules_failed">Could not load default rules: %1$s</string>
     <string name="setup_instructions_title">How to set up</string>
     <string name="setup_instructions_prefix">•\u0020</string>
     <string name="setup_instructions_link">Tap here and set Sanity as your default browser</string>

@@ -6,7 +6,11 @@ import org.junit.Assert.assertNull
 import org.junit.Test
 
 class UrlCleanerTest {
-    private val rules = DefaultRules.create()
+    private val rules = DefaultRules.parse(
+        checkNotNull(javaClass.classLoader!!.getResourceAsStream("regex-rules.json"))
+            .bufferedReader()
+            .readText()
+    ).rules
 
     @Test
     fun tryClean_removesIsFromYoutubeShort() {
@@ -34,6 +38,20 @@ class UrlCleanerTest {
         val url = "https://youtube.com/shorts/dQw4w9WgXcQ?si=abc123&feature=share"
         val cleaned = UrlCleaner.tryClean(url, rules)
         assertEquals("https://youtube.com/shorts/dQw4w9WgXcQ?feature=share", cleaned)
+    }
+
+    @Test
+    fun tryClean_stripsEbayQueryString() {
+        val url = "https://www.ebay.co.uk/itm/127958206592?_skw=ryzen&itmmeta=abc&hash=item1"
+        val cleaned = UrlCleaner.tryClean(url, rules)
+        assertEquals("https://www.ebay.co.uk/itm/127958206592", cleaned)
+    }
+
+    @Test
+    fun tryClean_stripsEtsyQueryString() {
+        val url = "https://www.etsy.com/listing/1234567890/widget?ref=share&utm_source=x"
+        val cleaned = UrlCleaner.tryClean(url, rules)
+        assertEquals("https://www.etsy.com/listing/1234567890/widget", cleaned)
     }
 
     @Test

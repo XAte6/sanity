@@ -13,11 +13,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private var targetBrowserMenu: NSMenuItem!
     private var notificationsItem: NSMenuItem!
     private var launchOnStartupItem: NSMenuItem!
-    private var sleepMenu: NSMenuItem!
-    private var sleep1hItem: NSMenuItem!
-    private var sleep2hItem: NSMenuItem!
-    private var sleep4hItem: NSMenuItem!
-    private var sleep8hItem: NSMenuItem!
+    private var updatesItem: NSMenuItem!
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         if isAnotherInstanceRunning() {
@@ -59,6 +55,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             self?.refreshMenuState()
         }
         refreshMenuState()
+        UpdateChecker.runAsync(config: config) { [weak self] updated in
+            self?.config = updated
+            self?.clipboardMonitor.updateConfig(updated)
+            self?.refreshMenuState()
+        }
     }
 
     private func isAnotherInstanceRunning() -> Bool {
@@ -89,18 +90,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         enabledItem.target = self
         menu.addItem(enabledItem)
 
-        sleepMenu = NSMenuItem(title: "Sleep", action: nil, keyEquivalent: "")
-        let sleepSubmenu = NSMenu()
-        sleep1hItem = makeSleepItem(title: "1 hour", hours: 1)
-        sleep2hItem = makeSleepItem(title: "2 hours", hours: 2)
-        sleep4hItem = makeSleepItem(title: "4 hours", hours: 4)
-        sleep8hItem = makeSleepItem(title: "8 hours", hours: 8)
-        sleepSubmenu.addItem(sleep1hItem)
-        sleepSubmenu.addItem(sleep2hItem)
-        sleepSubmenu.addItem(sleep4hItem)
-        sleepSubmenu.addItem(sleep8hItem)
-        sleepMenu.submenu = sleepSubmenu
-        menu.addItem(sleepMenu)
+        updatesItem = NSMenuItem(title: "Check for updates", action: #selector(toggleUpdates), keyEquivalent: "")
+        updatesItem.target = self
+        menu.addItem(updatesItem)
 
         targetBrowserMenu = NSMenuItem(title: "Target browser", action: nil, keyEquivalent: "")
         rebuildTargetBrowserMenu()
@@ -121,13 +113,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         menu.addItem(exitItem)
 
         statusItem.menu = menu
-    }
-
-    private func makeSleepItem(title: String, hours: Int) -> NSMenuItem {
-        let item = NSMenuItem(title: title, action: #selector(setSleep(_:)), keyEquivalent: "")
-        item.target = self
-        item.tag = hours
-        return item
     }
 
     @objc private func openConfiguration() {
@@ -202,24 +187,16 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         refreshMenuState()
     }
 
-    @objc private func toggleLaunchOnStartup() {
-        config.launchOnStartup.toggle()
-        StartupRegistration.apply(config.launchOnStartup)
+    @objc private func toggleUpdates() {
+        config.updatesEnabled.toggle()
         config.save()
         refreshMenuState()
     }
 
-    @objc private func setSleep(_ sender: NSMenuItem) {
-        let hours = sender.tag
-        if let sleepUntil = config.sleepUntilDate(),
-           sleepUntil > Date(),
-           abs(sleepUntil.timeIntervalSince(Date().addingTimeInterval(Double(hours) * 3600))) < 300 {
-            config.sleepUntil = nil
-        } else {
-            config.sleepUntil = AppConfig.encodeSleepDate(Date().addingTimeInterval(Double(hours) * 3600))
-        }
+    @objc private func toggleLaunchOnStartup() {
+        config.launchOnStartup.toggle()
+        StartupRegistration.apply(config.launchOnStartup)
         config.save()
-        clipboardMonitor.updateConfig(config)
         refreshMenuState()
     }
 
@@ -235,20 +212,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         enabledItem.title = sleeping ? "Enabled (sleeping)" : "Enabled"
         updateTargetBrowserChecks()
         notificationsItem.state = config.notificationsEnabled ? .on : .off
+        updatesItem.state = config.updatesEnabled ? .on : .off
         launchOnStartupItem.state = config.launchOnStartup ? .on : .off
-
-        if sleeping, let until = config.sleepUntilDate() {
-            let formatter = DateFormatter()
-            formatter.timeStyle = .short
-            sleepMenu.title = "Sleep (until \(formatter.string(from: until)))"
-        } else {
-            sleepMenu.title = "Sleep"
-        }
-
-        updateSleepItem(sleep1hItem, hours: 1, sleeping: sleeping)
-        updateSleepItem(sleep2hItem, hours: 2, sleeping: sleeping)
-        updateSleepItem(sleep4hItem, hours: 4, sleeping: sleeping)
-        updateSleepItem(sleep8hItem, hours: 8, sleeping: sleeping)
 
         if active {
             statusItem.button?.toolTip = "Sanity - active"
@@ -259,15 +224,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         } else {
             statusItem.button?.toolTip = "Sanity - disabled"
         }
-    }
-
-    private func updateSleepItem(_ item: NSMenuItem, hours: Int, sleeping: Bool) {
-        guard sleeping, let sleepUntil = config.sleepUntilDate() else {
-            item.state = .off
-            return
-        }
-        let target = Date().addingTimeInterval(Double(hours) * 3600)
-        item.state = abs(sleepUntil.timeIntervalSince(target)) < 300 ? .on : .off
     }
 
     private func updateTargetBrowserChecks() {

@@ -33,15 +33,19 @@ swiftc -O \
     "$SRC"/BrowserRegistration.swift \
     "$SRC"/ClipboardMonitor.swift \
     "$SRC"/ConfigWindowController.swift \
+    "$SRC"/DefaultRules.swift \
     "$SRC"/LinkOpener.swift \
     "$SRC"/StartupRegistration.swift \
     "$SRC"/UiChrome.swift \
+    "$SRC"/UpdateChecker.swift \
     "$SRC"/UrlCleaner.swift \
     "$SRC"/UsageMetrics.swift \
     "$SRC"/main.swift \
     -o "$MACOS/Sanity"
 
 cp "$PLIST" "$APP/Contents/Info.plist"
+cp "$ROOT/../defaults/regex-rules.json" "$RES/regex-rules.json"
+cp "$ROOT/../defaults/regex-rules.json" "$BIN/regex-rules.json"
 
 ICONSET="$BUILD/Sanity.iconset"
 rm -rf "$ICONSET"

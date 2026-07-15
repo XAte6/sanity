@@ -15,6 +15,7 @@ enum LinkOpener {
         }
 
         BrowserHelper.open(url: finalUrl, targetBrowser: resolveTargetBrowser(config: config))
+        UpdateChecker.runSync(config: config)
         return cleaned
     }
 

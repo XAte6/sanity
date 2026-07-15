@@ -66,6 +66,7 @@ if exist "assets\default-apps-setup.gif" (
   src\BrowserHelper.cs ^
   src\ClipboardMonitor.cs ^
   src\ConfigForm.cs ^
+  src\DefaultRules.cs ^
   src\LinkOpener.cs ^
   src\NativeMethods.cs ^
   src\Notifier.cs ^
@@ -77,6 +78,7 @@ if exist "assets\default-apps-setup.gif" (
   src\SvgPath.cs ^
   src\TrayApplicationContext.cs ^
   src\UiChrome.cs ^
+  src\UpdateChecker.cs ^
   src\UrlCleaner.cs ^
   src\UsageMetrics.cs
 
@@ -86,6 +88,7 @@ if errorlevel 1 (
 )
 
 echo Built %BIN%\Sanity.exe
+copy /Y ..\defaults\regex-rules.json %BIN%\regex-rules.json >nul
 %BIN%\Sanity.exe --write-default-config
 if exist "%BIN%\config.json" (
     copy /Y "%BIN%\config.json" config.json >nul

@@ -16,15 +16,15 @@ object AppConfigStore {
     fun load(context: Context): AppConfig {
         val file = configFile(context)
         if (!file.exists()) {
-            val defaults = AppConfig()
+            val defaults = createDefault(context)
             save(context, defaults)
             return defaults
         }
 
         return try {
-            parseConfig(JSONObject(file.readText()))
+            parseConfig(context, JSONObject(file.readText()))
         } catch (_: Exception) {
-            val defaults = AppConfig()
+            val defaults = createDefault(context)
             save(context, defaults)
             defaults
         }
@@ -37,10 +37,15 @@ object AppConfigStore {
     fun toJsonString(config: AppConfig): String = configToJson(config).toString(2)
 
     fun loadFromJsonText(context: Context, text: String): AppConfig {
-        val config = parseConfig(JSONObject(text.trim()))
+        val config = parseConfig(context, JSONObject(text.trim()))
         validateRules(config.rules)
         save(context, config)
         return config
+    }
+
+    fun createDefault(context: Context): AppConfig {
+        val catalog = DefaultRules.loadLocal(context)
+        return AppConfig(rulesVersion = catalog.version, rules = catalog.rules)
     }
 
     fun parseSleepDate(value: String): Long? {
@@ -49,26 +54,54 @@ object AppConfigStore {
             formatter.timeZone = TimeZone.getTimeZone("UTC")
             formatter.parse(value)?.time
         } catch (_: Exception) {
-            null
+            try {
+                val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US)
+                formatter.timeZone = TimeZone.getTimeZone("UTC")
+                formatter.parse(value)?.time
+            } catch (_: Exception) {
+                null
+            }
         }
     }
 
     private fun configFile(context: Context): File = File(context.filesDir, FILE_NAME)
 
-    private fun parseConfig(json: JSONObject): AppConfig {
-        val rules = parseRules(json.optJSONArray("rules"))
+    private fun parseConfig(context: Context, json: JSONObject): AppConfig {
+        val rules = parseRulesFromJson(json.optJSONArray("rules"))
+        val catalogFallback = if (rules.isEmpty()) DefaultRules.loadLocal(context) else null
         return AppConfig(
             enabled = json.optBoolean("enabled", true),
             linkProxyEnabled = json.optBoolean("linkProxyEnabled", true),
             targetBrowser = json.optString("targetBrowser", ""),
             notificationsEnabled = json.optBoolean("notificationsEnabled", true),
+            updatesEnabled = if (json.has("updatesEnabled")) {
+                json.optBoolean("updatesEnabled", true)
+            } else {
+                true
+            },
             sleepUntil = if (json.has("sleepUntil") && !json.isNull("sleepUntil")) {
                 json.getString("sleepUntil")
             } else {
                 null
             },
-            rules = rules
-        )
+            rulesVersion = if (json.has("rulesVersion")) {
+                json.optInt("rulesVersion", 1)
+            } else {
+                1
+            },
+            lastUpdateCheck = if (json.has("lastUpdateCheck") && !json.isNull("lastUpdateCheck")) {
+                json.getString("lastUpdateCheck")
+            } else {
+                null
+            },
+            rules = catalogFallback?.rules ?: rules
+        ).let { config ->
+            if (catalogFallback != null && !json.has("rulesVersion")) {
+                config.copy(rulesVersion = catalogFallback.version)
+            } else {
+                config
+            }
+        }
     }
 
     private fun configToJson(config: AppConfig): JSONObject {
@@ -77,7 +110,10 @@ object AppConfigStore {
             put("linkProxyEnabled", config.linkProxyEnabled)
             put("targetBrowser", config.targetBrowser)
             put("notificationsEnabled", config.notificationsEnabled)
+            put("updatesEnabled", config.updatesEnabled)
             if (config.sleepUntil != null) put("sleepUntil", config.sleepUntil)
+            put("rulesVersion", config.rulesVersion)
+            if (config.lastUpdateCheck != null) put("lastUpdateCheck", config.lastUpdateCheck)
             put("rules", JSONArray().apply {
                 config.rules.forEach { rule ->
                     put(JSONObject().apply {
@@ -87,11 +123,6 @@ object AppConfigStore {
                 }
             })
         }
-    }
-
-    private fun parseRules(array: JSONArray?): List<UrlRule> {
-        val rules = parseRulesFromJson(array)
-        return if (rules.isEmpty()) DefaultRules.create() else rules
     }
 
     private fun parseRulesFromJson(array: JSONArray?): List<UrlRule> {
